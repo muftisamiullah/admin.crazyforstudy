@@ -20,7 +20,9 @@ router
     .get('/book/chapter/section/:isbn/:chapter_no', Book.getBookSections)
     .get('/book/chapter/section/exercise/:isbn/:chapter_no/:section_no', Book.getBookExercises)
     .get('/book/chapter/section/exercise/problem/:isbn/:chapter_no/:section_no/:excerise_no', Book.getBookProblems)
+    .get('/book/chapter/section/exercise/problem/answer/:isbn/:chapter_no/:section_no/:excerise_no', Book.getBookProblemsWithAnswer)
     .get('/book/only-problem/:isbn/:chapter_no', Book.getBookOnlyProblems)
+    .get('/book/only-problem/answer/:isbn/:chapter_no', Book.getBookOnlyProblemsWithAnswers)
     .get('/book/search-question/:isbn/:search', Book.searchQuestion)
 
 

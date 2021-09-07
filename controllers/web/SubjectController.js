@@ -3,7 +3,6 @@ const Subject = require('../../models/admin/Subject.js');
 const ChildSubjects = require('../../models/admin/ChieldSubject.js');
 const Questions = require('../../models/admin/Question');
 
-
 const SubSubjects = async(req, res) => {
     try {
         const SubSubjects = await Sub_Subject.find({ subject: req.params.subject_name }, { __v: 0 }).collation( { locale: 'en', strength: 2 });

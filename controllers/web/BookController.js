@@ -338,6 +338,42 @@ const getBookProblems = async (req, res) => {
     });
 }
 
+const getBookProblemsWithAnswer = async (req, res) => {
+    const results = await Chapter.find({
+        "book_isbn": `${req.params.isbn}`,
+        "chapter_no": `${req.params.chapter_no}`,
+        "section_no": `${req.params.section_no}`,
+        "excerise": `${req.params.excerise_no}`,
+    },{
+        _id: 1,
+        problem_no: 1,
+        question: 1,
+        answer: 1,
+    });
+
+    const problems = [];
+    
+    const map = new Map();
+    results.forEach( item => {
+        if(!map.has(item.problem_no)){
+            map.set(item.problem_no, true);
+            problems.push({
+                q_id: item._id, 
+                problem_no: item.problem_no, 
+                question: item.question, 
+                answer: item.answer
+            })
+        }
+    });
+    res.status(200).json({
+        isbn: req.params.isbn,
+        chapter_no: req.body.chapter_no,
+        section_no: req.body.section_no, 
+        excerise: req.body.excerise,
+        problems
+    });
+}
+
 const getBookOnlyProblems = async (req, res) => {
     const results = await Chapter.find({
         "book_isbn": `${req.params.isbn}`,
@@ -358,6 +394,38 @@ const getBookOnlyProblems = async (req, res) => {
                 q_id: item._id, 
                 problem_no: item.problem_no, 
                 question: item.question, 
+            })
+        }
+    });
+    res.status(200).json({
+        isbn: req.params.isbn,
+        chapter_no: req.body.chapter_no,
+        problems
+    });
+}
+
+const getBookOnlyProblemsWithAnswers = async (req, res) => {
+    const results = await Chapter.find({
+        "book_isbn": `${req.params.isbn}`,
+        "chapter_no": `${req.params.chapter_no}`
+    },{
+        _id: 1,
+        problem_no: 1,
+        question: 1,
+        answer: 1,
+    });
+
+    const problems = [];
+    
+    const map = new Map();
+    results.forEach( item => {
+        if(!map.has(item.problem_no)){
+            map.set(item.problem_no, true);
+            problems.push({
+                q_id: item._id, 
+                problem_no: item.problem_no, 
+                question: item.question, 
+                answer: item.answer,
             })
         }
     });
@@ -430,7 +498,9 @@ module.exports = {
     getBookExercises,
     relatedBooks,
     getBookProblems,
+    getBookProblemsWithAnswer,
     getBookOnlyProblems,
+    getBookOnlyProblemsWithAnswers,
     searchQuestion,
     searchBookNameIsbnIndividual,
     searchChapterQuestionIndividual,

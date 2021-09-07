@@ -52,11 +52,9 @@ const saveAssignmentLocal = async (req, res) => {
 
 const saveAssignmentTwo = async (req, res) => {
     try {
-        // return res.send(req.body)
         const tutor = await Tutor.aggregate([
             { $sample: { size: 1 } }
         ]);
-        console.log(tutor[0])
         const filter = {_id:req.body.id,user_id:req.body.user_Id}
         const content = {   deadline_date: req.body.deadline_date,deadline_time: req.body.deadline_time, 
                             pages: req.body.pages, reference: req.body.reference,amount:req.body.amount,
