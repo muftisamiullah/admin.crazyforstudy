@@ -287,12 +287,6 @@ const changePassword = async(req,res) => {
 
 const getUser = async(req,res) => {
     try{
-        if(!req.body.email){
-            return res.status(500).json({
-                message: "Something Went Wrong"
-            });
-        }
-        console.log(req.body.email)
         let user = await Student.findOne({Email : req.body.email});
         return res.status(200).json(user);        
     }catch(e){
