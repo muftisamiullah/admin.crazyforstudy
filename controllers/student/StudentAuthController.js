@@ -293,9 +293,9 @@ const getUser = async(req,res) => {
             });
         }
         let user = await Student.findOne({Email : req.body.email});
-        return res.send(user);
+        return res.status(200).send(user);        
     }catch(e){
-        return res.status(502).json({
+        return res.status(500).json({
             message: "Something Went Wrong" + e
         });
     }
