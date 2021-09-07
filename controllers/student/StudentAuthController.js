@@ -287,7 +287,6 @@ const changePassword = async(req,res) => {
 
 const getUser = async(req,res) => {
     try{
-        return res.status(200).send(req.body.email);
         let user = await Student.findOne({Email : req.body.email});
         return res.status(200).json(user);        
     }catch(e){
