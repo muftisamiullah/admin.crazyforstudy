@@ -1,5 +1,6 @@
 const Book = require('../../models/admin/Book.js');
 const Chapter = require('../../models/admin/Chapter');
+const Question = require('../../models/admin/Question');
 
 const getAllBook = async(req, res) => {
     try {
@@ -18,8 +19,8 @@ const getAllBook = async(req, res) => {
 const getBook = async(req, res) => {
     // return res.send(req.params.isbn)
     try {
-        const Books = await Book.find({ ISBN13: req.params.isbn, status: true }, { __v: 0 });
-        // const ratingAverage = Books[0].reviews.length;
+        const Books = await Book.find({ ISBN13: req.params.isbn, status: true }, { __v: 0 }).lean();
+        // Books[0].ratingAv = Books[0].reviews.length;
         // return res.send(Books[0].reviews.length)
         return res.status(200).json({
             data: Books
@@ -163,6 +164,38 @@ const searchChapterQuestionIndividual = async (req, res) => {
         problem_no:1,
         question:1,
         book_isbn:1,
+    }).skip(req.params.pageno * req.params.limit).limit(parseInt(req.params.limit));
+
+    res.status(200).json({
+        questions:questions,
+        total:total
+    });
+}
+
+const searchQuestionAndAnswerIndividual = async (req, res) => {
+    const search = req.params.search;
+    const limit = parseInt(req.params.limit);
+    // return res.send(req.params)
+
+    const total = await Question.countDocuments(Question.find({ 
+        $or:
+        // [{book_isbn: { $regex: search}},{book_name:{ $regex:search }},{question:{$regex:search}}]
+        [{question:{$regex:search}}]}));
+    const questions = await Question.find({ 
+        $or:
+        // [{book_isbn: { $regex: search}},{book_name:{ $regex:search }},{question:{$regex:search}}]
+        [{question:{$regex:search}}]
+    },{
+        _id:0,
+        question :1,
+        old_qid:1,
+        type:1,
+        shortanswer:1,
+        completeanswer:1,
+        subject:1,
+        subject_id:1,
+        sub_subject_id:1,
+        chield_subject_id:1,
     }).skip(req.params.pageno * req.params.limit).limit(parseInt(req.params.limit));
 
     res.status(200).json({
@@ -504,4 +537,5 @@ module.exports = {
     searchQuestion,
     searchBookNameIsbnIndividual,
     searchChapterQuestionIndividual,
+    searchQuestionAndAnswerIndividual,
 }

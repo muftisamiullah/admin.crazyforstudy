@@ -9,9 +9,11 @@ router
     .get('/popular-books', Book.popularBooks)
     .post('/search-chapter-question', Book.searchChapterQuestion)
     .get('/search-book-name-isbn/:search/:limit', Book.searchBookNameIsbn)
+    .get('/book/search-question/:isbn/:search', Book.searchQuestion)
     // .get('/search-chapter-question/:search/:limit', Book.searchChapterQuestion)
     .get('/search-book-name-isbn-individual/:search/:limit/:pageno', Book.searchBookNameIsbnIndividual)
     .get('/search-chapter-question/:search/:limit/:pageno', Book.searchChapterQuestionIndividual)
+    .get('/search-question-qanda/:search/:limit/:pageno', Book.searchQuestionAndAnswerIndividual)
 
     //used on book detail page
     .get('/related-books/:sub_subject', Book.relatedBooks)
@@ -23,7 +25,7 @@ router
     .get('/book/chapter/section/exercise/problem/answer/:isbn/:chapter_no/:section_no/:excerise_no', Book.getBookProblemsWithAnswer)
     .get('/book/only-problem/:isbn/:chapter_no', Book.getBookOnlyProblems)
     .get('/book/only-problem/answer/:isbn/:chapter_no', Book.getBookOnlyProblemsWithAnswers)
-    .get('/book/search-question/:isbn/:search', Book.searchQuestion)
+
 
 
 module.exports = router;
