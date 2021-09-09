@@ -4,7 +4,7 @@ const router = express.Router();
 
 router
     .get('/view-all', Book.getAllBook)
-    .post('/subject/:sub_subject_name', Book.BooksBySubSubjectName)
+    .post('/subject/:subject_name/:sub_subject_name', Book.BooksBySubSubjectName)
     .get('/subsubject/search/:subsubject/:isbn', Book.searchSubSubject)
     .get('/popular-books', Book.popularBooks)
     .post('/search-chapter-question', Book.searchChapterQuestion)

@@ -34,10 +34,20 @@ const getBook = async(req, res) => {
 }
 
 const BooksBySubSubjectName = async(req, res) => {
-    // console.log(req.params, req.body.pageno)
     try {
-        const total = await Book.countDocuments(Book.find({ sub_subject_name: req.params.sub_subject_name }, { __v: 0 })).collation( { locale: 'en', strength: 2 } );
-        const Books = await Book.find({ sub_subject_name: req.params.sub_subject_name }, { __v: 0 }).skip(req.body.pageno * req.body.limit).limit(parseInt(req.body.limit)).collation( { locale: 'en', strength: 2 } );
+        let filter = {}
+        if(req.params.sub_subject_name == "other"){
+            filter ={
+                 sub_subject_name: req.params.sub_subject_name, 
+                 subject_name: req.params.subject_name 
+            }
+        }else{
+            filter ={
+                sub_subject_name: req.params.sub_subject_name, 
+            }
+        }
+        const total = await Book.countDocuments(Book.find(filter, { __v: 0 })).collation( { locale: 'en', strength: 2 } );
+        const Books = await Book.find(filter, { __v: 0 }).skip(req.body.pageno * req.body.limit).limit(parseInt(req.body.limit)).collation( { locale: 'en', strength: 2 } );
         return res.status(200).json({
             total: total,
             data: Books
