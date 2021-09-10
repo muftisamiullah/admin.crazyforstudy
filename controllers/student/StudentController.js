@@ -111,7 +111,7 @@ const checkBookIsbn = async (req, res) => {
     try {    
         const book_isbn = req.params.isbn;
         const books = await Book.findOne({ISBN13: book_isbn});
-        const filter = {user_Id: req.body.user_Id, book_isbn: book_isbn}
+        const filter = {user_Id: req.body.user_Id, isbn: book_isbn}
         var options = { upsert: true, new: true, setDefaultsOnInsert: true };  
         let updateData = '';
         if(books){
@@ -140,7 +140,7 @@ const checkBookIsbn = async (req, res) => {
 const myTextBook = async (req, res) => {
     try {    
         const filter = {user_Id: req.body.user_Id}
-        const TextBooks = await TextBook.find(filter,{_id: 1, book_isbn: 1, book_name: 1, edition: 1, user_Id: 1});
+        const TextBooks = await TextBook.find(filter,{_id: 1, isbn: 1, book_name: 1, edition: 1, user_Id: 1});
         res.status(200).json({
             error: false,
             data: TextBooks
