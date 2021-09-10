@@ -308,6 +308,7 @@ const editUser = async(req,res) => {
             Zipcode: req.body.Zipcode,
             Contact: req.body.Contact,
             Name: req.body.Name,
+            img: req?.file.filename,
         }
         let user = await Student.findOneAndUpdate(filter,{$set: data});
         return res.status(200).send({ msg: 'user updated successfully',user: user });

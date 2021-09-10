@@ -163,3 +163,5 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(index);
     });
 }
+
+app.use('/uploads', express.static(process.cwd() + '/uploads'));
