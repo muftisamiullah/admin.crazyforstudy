@@ -5,7 +5,7 @@ const ReviewSchema = new mongoose.Schema({
     rating: 'Number', 
     review: 'string', 
     userName: 'string', 
-    image:'',
+    image: 'string',
     status: {
         type: Boolean,
         default: false
