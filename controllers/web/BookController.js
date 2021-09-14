@@ -20,6 +20,37 @@ const getBook = async(req, res) => {
     // return res.send(req.params.isbn)
     try {
         const Books = await Book.find({ ISBN13: req.params.isbn, status: true }, { __v: 0 }).lean();
+        let total = 0;
+        let rating_1 = 0;
+        let rating_2 = 0;
+        let rating_3 = 0;
+        let rating_4 = 0;
+        let rating_5 = 0;
+        Books[0]?.reviews?.map((item, key)=>{
+            total = total + (item.rating ? item.rating : 0);
+            if(item.rating == 1){
+                rating_1 = rating_1 + 1;
+            }
+            if(item.rating == 2){
+                rating_2 = rating_2 + 1;
+            }
+            if(item.rating == 3){
+                rating_3 = rating_3 + 1;
+            }
+            if(item.rating == 4){
+                rating_4 = rating_4 + 1;
+            }
+            if(item.rating == 5){
+                rating_5 = rating_5 + 1;
+            }
+        })
+        let ratingAv = (5 * rating_5 + 4 * rating_4 + 3 * rating_3 + 2 * rating_2 + 1 * rating_1) / total;
+        Books[0].ratingAv = ratingAv;
+        Books[0].rating_1 = rating_1;
+        Books[0].rating_2 = rating_2;
+        Books[0].rating_3 = rating_3;
+        Books[0].rating_4 = rating_4;
+        Books[0].rating_5 = rating_5;
         // Books[0].ratingAv = Books[0].reviews.length;
         // return res.send(Books[0].reviews.length)
         return res.status(200).json({
