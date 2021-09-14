@@ -67,6 +67,22 @@ const GetQuestionAndAnswers = async (req, res) => {
     }
 }
 
+const GetQuestionAndAnswers2 = async (req, res) => {
+    try {
+        const questions = await Questions.find({sub_subject:req.params.sub_subject, subject:req.params.subject}).skip(req.body.pageno * req.body.limit).limit(parseInt(req.body.limit))
+        const total = await Questions.countDocuments(Questions.find({ sub_subject: req.params.sub_subject, subject: req.params.subject }));
+        res.status(200).json({
+            data: questions,
+            total:total
+        });
+    } catch (error) {
+        res.status(409).json({
+            message: "Error occured",
+            errors: error.message
+        });
+    }
+}
+
 const GetAnswer = async (req, res) => {
     try {
         const questions = await Questions.findOne({old_qid:req.params.old_id}).lean()
@@ -88,5 +104,6 @@ module.exports = {
     SubSubjects,
     GetChildSubjects,
     GetQuestionAndAnswers,
-    GetAnswer
+    GetAnswer,
+    GetQuestionAndAnswers2,
 }

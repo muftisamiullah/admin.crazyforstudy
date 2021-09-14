@@ -3,7 +3,7 @@ const Tutor = require('../../models/tutor/Tutor');
 
 const saveAssignmentOne = async (req, res) => {
     try {
-        const content = {question: req.body.question,subject: req.body.subject, sub_subject: req.body.sub_subject, subject_id: req.body.subject_id,sub_subject_id:req.body.sub_subject_id,user_id:req.body.user_Id,image:req.file ? req.file.filename : '',};
+        const content = {question: req.body.question,subject: req.body.subject, sub_subject: req.body.sub_subject, subject_id: req.body.subject_id,sub_subject_id:req.body.sub_subject_id,user_id:req.body.user_Id,image0:req.files?.image0 ? req?.files?.image0[0].filename : '',image1:req.files?.image1 ? req?.files?.image1[0].filename : '',image2:req.files?.image2 ? req?.files?.image2[0].filename : '',};
         const assign = await new Assignment(content).save()
         if(assign){
             return res.status(200).json({
@@ -13,6 +13,7 @@ const saveAssignmentOne = async (req, res) => {
             });
         }
     } catch (error) {
+        console.log(error)
         res.status(409).json({
             message: "Error occured",
             errors: error.message

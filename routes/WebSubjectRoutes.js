@@ -6,7 +6,8 @@ router
     .get('/all', Subject.AllSubjects)
     .get('/:subject_name', Subject.SubSubjects)
     .get('/childsubjects/:sub_subject_name', Subject.GetChildSubjects)
-    .post('/questions/:child_subject', Subject.GetQuestionAndAnswers)
+    // .post('/questions/:child_subject', Subject.GetQuestionAndAnswers)
+    .post('/questions/:subject/:sub_subject', Subject.GetQuestionAndAnswers2)
     .post('/get-answer/:old_id', Subject.GetAnswer)
 ;
     

@@ -298,18 +298,33 @@ const getUser = async(req,res) => {
 
 const editUser = async(req,res) => {
     try{
+        console.log(req.body)
         // return res.send(req.body)
         const filter = {Email: req.body.email};
-        const data = {
-            college: req.body.college,
-            dob: req.body.dob, 
-            Country: req.body.Country,
-            Address: req.body.Address,
-            Zipcode: req.body.Zipcode,
-            Contact: req.body.Contact,
-            Name: req.body.Name,
-            img: req?.file.filename,
+        let data = {};
+        if(req.file != undefined && req?.file.filename != undefined){
+            data = {
+                college: req.body.college,
+                dob: req.body.dob, 
+                Country: req.body.Country,
+                Address: req.body.Address,
+                Zipcode: req.body.Zipcode,
+                Contact: req.body.Contact,
+                Name: req.body.Name,
+                img: req?.file.filename,
+            }
+        }else{
+            data = {
+                college: req.body.college,
+                dob: req.body.dob, 
+                Country: req.body.Country,
+                Address: req.body.Address,
+                Zipcode: req.body.Zipcode,
+                Contact: req.body.Contact,
+                Name: req.body.Name,
+            }
         }
+       
         let user = await Student.findOneAndUpdate(filter,{$set: data});
         return res.status(200).send({ msg: 'user updated successfully',user: user });
     }catch(e){

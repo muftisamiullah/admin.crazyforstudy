@@ -45,7 +45,7 @@ const AssignmentSchema = new mongoose.Schema({
     question:{
         type: String,
     },
-    image:{
+    image0:{
         type: String,
     },
     amount:{
@@ -81,7 +81,10 @@ const AssignmentSchema = new mongoose.Schema({
     transactions: {
         type: [TransactionSchema]
     },
-    image:{
+    image1:{
+        type: String,
+    },
+    image2:{
         type: String,
     },
     created_at: {
