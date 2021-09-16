@@ -26,6 +26,7 @@ const getBook = async(req, res) => {
         let rating_3 = 0;
         let rating_4 = 0;
         let rating_5 = 0;
+        let bestRating = null;
         Books[0]?.reviews?.map((item, key)=>{
             total = total + (item.rating ? item.rating : 0);
             if(item.rating == 1){
@@ -44,6 +45,11 @@ const getBook = async(req, res) => {
                 rating_5 = rating_5 + 1;
             }
         })
+        if(rating_1 > 0){ bestRating = 1 }
+        if(rating_2 > 0){ bestRating = 2 }
+        if(rating_3 > 0){ bestRating = 3 }
+        if(rating_4 > 0){ bestRating = 4 }
+        if(rating_5 > 0){ bestRating = 5 }
         let ratingAv = (5 * rating_5 + 4 * rating_4 + 3 * rating_3 + 2 * rating_2 + 1 * rating_1) / total;
         Books[0].ratingAv = ratingAv;
         Books[0].rating_1 = rating_1;
@@ -51,6 +57,8 @@ const getBook = async(req, res) => {
         Books[0].rating_3 = rating_3;
         Books[0].rating_4 = rating_4;
         Books[0].rating_5 = rating_5;
+        Books[0].total = total;
+        Books[0].bestRating = bestRating;
         // Books[0].ratingAv = Books[0].reviews.length;
         // return res.send(Books[0].reviews.length)
         return res.status(200).json({

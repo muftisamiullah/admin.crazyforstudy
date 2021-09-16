@@ -345,6 +345,24 @@ const getCountryList = async(req,res) => {
     }
 }
 
+const updatePass = async(req,res) => {
+    try{
+        if(req.body.pass != req.body.confirmPass){
+            return res.status(401).send({ msg: 'Password mismatch' });
+        }
+        const stud = await Student.findOneAndUpdate({ _id: req.body.id }, {'Password': req.body.confirmPass })
+        if (stud) {
+            return res.status(200).send({ msg: 'Password changed successfully' });
+        } else {
+            return res.status(401).send({ msg: 'Password couldnt be changed!' });
+        }
+    }catch(e){
+        return res.status(502).json({
+            message: "Something Went Wrong" + e
+        });
+    }
+}
+
 
 module.exports = {
     Register,
@@ -360,4 +378,5 @@ module.exports = {
     getUser,
     getCountryList,
     editUser,
+    updatePass,
 }

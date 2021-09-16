@@ -50,6 +50,7 @@ router
     .get('/similar-books/:book_id', checkAuth, Book.smimilarBooks)
     .post('/add-similar-books', checkAuth, Book.addSimilarBooks)
     .get('/upload-questions', checkAuth, Book.uploadQuestion)
+    .post('/update-seo', checkAuth, Book.updateSeo)
 ;
 
 module.exports = router;
