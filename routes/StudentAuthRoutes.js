@@ -33,6 +33,7 @@ router
     .post('/verifyotp', Auth.verifyOtp)
     .post('/get-user',studentAuth, Auth.getUser)
     .post('/edit-user-profile',upload.single('file'), studentAuth, Auth.editUser)
-    .get('/getcountries', Auth.getCountryList);
+    .get('/getcountries', Auth.getCountryList)  
+    .post('/update-pass', Auth.updatePass);
     
 module.exports = router;

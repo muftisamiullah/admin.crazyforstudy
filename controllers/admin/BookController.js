@@ -678,6 +678,39 @@ const SaveBookSeo = async(req, res) => {
         });
     }
 }
+const updateSeo = async(req, res) => {
+    try {
+        const books = await Book.find();
+        bookss: books.map(function(item) {
+            // item.MetaTitle = item.BookName + ' ' + item.Edition + " Solutions";
+            // item.MetaDescription = "Get Access " + item.BookName + " " + item.Edition + " Solutions manual now. Our Textbook Solutions manual are written by Crazyforstudy experts"
+            // item.seo = true;
+            // item.AltImage = item.BookName + " " + item.Edition + " " + item.ISBN13
+            const d = item.ISBN13.substr('0',3);
+            const da = item.ISBN13.substr(3);
+            const arr = item.BookName.split(/[\s,]+/)
+            const data = item.BookName + " " + item.Edition + " Solutions manual, " + arr[0] + " " +  (typeof(arr[1])!= "undefined" ? arr[1]+ " " : '') + (typeof(arr[2])!= "undefined" ? arr[2]+ " " : '') + (typeof(arr[3])!= "undefined" ? arr[3]+ " " : '') + (typeof(arr[4])!= "undefined" ? arr[4]+ " " : '') + (typeof(arr[5])!= "undefined" ? arr[5]+ " " : '') + item.Edition +", " +item.ISBN10 + ", " +item.ISBN13+ ", ISBN13:"+' '+d+'-'+da
+            // console.log(data)
+            // if(item.ISBN10 == undefined){
+            //     console.log(item.ISBN13)
+            // }
+            // item.MetaKeywords = data;
+            item.save(function(err, res) { 
+                // console.log(res) 
+            })
+         })
+        return res.status(201).json({
+            error: false,
+            message: "Book SEO Updated successfully"
+        });
+       
+    } catch (error) {
+        res.status(409).json({
+            message: "Error occured",
+            errors: error.message
+        });
+    }
+}
 
 const addFields = async (req, res) => {
     await Book.updateMany({},
@@ -800,5 +833,6 @@ module.exports = {
     updateFaqStatus,
     totalQuestions,
     BookSeo,
-    SaveBookSeo
+    SaveBookSeo,
+    updateSeo,
 }
