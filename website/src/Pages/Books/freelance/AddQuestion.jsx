@@ -91,6 +91,8 @@ export default function AddQuestion() {
       }
       const convertedAnswer = JSON.stringify(AnswersArray);
       let data;
+      console.log(formData)
+      return;
       if(params?.section_id?.includes('oldbook')){
         data = {
           question_id: formData['question_id'],
