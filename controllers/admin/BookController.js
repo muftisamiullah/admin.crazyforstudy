@@ -678,6 +678,7 @@ const SaveBookSeo = async(req, res) => {
         });
     }
 }
+
 const updateSeo = async(req, res) => {
     try {
         const books = await Book.find();
@@ -703,7 +704,70 @@ const updateSeo = async(req, res) => {
             error: false,
             message: "Book SEO Updated successfully"
         });
-       
+    } catch (error) {
+        res.status(409).json({
+            message: "Error occured",
+            errors: error.message
+        });
+    }
+}
+
+const updateFaqBooks = async(req, res) => {
+    try {
+        const books = await Book.find();
+        bookss: books.map(function(item) {
+            let arr = []
+            const question1 = `1. Is it better to get the ${item.BookName} ${item.Edition} solution manual download or view from Crazy for Study?`
+            const answer1 = `<p>Crazy For Study is the best platform for offering solutions manual because it is widely accepted by students worldwide. These manuals entailed more theoretical concepts compared to ${item.BookName} manual solutions PDF. We also offer manuals for other relevant modules like Social Science, Law , Accounting, Economics, Maths, Science (Physics, Chemistry, Biology), Engineering (Mechanical, Electrical, Civil), Business, and much more.</p>`
+            
+            const question2 = `2. Instead of downloading the ${item.BookName} ${item.Edition} pdf solution manual, how can I access the solutions manual of Crazy For Study from my smartphone?`
+            const answer2 = `<p>The ${item.BookName} ${item.Edition} solutions manual PDF download is just a textual version, and it lacks interactive content based on your curriculum. Crazy For Study’s solutions manual has both textual and digital solutions. It is a better option for students like you because you can access them from anywhere.</p><p>Here’s how –</p><ul><li>You need to have an Android or iOS-based smartphone.</li><li>Open your phone’s Google Play Store or Apple App Store.</li><li>Search for our official CFS app there.</li><li>Download and install it on your phone.</li><li>Register yourself as a new member or Log into your existing CFS account.</li><li>Search your required CFS solutions manual.</li></ul>`
+            
+            const question3 = `3. Should I take the student solution manual for ${item.BookName} ${item.Edition} pdf or view the solutions manual from Crazy For Study to meet the academic standards?`
+            const answer3 = `<p>If you are looking for the ${item.BookName} ${item.Edition} solution manual pdf free download version, we have a better suggestion for you. You should try out Crazy For Study’s solutions manual. They are better because they are written, developed, and edited by CFS professionals. </p><p>CFS’s solution manuals provide a complete package for all your academic needs. Our content gets periodic updates, and we provide step-by-step solutions. Unlike PDF versions, we revise our content when needed. Because it is related to your education, we suggest you not go for freebies.</p>`
+
+            // arr.push({ 
+            //         question: question1, 
+            //         answer: answer1, 
+            //         status: true, 
+            //     },
+            //     { 
+            //         question: question2, 
+            //         answer: answer2, 
+            //         status: true, 
+            //     },
+            //     { 
+            //         question: question3, 
+            //         answer: answer3, 
+            //         status: true, 
+            //     }
+            // )
+
+            item.faqs.push(
+                { 
+                    question: question1, 
+                    answer: answer1, 
+                    status: true, 
+                },
+                { 
+                    question: question2, 
+                    answer: answer2, 
+                    status: true, 
+                },
+                { 
+                    question: question3, 
+                    answer: answer3, 
+                    status: true, 
+                }
+            );
+            item.save(function(err, res) { 
+                console.log(res) 
+            })
+        })
+        return res.status(201).json({
+            error: false,
+            message: "Book FAQ Updated successfully"
+        });
     } catch (error) {
         res.status(409).json({
             message: "Error occured",
@@ -835,4 +899,5 @@ module.exports = {
     BookSeo,
     SaveBookSeo,
     updateSeo,
+    updateFaqBooks,
 }

@@ -50,7 +50,12 @@ router
     .get('/similar-books/:book_id', checkAuth, Book.smimilarBooks)
     .post('/add-similar-books', checkAuth, Book.addSimilarBooks)
     .get('/upload-questions', checkAuth, Book.uploadQuestion)
+    
+    // api to update seo from postman
     .post('/update-seo', checkAuth, Book.updateSeo)
+
+    // api to update faq from postman
+    .post('/update-faq', checkAuth, Book.updateFaqBooks)
 ;
 
 module.exports = router;
