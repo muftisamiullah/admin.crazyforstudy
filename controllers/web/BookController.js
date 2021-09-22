@@ -59,7 +59,6 @@ const getBook = async(req, res) => {
         Books[0].rating_5 = rating_5;
         Books[0].total = total;
         Books[0].bestRating = bestRating;
-        console.log(total)
         // Books[0].ratingAv = Books[0].reviews.length;
         // return res.send(Books[0].reviews.length)
         return res.status(200).json({
