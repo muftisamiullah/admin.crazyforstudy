@@ -165,4 +165,3 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use('/uploads', express.static(process.cwd() + '/uploads'));
-// app.use('/uploads', express.static(__dirname + '/uploads'));
