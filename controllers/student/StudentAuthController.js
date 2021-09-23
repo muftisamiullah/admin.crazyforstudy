@@ -298,7 +298,7 @@ const getUser = async(req,res) => {
 
 const editUser = async(req,res) => {
     try{
-        console.log(req.body)
+        console.log(req.file)
         // return res.send(req.body)
         const filter = {Email: req.body.email};
         let data = {};

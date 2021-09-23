@@ -1,19 +1,46 @@
-const express = require("express");
+const express = require("express"); //s3
+var multerS3 = require('multer-s3'); //s3
+var aws = require('aws-sdk') //s3
+
+var multer = require('multer')
+
 const Auth = require('../controllers/student/StudentAuthController.js');
 const studentAuth = require("../middleware/student-auth.js");
 
-var multer = require('multer')
-var storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'uploads/')
+
+var s3 = new aws.S3({secretAccessKey: process.env.awsAcessSecret,
+    accessKeyId: process.env.awsAccessKey,
+    region: "ap-south-1"}) //s3
+
+// aws.config.update({
+//     secretAccessKey: process.env.awsAcessSecret,
+//     accessKeyId: process.env.awsAccessKey,
+//     region: "ap-south-1",
+// });
+
+// var storage = multer.diskStorage({
+//     destination: function(req, file, cb) {
+//         cb(null, 'uploads/')
+//     },
+//     fileFilter: function(req, file, cb) {
+//         console.log(file.mimetype, "dadasd")
+//     },
+//     filename: function(req, file, cb) {
+//         // console.log(file)
+//         cb(null, file.originalname)
+//     },
+// })
+
+var storage =  multerS3({
+    s3: s3,
+    bucket: 'crazyforstudy',
+    metadata: function (req, file, cb) {
+        cb(null, {fieldName: file.fieldname});
     },
-    fileFilter: function(req, file, cb) {
-        console.log(file.mimetype, "dadasd")
-    },
-    filename: function(req, file, cb) {
-        // console.log(file)
-        cb(null, file.originalname)
-    },
+    key: function (req, file, cb) {
+        file.filename = file.originalname
+        cb(null, "uploads/" + file.originalname)
+    }
 })
 
 var upload = multer({ storage: storage })
