@@ -12,6 +12,8 @@ Date.prototype.addMinutes = function(minutes) {
 const askQuestion = async (req, res) => {
     try {
         const data = req.body;
+        data.image0 = req.files?.image0 ? req?.files?.image0[0].filename : '';
+        data.image1 = req.files?.image1 ? req?.files?.image1[0].filename : '';
         data['last_submition'] = "04:00";
         const question = new Question(data);
         await question.save();

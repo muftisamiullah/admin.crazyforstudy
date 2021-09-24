@@ -16,7 +16,10 @@ const QuestionSchema = new mongoose.Schema({
     question:{
         type: String,
     },
-    image:{
+    image0:{
+        type: String,
+    },
+    image1:{
         type: String,
     },
     shortanswer:{

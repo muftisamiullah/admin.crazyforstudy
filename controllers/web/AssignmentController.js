@@ -30,7 +30,9 @@ const saveAssignmentLocal = async (req, res) => {
         const content = {   question: req.body.question,subject: req.body.subject, 
                             sub_subject: req.body.sub_subject, subject_id: req.body.subject_id,
                             sub_subject_id:req.body.sub_subject_id,user_id:req.body.user_Id,
-                            image:req.file ? req.file.filename : '',deadline_date: req.body.deadline_date,
+                            // image:req.file ? req.file.filename : '',
+                            image0:req.files?.image0 ? req?.files?.image0[0].filename : '',image1:req.files?.image1 ? req?.files?.image1[0].filename : '',image2:req.files?.image2 ? req?.files?.image2[0].filename : '',
+                            deadline_date: req.body.deadline_date,
                             deadline_time: req.body.deadline_time,pages: req.body.pages, 
                             reference: req.body.reference,
                             tutor_id: tutor._id, tutor_name: tutor.fname + tutor.lname
