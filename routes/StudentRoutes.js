@@ -10,7 +10,7 @@ const checkAuth = require("../middleware/check-auth.js");
 
 var s3 = new aws.S3({secretAccessKey: process.env.awsAcessSecret,
     accessKeyId: process.env.awsAccessKey,
-    region: "ap-south-1"}) //s3
+    region: process.env.awsRegion}) //s3
 
 // var storage = multer.diskStorage({
 //     destination: function(req, file, cb) {

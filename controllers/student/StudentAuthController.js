@@ -251,9 +251,9 @@ const sendResetEmail = async(req, res) =>{
         return res.status(502).json({
             message: "Something Went Wrong" + e
         });
-    }
-    
+    }    
 }
+
 const verifyOtp = async(req,res) => {
     try{
         const token = await Token.findOne({ token: req.body.otp });
@@ -298,30 +298,29 @@ const getUser = async(req,res) => {
 
 const editUser = async(req,res) => {
     try{
-        console.log(req.file)
-        // return res.send(req.body)
+        console.log(req.body)
         const filter = {Email: req.body.email};
         let data = {};
         if(req.file != undefined && req?.file.filename != undefined){
             data = {
-                college: req.body.college,
-                dob: req.body.dob, 
-                Country: req.body.Country,
-                Address: req.body.Address,
-                Zipcode: req.body.Zipcode,
-                Contact: req.body.Contact,
-                Name: req.body.Name,
+                college: req.body.college != 'undefined' ? req.body.college : '',
+                dob: req.body.dob != 'undefined' ? req.body.dob : '', 
+                Country: req.body.Country != 'undefined' ? req.body.Country : '',
+                Address: req.body.Address != 'undefined' ? req.body.Address : '',
+                Zipcode: req.body.Zipcode != 'undefined' ? req.body.Zipcode : '',
+                Contact: req.body.Contact != 'undefined' ? req.body.Contact : '',
+                Name: req.body.Name != 'undefined' ? req.body.Name : '',
                 img: req?.file.filename,
             }
         }else{
             data = {
-                college: req.body.college,
-                dob: req.body.dob, 
-                Country: req.body.Country,
-                Address: req.body.Address,
-                Zipcode: req.body.Zipcode,
-                Contact: req.body.Contact,
-                Name: req.body.Name,
+                college: req.body.college != 'undefined' ? req.body.college : '',
+                dob: req.body.dob != 'undefined' ? req.body.dob : '', 
+                Country: req.body.Country != 'undefined' ? req.body.Country : '',
+                Address: req.body.Address != 'undefined' ? req.body.Address : '',
+                Zipcode: req.body.Zipcode != 'undefined' ? req.body.Zipcode : '',
+                Contact: req.body.Contact != 'undefined' ? req.body.Contact : '',
+                Name: req.body.Name != 'undefined' ? req.body.Name : '',
             }
         }
        

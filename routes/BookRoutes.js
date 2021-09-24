@@ -56,6 +56,9 @@ router
 
     // api to update faq from postman
     .post('/update-faq', checkAuth, Book.updateFaqBooks)
+
+    // // api to download images for books isbn from postman
+    // .post('/update-faq', checkAuth, Book.downloadFaqBooks)
 ;
 
 module.exports = router;

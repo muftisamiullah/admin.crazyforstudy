@@ -30,10 +30,10 @@ const getAnswered = async (req, res) => {
 }
 const chapterQuestion = async (req, res) => {
     try {
+        
         const filter ={"book_isbn": req.body.book_isbn};
         const chapters = [];
         const map = new Map();
-        
         const results = await Chapter.find(filter,{
             chapter_no: 1,
             chapter_name: 1
@@ -52,7 +52,7 @@ const chapterQuestion = async (req, res) => {
             filter.chapter_no = results[0].chapter_no;
             const questions = await Chapter.find(filter, {problem_no:1,question:1,_id:1, chapter_no:1})
             res.status(200).json({
-                chapters,questions
+                chapters, questions
             });
         }else{
             filter.chapter_no = req.body.chapter_no;
@@ -60,9 +60,7 @@ const chapterQuestion = async (req, res) => {
             res.status(200).json({
                 questions
             });
-        }
-        
-        
+        }        
     } catch (error) {
         res.status(409).json({
             error: true,
