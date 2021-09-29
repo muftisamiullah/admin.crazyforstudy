@@ -18,7 +18,7 @@ const forgotPassword = (name, email, code) =>
                             <tr>
                                 <td valign="middle" align="left" style="background:#fff;padding:0 10px;font-size:15px;line-height:24px;color:#333;padding:10px; font-family:Arial,Helvetica,sans-serif;">
                                 <p style="font-size: 36px; color:#125c9c; font-family:Arial,Helvetica,sans-serif; line-height: 36px; padding-top: 29px; margin-top:0px;">Forgot your password?</p>
-                                <p style="margin:10px 0 0 0;font-size:15px; font-family:Arial,Helvetica,sans-serif;">Dear ${Name},</p>
+                                <p style="margin:10px 0 0 0;font-size:15px; font-family:Arial,Helvetica,sans-serif;">Dear ${name},</p>
                                 <p>We recently received a request to reset the password for your CrazyForStudy account. We’re here to help you.</p>
                                 <p>Your Password on <a href="https://www.crazyforstudy.com/">crazyforstudy.com</a>. Please keep it in your records so you don't forget it.</p>
                                 </td>

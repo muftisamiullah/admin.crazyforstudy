@@ -233,7 +233,7 @@ const sendResetEmail = async(req, res) =>{
         var mailOptions = {
             from: process.env.email,
             to: student.Email,
-            subject: 'Verify your email address',
+            subject: 'Forgot Password', 
             // html: `<h1>Welcome</h1><p><b>reset code : ${rand} </b></p>`
             html: output
         };
