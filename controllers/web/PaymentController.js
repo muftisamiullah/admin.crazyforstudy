@@ -1,7 +1,8 @@
 const Student = require('../../models/student/Student.js');
 const Assignment = require('../../models/admin/Assignment.js');
 
-const Razorpay = require('razorpay')
+const Razorpay = require('razorpay');
+
 var instance = new Razorpay({
     key_id: process.env.razor_pay_key,
     key_secret: process.env.razor_pay_secret
@@ -14,6 +15,35 @@ const createSubscription = async(req, res) => {
         const data = await instance.subscriptions.create({plan_id: process.env.plan_id,"quantity": 1,"total_count":12,customer_notify:1})
         return res.status(200).json({
             data: data
+        });
+    } catch (error) {
+        res.status(409).json({
+            message: "Error occured",
+            errors: error
+        });
+    }
+}
+
+const cancelSubscription = async(req, res) => {
+    try {
+        const filter = {_id: req.body.user_Id, Subscribe: true};
+        const subscriptionId = req.body.subscribe_Id
+        const cancelAtCycleEnd = Boolean(req.body.cancel_at_cycle_end)
+        const data = await instance.subscriptions.cancel(subscriptionId,cancelAtCycleEnd)
+        const dataUpdate = {
+            SubscribeDate: Date.now(),
+            subscription_status: 'cancelled',
+            subscription_id: req.body.subscribe_Id, 
+            payment_id: data.payment_id,
+            type: "subscription",
+            reason: req.body.reason,
+            message:req.body.message,   
+        }
+        if(data){
+            await Student.findOneAndUpdate(filter, {$set: { transactions : dataUpdate, Subscribe: false } });
+        }
+        return res.status(200).json({
+            message: 'Subscripion cancelled'
         });
     } catch (error) {
         res.status(409).json({
@@ -64,6 +94,7 @@ const saveTransaction = async(req, res) => {
             payment_id: req.body.payment_id,
             type: "subscription",
             SubscribeDate: Date.now(),
+            subscription_status: 'active'
         }
         const transaction = await Student.findOneAndUpdate(filter,{$set: { transactions : data } });
         if(transaction){
@@ -118,6 +149,7 @@ const saveTransactionAssignment = async(req, res) => {
 
 module.exports = {
     createSubscription,
+    cancelSubscription,
     saveTransaction,
     saveTransactionAssignment,
     createCustomer,

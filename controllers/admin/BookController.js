@@ -726,23 +726,6 @@ const updateFaqBooks = async(req, res) => {
             const question3 = `3. Should I take the student solution manual for ${item.BookName} ${item.Edition} pdf or view the solutions manual from Crazy For Study to meet the academic standards?`
             const answer3 = `<p>If you are looking for the ${item.BookName} ${item.Edition} solution manual pdf free download version, we have a better suggestion for you. You should try out Crazy For Study’s solutions manual. They are better because they are written, developed, and edited by CFS professionals. </p><p>CFS’s solution manuals provide a complete package for all your academic needs. Our content gets periodic updates, and we provide step-by-step solutions. Unlike PDF versions, we revise our content when needed. Because it is related to your education, we suggest you not go for freebies.</p>`
 
-            // arr.push({ 
-            //         question: question1, 
-            //         answer: answer1, 
-            //         status: true, 
-            //     },
-            //     { 
-            //         question: question2, 
-            //         answer: answer2, 
-            //         status: true, 
-            //     },
-            //     { 
-            //         question: question3, 
-            //         answer: answer3, 
-            //         status: true, 
-            //     }
-            // )
-
             item.faqs.push(
                 { 
                     question: question1, 
@@ -868,6 +851,33 @@ const uploadQuestion = async(req, res) => {
     }
 }
 
+const downloadBookImages = async(req, res) => {
+    try {
+        const fs = require('fs');
+        const request = require('request');
+
+        const download = (uri, filename, callback) => {
+            request.head(uri, (err, res, body) => {    
+                request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+            });
+        };
+        const books = await Book.find({},{ISBN13:1});
+        books.forEach((item, key)=>{
+            download(`https://pictures.abebooks.com/isbn/${item.ISBN13}-us-300.jpg`, `uploads/isbn/${item.ISBN13}-us-300.jpg`, () => {
+                console.log(`done${key}`);
+            });
+        })
+        res.status(201).json({
+            msg: "done"
+        })
+    } catch (error) {
+        res.status(409).json({
+            message: "Error occured",
+            errors: error.message
+        });
+    }
+}
+
 module.exports = {
     uploadQuestion,
     smimilarBooks,
@@ -900,4 +910,5 @@ module.exports = {
     SaveBookSeo,
     updateSeo,
     updateFaqBooks,
+    downloadBookImages,
 }

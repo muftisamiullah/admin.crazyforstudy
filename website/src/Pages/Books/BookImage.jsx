@@ -7,15 +7,18 @@ function BookImage({isbn, width}) {
     useEffect(() => {
         async function fetchCoverImage(){
             try{
-                const response = await axios.get(`https://pictures.abebooks.com/isbn/${isbn}-us-300.jpg`,{
+                const response = await axios.get(`https://crazyforstudy.s3.ap-south-1.amazonaws.com/isbn/${isbn}-us-300.jpg`,{
+                // const response = await axios.get(`https://pictures.abebooks.com/isbn/${isbn}-us-300.jpg`,{
                     header: {
                         "Cotnent-Type": 'application/json',
                         "Access-Control-Allow-Origin": "*",
-                        "origin": "https://pictures.abebooks.com/"
+                        "origin": "https://crazyforstudy.s3.ap-south-1.amazonaws.com/"
+                        // "origin": "https://pictures.abebooks.com/"
                      }
                 });
                 if(response.status === 200){
-                  setImage(`https://pictures.abebooks.com/isbn/${isbn}-us-300.jpg`);
+                  setImage(`https://crazyforstudy.s3.ap-south-1.amazonaws.com/isbn/${isbn}-us-300.jpg`);
+                //   setImage(`https://pictures.abebooks.com/isbn/${isbn}-us-300.jpg`);
                 }
             }catch(err) {
                 setImage(`https://backup.crazyforstudy.com/uploads/book-images-with-text/IMG-${isbn}.jpg`);

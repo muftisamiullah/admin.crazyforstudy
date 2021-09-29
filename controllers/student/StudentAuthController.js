@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 var nodemailer = require('nodemailer');
 var randomBytes = require('randombytes');
+const f = require('../../emails/emailTemplates');
 
 let refreshTokens = [];
 
@@ -39,7 +40,7 @@ const Register = async(req, res) => {
             subject: 'Verify your email address',
             html: `<h1>Welcome</h1><p><a href=${link}>Click here to verify</a></p>`
         };
-
+        
         transporter.sendMail(mailOptions, function(error, info) {
             if (error) {
                 console.log(error);
@@ -226,13 +227,15 @@ const sendResetEmail = async(req, res) =>{
                 pass: process.env.password
             }
         });
-
         // const link = `http:\/\/${req.headers.host}\/student/verify\/${saved.email}\/${token.token}`;
+        const output = f.forgotPassword(student.Name, student.Email, rand)
+
         var mailOptions = {
             from: process.env.email,
-            to: student.email,
+            to: student.Email,
             subject: 'Verify your email address',
-            html: `<h1>Welcome</h1><p><b>reset code : ${rand} </b></p>`
+            // html: `<h1>Welcome</h1><p><b>reset code : ${rand} </b></p>`
+            html: output
         };
 
         transporter.sendMail(mailOptions, function(error, info) {

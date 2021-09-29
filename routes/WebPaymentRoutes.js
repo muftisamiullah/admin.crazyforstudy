@@ -5,6 +5,7 @@ const router = express.Router();
 
 router
     .post('/razorpay-create-subs',studentAuth, Payment.createSubscription)
+    .post('/razorpay-cancel-subs',studentAuth, Payment.cancelSubscription)
     .post('/stripe-create-customer', studentAuth, Payment.createCustomer)
 
     .post('/save-transaction',studentAuth, Payment.saveTransaction)

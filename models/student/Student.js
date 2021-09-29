@@ -4,12 +4,15 @@ const bcrypt = require('bcryptjs');
 
 const TransactionSchema = new mongoose.Schema({ 
     subscription_id: 'string', 
-    payment_id: 'string', 
+    payment_id: 'string',
     type: 'string', 
+    subscription_status: 'string',
+    reason: 'string',
+    message: 'string',
     SubscribeDate: {
         type: Date,
         default: Date.now
-    }, 
+    },
     status: {
         type: Boolean,
         default: false
@@ -36,8 +39,8 @@ const StudentSchema = new mongoose.Schema({
     type: {type: String, default: "new"},
     Subscribe: 
         {
-            type: Boolean,
-            default: false 
+            type: String,
+            default: "false" 
         },
     SubscribeDate: {type: String},
     social_id: {type: String},

@@ -1,0 +1,28 @@
+const express = require("express");
+const Dummy = require('../controllers/admin/DummyController.js');
+const checkAuth = require("../middleware/check-auth.js");
+var multer = require('multer')
+
+var storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'uploads/')
+    },
+    fileFilter: function(req, file, cb) {
+        console.log(file.mimetype, "dadasd")
+    },
+    filename: function(req, file, cb) {
+        console.log(file)
+        cb(null, file.fieldname + '-' + Date.now() + '.csv')
+    },
+})
+
+var upload = multer({ storage: storage })
+
+const router = express.Router();
+
+router
+    .post('/update-dummy', upload.single('file'), checkAuth, Dummy.UpdateDummyCollection)
+    .post('/insert-updated-data',checkAuth, Dummy.InsertUpdatedDummyCollection)
+;
+
+module.exports = router;
