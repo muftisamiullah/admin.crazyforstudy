@@ -1,5 +1,8 @@
 const Student = require('../../models/student/Student.js');
 const Assignment = require('../../models/admin/Assignment.js');
+const Admin = require('../../models/admin/Admin.js');
+var nodemailer = require('nodemailer');
+const emails = require('../../emails/emailTemplates');
 
 const Razorpay = require('razorpay');
 
@@ -40,7 +43,43 @@ const cancelSubscription = async(req, res) => {
             message:req.body.message,   
         }
         if(data){
-            await Student.findOneAndUpdate(filter, {$set: { transactions : dataUpdate, Subscribe: false } });
+            const admins = await Admin.find({ role:1 }, {email:1});
+            const stud = await Student.findOneAndUpdate(filter, {$set: { transactions : dataUpdate, Subscribe: false } });
+            const reason = req.body.reason;
+            const message = req.body.message;
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.email,
+                    pass: process.env.password
+                }
+            });
+            
+            const output = emails.cancelSubscription(stud.Name)
+            const output2 = emails.adminCancelSubsciptionMail(reason, message)
+
+            let mailOptionsStudent = {
+                from: process.env.email,
+                to: stud.Email,
+                subject: 'Cancel Subscription',
+                // html: `<h1>Welcome</h1><p><a href=${link}>Click here to verify</a></p>`
+                html: output
+            };
+
+            var mailOptionsAdmin = {
+                from: process.env.email,
+                to: admins,
+                subject: 'Cancel Subscription',
+                // html: `<h1>Welcome</h1><p><a href=${link}>Click here to verify</a></p>`
+                html: output2
+            };
+
+            Promise.all([
+                transporter.sendMail(mailOptionsStudent),
+                transporter.sendMail(mailOptionsAdmin),
+              ])
+                .then((res) => console.log('Email sent: ' + res.response))
+                .catch((err) => console.log(err));
         }
         return res.status(200).json({
             message: 'Subscripion cancelled'
@@ -54,7 +93,6 @@ const cancelSubscription = async(req, res) => {
 }
 
 const createOrder = async(req, res) => {
-    console.log(req.body.amt)
     try {
         const options = {
             amount: req.body.amt,  // amount in the smallest currency unit
@@ -98,11 +136,112 @@ const saveTransaction = async(req, res) => {
         }
         const transaction = await Student.findOneAndUpdate(filter,{$set: { transactions : data } });
         if(transaction){
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.email,
+                    pass: process.env.password
+                }
+            });
+            const output = emails.subscriptionEmail(transaction.Name, transaction.Email, req.body.payment_id, req.body.subscription_id)
+            let mailOptionsStudent = {
+                from: process.env.email,
+                to: transaction.Email,
+                subject: 'Subscription',
+                // html: `<h1>Welcome</h1><p><a href=${link}>Click here to verify</a></p>`
+                html: output
+            };
+            transporter.sendMail(mailOptionsStudent, function(error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
             const stud = await Student.findOneAndUpdate(filter, {Subscribe : true});
             return res.status(200).json({
                 data: stud
             });
         }
+    } catch (error) {
+        res.status(409).json({
+            message: "Error occured",
+            errors: error.message
+        });
+    }
+}
+
+const failedPaymentSubscription = async(req, res) => {
+    try {
+        //all data in req.body
+        console.log(req.body);
+        const filter = {_id: req.body.userId};
+        const student = await Student.findOne(filter);
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.email,
+                pass: process.env.password
+            }
+        });
+        const output = emails.failedPayementEmail()
+        let mailOptionsStudent = {
+            from: process.env.email,
+            to: student.Email,
+            subject: 'Payment Failure',
+            // html: `<h1>Welcome</h1><p><a href=${link}>Click here to verify</a></p>`
+            html: output
+        };
+        transporter.sendMail(mailOptionsStudent, function(error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+        return res.status(200).json({
+            message: "payment failure"
+        });
+    } catch (error) {
+        res.status(409).json({
+            message: "Error occured",
+            errors: error.message
+        });
+    }
+}
+
+const failedPaymentAssignment = async(req, res) => {
+    try {
+        //all data in req.body
+        console.log(req.body);
+        const filter = {_id: req.body.userId};
+        const student = await Student.findOne(filter);
+        console.log(student)
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.email,
+                pass: process.env.password
+            }
+        });
+        const output = emails.failedPayementEmail()
+        let mailOptionsStudent = {
+            from: process.env.email,
+            to: student.Email,
+            subject: 'Payment Failure',
+            // html: `<h1>Welcome</h1><p><a href=${link}>Click here to verify</a></p>`
+            html: output
+        };
+        transporter.sendMail(mailOptionsStudent, function(error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+        return res.status(200).json({
+            message: "payment failure"
+        });
     } catch (error) {
         res.status(409).json({
             message: "Error occured",
@@ -154,4 +293,6 @@ module.exports = {
     saveTransactionAssignment,
     createCustomer,
     createOrder,
+    failedPaymentSubscription,
+    failedPaymentAssignment,
 }

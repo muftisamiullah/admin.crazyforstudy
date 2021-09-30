@@ -1,11 +1,12 @@
 const Student = require('../../models/student/Student.js');
+const Admin = require('../../models/admin/Admin.js');
 const Country = require('../../models/Country');
 const Token = require('../../models/student/Token.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 var nodemailer = require('nodemailer');
 var randomBytes = require('randombytes');
-const f = require('../../emails/emailTemplates');
+const emails = require('../../emails/emailTemplates');
 
 let refreshTokens = [];
 
@@ -25,6 +26,8 @@ const Register = async(req, res) => {
         const tsaved = await token.save();
         if (!tsaved) return res.status(500).send("Error in saving Token");
 
+        const admins = await Admin.find({ role:1 }, {email:1});
+        
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -32,22 +35,32 @@ const Register = async(req, res) => {
                 pass: process.env.password
             }
         });
+        const link = `http:\/\/${req.headers.host}\/student/verify\/${body.Email}\/${token.token}`;
+        const studentMail = emails.welcomeEmail(body.Email, body.Password, link)
+        const adminMail = emails.adminEmail(body.Email)
 
-        const link = `http:\/\/${req.headers.host}\/student/verify\/${saved.email}\/${token.token}`;
-        var mailOptions = {
+        var mailOptionsStudent = {
             from: process.env.email,
             to: newStudent.Email,
             subject: 'Verify your email address',
-            html: `<h1>Welcome</h1><p><a href=${link}>Click here to verify</a></p>`
+            // html: `<h1>Welcome</h1><p><a href=${link}>Click here to verify</a></p>`
+            html: studentMail
+        };
+
+        var mailOptionsAdmin = {
+            from: process.env.email,
+            to: admins,
+            subject: 'New User Registered',
+            // html: `<h1>Welcome</h1><p><a href=${link}>Click here to verify</a></p>`
+            html: adminMail
         };
         
-        transporter.sendMail(mailOptions, function(error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Email sent: ' + info.response);
-            }
-        });
+        Promise.all([
+            transporter.sendMail(mailOptionsStudent),
+            transporter.sendMail(mailOptionsAdmin),
+          ])
+            .then((res) => console.log('Email sent: ' + res.response))
+            .catch((err) => console.log(err));
 
         return res.status(200).json({
             message: "Registered Sucessfully"
@@ -228,7 +241,7 @@ const sendResetEmail = async(req, res) =>{
             }
         });
         // const link = `http:\/\/${req.headers.host}\/student/verify\/${saved.email}\/${token.token}`;
-        const output = f.forgotPassword(student.Name, student.Email, rand)
+        const output = emails.forgotPassword(student.Name, student.Email, rand)
 
         var mailOptions = {
             from: process.env.email,

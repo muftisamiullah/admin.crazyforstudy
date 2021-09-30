@@ -3,6 +3,9 @@ const Book = require('../../models/admin/Book.js');
 const TextBook = require('../../models/admin/TextBook.js');
 const Notify = require('../../models/admin/Notification.js');
 const Student = require('../../models/student/Student.js');
+const Admin = require('../../models/admin/Admin');
+const emails = require('../../emails/emailTemplates');
+var nodemailer = require('nodemailer');
 
 Date.prototype.addMinutes = function(minutes) {
     this.setMinutes(this.getMinutes() + minutes);
@@ -24,6 +27,30 @@ const askQuestion = async (req, res) => {
         }
         const noti = new Notify(notifyData);
         const dt = await noti.save();
+        const admins = await Admin.find({ role:1 }, {email:1});
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.email,
+                pass: process.env.password
+            }
+        });
+        const output = emails.newQuestionRecieved(req.body.question)
+        var mailOptionsAdmin = {
+            from: process.env.email,
+            to: admins,
+            subject: 'New Question Recieved',
+            // html: `<h1>Welcome</h1><p><a href=${link}>Click here to verify</a></p>`
+            html: output
+        };
+
+        transporter.sendMail(mailOptionsAdmin, function(error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
         res.status(201).json({error: false, message: "Your question is submitted. you will get answer withing 2-4 Hrs."})
     } catch (error) {
         res.status(501).json({error: true, message: error})
