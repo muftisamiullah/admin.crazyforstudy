@@ -645,6 +645,8 @@ const getBookOnlyProblems = async (req, res) => {
             problem_no: 1,
             question: 1,
             answer: 1,
+            expert_answer:1,
+            another_answer:1,
             source: 1,
             image: 1
         });
@@ -655,14 +657,34 @@ const getBookOnlyProblems = async (req, res) => {
         results.forEach( item => {
             if(!map.has(item.problem_no)){
                 map.set(item.problem_no, true);
-                problems.push({
-                    q_id: item._id, 
-                    problem_no: item.problem_no, 
-                    question: item.question, 
-                    source: item.source, 
-                    answer: item.answer, 
-                    image: item.image, 
-                })
+                if(item.answer!="" && item.answer!= undefined){
+                    problems.push({
+                        q_id: item._id, 
+                        problem_no: item.problem_no, 
+                        question: item.question, 
+                        source: item.source, 
+                        answer: item.answer, 
+                        image: item.image, 
+                    })
+                }else if(item.expert_answer != "" && item.expert_answer != undefined){
+                    problems.push({
+                        q_id: item._id, 
+                        problem_no: item.problem_no, 
+                        question: item.question, 
+                        source: item.source, 
+                        answer: item.expert_answer, 
+                        image: item.image, 
+                    })
+                }else{
+                    problems.push({
+                        q_id: item._id, 
+                        problem_no: item.problem_no, 
+                        question: item.question, 
+                        source: item.source, 
+                        answer: item.another_answer, 
+                        image: item.image, 
+                    })
+                }
             }
         });
         res.status(200).json({
@@ -744,19 +766,50 @@ const GetSingleQuestion = async (req, res) => {
 }
 const AddSingleQuestion = async (req, res) => {
     try {
-        await Chapter.findByIdAndUpdate({ _id: req.params.q_id }, req.body)
-                    .then(response => {
-                        return res.status(201).json({
-                            message: "Question, Updated"
-                        })
-                    })
-                    .catch(error => {
-                        return res.status(500).json({
-                            message: "Error Found",
-                            errors: error.message
-                        })
-                    });
-
+        let update = req.body;
+        if(update.answer){
+            const chap = await Chapter.findByIdAndUpdate({ _id: req.params.q_id }, update);
+            console.log(chap)
+            const notifyData = {
+                title: chap.question,
+                info: `<p>You will get solution for <strong>${(chap.question).substr(0,30)}</strong></p>`,
+                type: 'TBS',
+                user_Id: req.body.user_Id,
+            }
+            const noti = new Notify(notifyData);
+            const dt = await noti.save();
+            const student = await Student.findOne({_id:req.body.user_Id});
+            const admins = await Admin.find({ role:1 }, {email:1});
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.email,
+                    pass: process.env.password
+                }
+            });
+            const output = emails.askTbsSolution(student.Name, req.body.book_name, req.body.chapter_name, req.body.section_name, req.body.question)
+            const adminMail = emails.askTbsSolutionAdmin(student.Name, req.body.book_name, req.body.chapter_name, req.body.section_name, req.body.question, req.body.q_id)
+    
+            var mailOptionsStudent = {
+                from: process.env.email,
+                to: student.Email,
+                subject: 'Crazy For Study is working on your question!',
+                text: output
+            };
+    
+            transporter.sendMail(mailOptionsStudent, function(error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+        }else{
+            const chap = await Chapter.findByIdAndUpdate({ _id: req.params.q_id }, update);
+        }
+        return res.status(200).json({
+            message: "Question, Updated"
+        })
     } catch (error) {
         res.send({
             error: true,

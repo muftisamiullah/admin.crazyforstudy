@@ -66,9 +66,7 @@ export default function QZSolution() {
                      <AddQuestion />   
                   )}
 
-
               </div>  
-
             </div>
       )
 }

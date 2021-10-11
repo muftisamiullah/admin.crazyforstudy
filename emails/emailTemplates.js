@@ -381,9 +381,105 @@ const adminCancelSubsciptionMail = (reason, message) => {
 }
 
 const newQuestionRecieved = (question) => {
-    return `<p>${question}</p>`
+    return `Hey there, #User!
+    
+    Your solution is ready for the takeaway.
+    Here are the details of your question.
+    
+    Question: ${question}
+    
+    You’ll get the solution within 2-4 hours. As soon as we get the answer, you will be notified on both your email as well on your CFS My Account section.
+    
+    Thank you for using our services,
+    
+    Team CFS`
 }
 
+const ask50Solution = (user, question, shortanswer, completeanswer) => {
+    return `Hey there, ${user}!
+            Your solution is ready for the takeaway.
+            Here are the details of your question.
+            
+            Question: ${question}
+            Answer: ${shortanswer}           
+            Explanation: ${completeanswer}
+            
+            Either <a href="https://www.crazyforstudy.com/user/my-question">click here</a> to get the solution or check out your Crazy For Study’s My Account and get your answer.
+            Thank you for using our services,
+            Team CFS`
+}
+
+const ask50Rejection = (user, question, rejectionReason, rejectionReason1) => {
+    return `Hi ${user},
+    
+    The professor has rejected your question.
+
+    Question:${question}
+
+    These are the reasons that lead to rejection: 
+    1. ${rejectionReason} 
+    2. ${rejectionReason1}
+    
+    We request you to ask a question that has easy-to-understand language related to the subject.
+
+    Thank you for using our services,
+    Team CFS`
+}
+
+const askTbsSolution = (user, book_name, chapter_name, section_name, question) => {
+    return `Hey there, ${user}\nHere are the details of your question:\n\n
+    Book: ${book_name}
+    Chapter: ${chapter_name}                                                                                                                                     
+    Section: ${section_name}
+    Question: ${question}\n
+    
+    You’ll get the solution within 2-4 hours. As soon as we get the answer, you will be notified on both your email as well on your CFS My Account section.
+    
+    Thank you for your patience,
+    Team CFS`
+}
+
+const askTbsSolutionAdmin = (user, book_name, chapter_name, section_name, question,q_id) => {
+    return `<!doctype html>
+    <html>
+       <head>
+          <meta charset="utf-8">
+          <title>Cancellation request received</title>
+       </head>
+       <body>
+        <p>Hey Admin,  user named ${user} has asked a new question from TBS\n</p><p>Here are the details of your question:\n\n</p>
+        <p><strong>Book:</strong> ${book_name}</p>
+        <p><strong>Chapter:</strong> ${chapter_name}</p>                                                                                                                                     
+        <p><strong>Section:</strong> ${section_name}</p>
+        <p><strong>Question:</strong> ${question}</p>
+        <p><strong>Question Id:</strong> ${q_id}\n</p>
+        
+        <a href=https://admin.crazyforstudy.com/books-chapter-add-question/${q_id}>Click here to answer the question</a>
+        <p>Team CFS</p>
+       </body>
+    </html>`
+}
+
+const askTbsSolutionSolved = (user, book_name, chapter_name, section_name, question,q_id) => {
+    return `<!doctype html>
+    <html>
+       <head>
+          <meta charset="utf-8">
+          <title>Cancellation request received</title>
+       </head>
+       <body>
+        <p>Hey Admin,  user named ${user} has asked a new question from TBS\n</p><p>Here are the details of your question:\n\n</p>
+        <p><strong>Book:</strong> ${book_name}</p>
+        <p><strong>Chapter:</strong> ${chapter_name}</p>                                                                                                                                     
+        <p><strong>Section:</strong> ${section_name}</p>
+        <p><strong>Question:</strong> ${question}</p>
+        <p><strong>Question Id:</strong> ${q_id}\n</p>
+        
+        <a href=https://admin.crazyforstudy.com/books-chapter-add-question/${q_id}>Click here to answer the question</a>
+        <p>Team CFS</p>
+       </body>
+    </html>`
+}
 
 module.exports = { 
     forgotPassword,
@@ -394,4 +490,9 @@ module.exports = {
     cancelSubscription, 
     adminCancelSubsciptionMail,
     newQuestionRecieved,
+    ask50Solution,
+    ask50Rejection,
+    askTbsSolution,
+    askTbsSolutionAdmin,
+    askTbsSolutionSolved,
 }

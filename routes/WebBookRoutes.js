@@ -1,5 +1,6 @@
 const express = require("express");
 const Book = require('../controllers/web/BookController.js');
+const checkAuth = require("../middleware/check-auth.js");
 const router = express.Router();
 
 router
@@ -25,7 +26,7 @@ router
     .get('/book/chapter/section/exercise/problem/answer/:isbn/:chapter_no/:section_no/:excerise_no', Book.getBookProblemsWithAnswer)
     .get('/book/only-problem/:isbn/:chapter_no', Book.getBookOnlyProblems)
     .get('/book/only-problem/answer/:isbn/:chapter_no', Book.getBookOnlyProblemsWithAnswers)
-
+    .post('/book/ask-for-solution', checkAuth, Book.askForSolution)
 
 
 module.exports = router;

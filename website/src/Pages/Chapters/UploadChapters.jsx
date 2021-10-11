@@ -195,7 +195,7 @@ return (
                     <div className="pl-0">
                         <button className="btn btn-sm dark"
                         onClick={e => setApiData(!apiData)}>
-                            {apiData ? 'Upload Data Via CSV': 'Import Book Questions Via API'}
+                            {!apiData ? 'Upload Data Via CSV': 'Import Book Questions Via API'}
                         </button>
 
                     </div>

@@ -6,6 +6,7 @@ var multer = require('multer')
 
 const Assignment = require('../controllers/web/AssignmentController');
 const studentAuth = require("../middleware/student-auth");
+const adminAuth = require("../middleware/admin-auth");
 
 var s3 = new aws.S3({secretAccessKey: process.env.awsAcessSecret,
     accessKeyId: process.env.awsAccessKey,
@@ -48,6 +49,10 @@ router
     .post('/save-local-assignment',upload.fields([{name:'image0'},{name:'image1'},{name:'image2'}]), studentAuth, Assignment.saveAssignmentLocal)
     .post('/get-assignment-info', studentAuth, Assignment.getAssignmentInfo)
     .post('/get-assignment-all', studentAuth, Assignment.getAssignmentAll)
+
+    //admin routes
+
+    // .get('/get-all-quesions-50', adminAuth, Assignment.getAllPendingQuestions)
 ;
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { StringDecoder } = require('string_decoder');
 
 const ChapterSchema = new mongoose.Schema({
     old_qid:{type: String},
@@ -56,7 +57,6 @@ const ChapterSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-
     status: {
         type: Boolean,
         default: true
@@ -74,15 +74,18 @@ const ChapterSchema = new mongoose.Schema({
     assigned_at: {
         type: Date
     },
-    
     assigned_to: {
         type: Object
     },
-    
     tutor_name: {
         type: String
     },
-
+    answerRequestedIds: {
+        type: Array
+    },
+    answerFlag:{
+        type:String
+    },
     created_at: {
         type: Date,
         default: Date.now

@@ -51,11 +51,12 @@ router
     .post('/add-similar-books', checkAuth, Book.addSimilarBooks)
     .get('/upload-questions', checkAuth, Book.uploadQuestion)
     
+    
     // api to update seo from postman
-    .post('/update-seo', checkAuth, Book.updateSeo)
+    // .post('/update-seo', checkAuth, Book.updateSeo)
 
     // api to update faq from postman
-    .post('/update-faq', checkAuth, Book.updateFaqBooks)
+    // .post('/update-faq', checkAuth, Book.updateFaqBooks)
 
     // // api to download images for books isbn from postman
     .post('/download-images', checkAuth, Book.downloadBookImages)

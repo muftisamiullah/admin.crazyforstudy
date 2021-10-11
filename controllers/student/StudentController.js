@@ -14,6 +14,7 @@ Date.prototype.addMinutes = function(minutes) {
 
 const askQuestion = async (req, res) => {
     try {
+        console.log(req.files);
         const data = req.body;
         data.image0 = req.files?.image0 ? req?.files?.image0[0].filename : '';
         data.image1 = req.files?.image1 ? req?.files?.image1[0].filename : '';
@@ -21,6 +22,8 @@ const askQuestion = async (req, res) => {
         const question = new Question(data);
         await question.save();
         const notifyData = {
+            // {_id:ObjectId('615c053b853c3902f351f007')}
+            info: `<p>You will get the answer for <strong>${req.body.question}</strong> within next 2-4 hours, Please be patient.</p>`,
             title: req.body.question,
             type: req.body.type,
             user_Id: req.body.user_Id,
@@ -40,9 +43,8 @@ const askQuestion = async (req, res) => {
             from: process.env.email,
             to: admins,
             subject: 'New Question Recieved',
-            // html: `<h1>Welcome</h1><p><a href=${link}>Click here to verify</a></p>`
             html: output
-        };
+    };
 
         transporter.sendMail(mailOptionsAdmin, function(error, info) {
             if (error) {
@@ -66,6 +68,7 @@ const userQuestion = async (req, res) => {
         }else{
             cond = {user_Id: req.body.user_Id, type: 'QA'}    
         }
+        console.log(cond)
         const questions = await Question.find(cond).sort({created_at: -1});
         res.status(201).json({
             error: false,
@@ -82,15 +85,15 @@ const userQuestion = async (req, res) => {
 const userNotifications = async (req, res) => {
     try {
         let cond = '';
-        cond = {user_Id: req.body.user_Id, type: 'QA',isRead: false}
+        cond = {user_Id: req.body.user_Id, isRead: false}
         if(req.params.isRead === 'all'){
-            cond = {user_Id: req.body.user_Id, type: 'QA'}
+            cond = {user_Id: req.body.user_Id,}
         }
         if(req.params.isRead !== 'all'){
-            cond = {user_Id: req.body.user_Id, type: 'QA',isRead: req.params.isRead}
+            cond = {user_Id: req.body.user_Id, isRead: req.params.isRead}
         }
         if(req.params.isRead === undefined){
-            cond = {user_Id: req.body.user_Id, type: 'QA',isRead:false}
+            cond = {user_Id: req.body.user_Id, isRead:false}
         }
         
         const questions = await Notify.find(cond).sort({created_at:-1});

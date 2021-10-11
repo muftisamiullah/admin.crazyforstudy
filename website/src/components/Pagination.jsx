@@ -4,7 +4,7 @@ import useBooks from  '../hooks/useBooks';
 import {AdminContext} from '../context/AdminContext';
 
 
-function Pagination({pagination}) {
+function Pagination({pagination, isLoad}) {
     const [pageno, setPageNo] = useState(1);
     const {dispatch: adminDispatch} = useContext(AdminContext);
     const {isLoading} = useBooks();

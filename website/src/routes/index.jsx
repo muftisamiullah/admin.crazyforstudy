@@ -47,8 +47,11 @@ import RoleModuleList from '../Pages/Permission/RoleModuleList.jsx';
 import UploadChapters from '../Pages/Chapters/UploadChapters.jsx';
 import ModifyChapters from '../Pages/Chapters/ModifyChapters.jsx';
 
-
 import SamplePage from '../Pages/Sample/SamplePage.jsx'
+
+import Solve50 from '../Pages/Solve50/Solve50List.jsx'
+import UpdateAnswer from '../Pages/Solve50/UpdateAnswer.jsx'
+import RejectQuestion from '../Pages/Solve50/RejectQuestion.jsx'
 
 export const guestRoutes =  [
     { 
@@ -231,6 +234,18 @@ export const privateRoutes = [
     {
         path: '/manage-vendor/:vendor_id?',
         component: VendorList
+    },
+    {
+        path: '/solve-50/:subject_id?/:sub_subject_id?/:filter?/:page_no?',
+        component: Solve50
+    },
+    {
+        path: '/solve-50-update-answer/:subject_id?/:sub_subject_id?/:filter?/:page_no?/:question_id?',
+        component: UpdateAnswer
+    },
+    {
+        path: '/solve-50-reject-question/:subject_id?/:sub_subject_id?/:filter?/:page_no?/:question_id?',
+        component: RejectQuestion
     },
     
 ];

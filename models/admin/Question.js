@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const QuestionSchema = new mongoose.Schema({
     old_qid:{type: String},
@@ -49,6 +50,12 @@ const QuestionSchema = new mongoose.Schema({
         type: Boolean,
         default: 0
     },
+    rejectionReason: {
+        type: String
+    },
+    rejectionReason1: {
+        type: String
+    },
     status: {
         type: Boolean,
         default: 0
@@ -62,4 +69,5 @@ const QuestionSchema = new mongoose.Schema({
     }
 });
 
+QuestionSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('Question', QuestionSchema);
