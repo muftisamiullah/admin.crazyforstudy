@@ -452,21 +452,24 @@ const getBookProblemsWithAnswer = async (req, res) => {
                     q_id: item._id, 
                     problem_no: item.problem_no, 
                     question: item.question, 
-                    answer: item.answer
+                    answer: item.answer,
+                    answerRequestIds : item.answerRequestedIds,
                 })
             }else if(item.expert_answer!="" && item.expert_answer != undefined){
                 problems.push({
                     q_id: item._id, 
                     problem_no: item.problem_no, 
                     question: item.question, 
-                    answer: item.expert_answer
+                    answer: item.expert_answer,
+                    answerRequestIds : item.answerRequestedIds,
                 })
             }else{
                 problems.push({
                     q_id: item._id, 
                     problem_no: item.problem_no, 
                     question: item.question, 
-                    answer: item.another_answer
+                    answer: item.another_answer,
+                    answerRequestIds : item.answerRequestedIds,
                 })
             } 
         }
@@ -521,6 +524,7 @@ const getBookOnlyProblemsWithAnswers = async (req, res) => {
         answer: 1,
         expert_answer: 1,
         another_answer: 1,
+        answerRequestedIds: 1,
     });
 
     const problems = [];
@@ -535,6 +539,7 @@ const getBookOnlyProblemsWithAnswers = async (req, res) => {
                     problem_no: item.problem_no, 
                     question: item.question, 
                     answer: item.answer,
+                    answerRequestIds : item.answerRequestedIds,
                 })
             }else if(item.expert_answer!="" && item.expert_answer != undefined){
                 problems.push({
@@ -542,6 +547,7 @@ const getBookOnlyProblemsWithAnswers = async (req, res) => {
                     problem_no: item.problem_no, 
                     question: item.question, 
                     answer: item.expert_answer,
+                    answerRequestIds : item.answerRequestedIds,
                 })
             }else{
                 problems.push({
@@ -549,6 +555,7 @@ const getBookOnlyProblemsWithAnswers = async (req, res) => {
                     problem_no: item.problem_no, 
                     question: item.question, 
                     answer: item.another_answer,
+                    answerRequestIds : item.answerRequestedIds,
                 })
             }
         }
@@ -616,7 +623,7 @@ const askForSolution = async(req, res) => {
         // const chap = await Chapter.findOneAndUpdate({_id:req.body.q_id},{$addToSet: {answerRequestedIds : ids},$set:{answerFlag:"pending"}});
         const chap = await Chapter.findOneAndUpdate(
             {_id:req.body.q_id, 'answerRequestedIds.user_id': {$ne: req.body.user_Id}}, 
-            {$push: {answerRequestedIds: {user_id: req.body.user_Id,user_email:req.body.email,answerRequestDate: new Date()}}})
+            {$push: {answerRequestedIds: {user_id: req.body.user_Id,user_email:req.body.email,answerRequestDate: new Date()}},answerFlag:"pending"})
         if(!chap){
             return res.status(200).json({
                 msg: "Already asked",

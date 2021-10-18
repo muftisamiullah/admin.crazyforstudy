@@ -146,21 +146,25 @@ const updateAnswersInAlreadyPresentData = async (req,res) => {
         console.log("in present")
         const axios = require('axios');
         const dummies = await Dummy1.find();
-        dummies.map( async (it , key) => {
+        // const ISBN = 9781260696257;
+        dummies.map( async (it , i) => {
             const response = await axios.get(`https://backup.crazyforstudy.com/api/get-book-question-new.php?accessKey=crazyforstudy&isbn=${it.ISBN}`)
             const d = response.data
-            d.map(async (item, key) => {
-                if(item.answer != ''){
-                    await Chapter.findOneAndUpdate({book_isbn:it.ISBN,old_qid:item.old_qid, answer_uploaded:false},{$set: { 
-                        answer: item.answer,
-                        answer_uploaded: true,
-                    }});
-                }
-                // await Chapter.findOneAndUpdate({book_isbn:"9780133915389",answer_uploaded:true},{$set: { 
-                //     answer_uploaded: false,
-                // }});
-                console.log(key)
-            });
+            if(typeof(d)!== "string"){
+                // console.log(i, "total books done")
+                d.map(async (item, key) => {
+                    if(item.answer != ''){
+                        await Chapter.findOneAndUpdate({book_isbn:it.ISBN,chapter_no:item.chapter_no, problem_no:item.problem_no,section_no:item.section_no},{$set: { 
+                            answer: item.answer,
+                            answer_uploaded: true,
+                        }});
+                    }
+                    // await Chapter.findOneAndUpdate({book_isbn:"9780133915389",answer_uploaded:true},{$set: { 
+                    //     answer_uploaded: false,
+                    // }});
+                    console.log(key)
+                });
+            }
         });
         return res.status(200).send('Done')
     } catch (error) {

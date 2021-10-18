@@ -293,8 +293,6 @@ const RejectQuestion = async (req, res) => {
         delete update.user_Id;
         const response = await Question.findByIdAndUpdate({ _id: req.params.q_id }, update);
             if(response){
-                console.log(update.assignment)
-                console.log(typeof(update.assignment))
                 if(update.assignment){
                     let content = {};
                     content.question = response.question;
@@ -306,9 +304,7 @@ const RejectQuestion = async (req, res) => {
                     content.image0 = response.image0;
                     content.image1 = response.image1;
                     const assign = await new Assignment(content).save()
-                    console.log(assign);
                 }
-                console.log("outside")
                 const notifyData = {
                     // {_id:ObjectId('615c053b853c3902f351f007')}
                     title: response.question,

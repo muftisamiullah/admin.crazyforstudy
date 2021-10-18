@@ -24,7 +24,7 @@ router
     // .post('/update-dummy', upload.single('file'), checkAuth, Dummy.UpdateDummyCollection)
     .post('/insert-updated-data',checkAuth, Dummy.InsertUpdatedDummyCollection)
     
-    // .post('/update-dummy1', upload.single('file'), checkAuth, Dummy.UpdateDummy1Collection)
+    .post('/update-dummy1', upload.single('file'), checkAuth, Dummy.UpdateDummy1Collection)
     .post('/update-answers',checkAuth, Dummy.updateAnswersInAlreadyPresentData)
 ;
 

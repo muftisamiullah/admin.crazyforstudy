@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { StringDecoder } = require('string_decoder');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const ChapterSchema = new mongoose.Schema({
     old_qid:{type: String},
@@ -92,4 +92,5 @@ const ChapterSchema = new mongoose.Schema({
     }
 });
 
+ChapterSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('Chapter', ChapterSchema);

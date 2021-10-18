@@ -146,6 +146,7 @@ return (
                                         ]
                                     },
                                 }}
+                                disabled
                                 data={data && data.question}
                                 onChange={ ( event, editor ) => {
                                     const data = editor.getData();

@@ -53,6 +53,9 @@ import Solve50 from '../Pages/Solve50/Solve50List.jsx'
 import UpdateAnswer from '../Pages/Solve50/UpdateAnswer.jsx'
 import RejectQuestion from '../Pages/Solve50/RejectQuestion.jsx'
 
+import SolveTBS from '../Pages/SolveTBS/SolveTBSList.jsx'
+import UpdateAnswerTbs from '../Pages/SolveTBS/UpdateAnswerTbs.jsx'
+
 export const guestRoutes =  [
     { 
         path:'/',
@@ -246,6 +249,14 @@ export const privateRoutes = [
     {
         path: '/solve-50-reject-question/:subject_id?/:sub_subject_id?/:filter?/:page_no?/:question_id?',
         component: RejectQuestion
+    },
+    {
+        path: '/solve-tbs/:filter?/:page_no?',
+        component: SolveTBS
+    },
+    {
+        path: '/solve-tbs-update-answer/:filter?/:page_no?/:question_id?',
+        component: UpdateAnswerTbs
     },
     
 ];

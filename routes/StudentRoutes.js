@@ -53,6 +53,7 @@ router
     .get('/my-textbook',checkAuth, Student.myTextBook)
     .get('/my-subscription-details', checkAuth, Student.mySubscription)
     .post('/my-textbook-del', checkAuth, Student.deleteTextBook)
+    .post('/ask-already-present-question', checkAuth, Student.askAlreadyPQuestion)
 ;
 
 module.exports = router;

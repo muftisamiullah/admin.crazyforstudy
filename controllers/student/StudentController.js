@@ -14,7 +14,7 @@ Date.prototype.addMinutes = function(minutes) {
 
 const askQuestion = async (req, res) => {
     try {
-        console.log(req.files);
+        console.log(req.body);
         const data = req.body;
         data.image0 = req.files?.image0 ? req?.files?.image0[0].filename : '';
         data.image1 = req.files?.image1 ? req?.files?.image1[0].filename : '';
@@ -39,11 +39,12 @@ const askQuestion = async (req, res) => {
             }
         });
         const output = emails.newQuestionRecieved(req.body.question)
+        const outputAdmin = emails.newQuestionRecievedAdmin(question.question)
         var mailOptionsAdmin = {
             from: process.env.email,
             to: admins,
             subject: 'New Question Recieved',
-            html: output
+            html: outputAdmin
     };
 
         transporter.sendMail(mailOptionsAdmin, function(error, info) {
@@ -221,6 +222,64 @@ const deleteTextBook = async (req, res) => {
     }
 }
 
+const askAlreadyPQuestion = async (req, res) => {
+    try {
+        let update = req.body
+        update.flag = "pending"
+        update.created_at = new Date();
+        const question = await Question.findOne({_id:req.body.q_id})
+        const resolved = await Question.findByIdAndUpdate({_id:req.body.q_id}, update)
+        if(resolved){
+            const notifyData = {
+                info: `<p>You will get the answer for the question:</p> <p><strong>${question.question}</strong></p> <p>within next 2-4 hours, Please be patient.</p>`,
+                title: question.question,
+                type: question.type,
+                user_Id: req.body.user_Id,
+            }
+            const noti = new Notify(notifyData);
+            const dt = await noti.save();
+            const admins = await Admin.find({ role:1 }, {email:1});
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.email,
+                    pass: process.env.password
+                }
+            });
+            const output = emails.newQuestionRecieved(question.question, question.subject, question.sub_subject, question.subject_id, question.sub_subject_id, question._id)
+            const outputAdmin = emails.newQuestionRecievedAdmin(question.question, question.subject, question.sub_subject, question.subject_id, question.sub_subject_id, question._id)
+            var mailOptionsAdmin = {
+                from: process.env.email,
+                to: admins,
+                subject: 'New Question Recieved',
+                html: outputAdmin
+            };
+            var mailOptionsStudent = {
+                from: process.env.email,
+                to: req.body.email,
+                subject: 'Crazy For Study is working on your homework question!',
+                html: output
+            };
+            
+            Promise.all([
+                transporter.sendMail(mailOptionsStudent),
+                transporter.sendMail(mailOptionsAdmin),
+            ])
+                .then((res) => console.log('Email sent: ' + res))
+                .catch((err) => console.log(err));
+        }
+        return res.status(201).json({
+            message: "Question, Updated"
+        })
+    } catch (error) {
+        res.send({
+            error: true,
+            code: 501,
+            message: error.message
+        })
+    }
+}
+
 module.exports = {
     askQuestion,
     userQuestion,
@@ -231,4 +290,5 @@ module.exports = {
     myTextBook,
     mySubscription,
     deleteTextBook,
+    askAlreadyPQuestion
 }

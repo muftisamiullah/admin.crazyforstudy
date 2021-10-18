@@ -5,6 +5,10 @@ const csv = require('csv-parser')
 const fs = require('fs');
 const QuizletChapter = require('../../models/admin/QuizletChapter.js');
 
+const Notify = require('../../models/admin/Notification.js');
+const emails = require('../../emails/emailTemplates');
+var nodemailer = require('nodemailer');
+
 const getChapters = async (isbn) => {
     try {
         const chapters = [];
@@ -764,6 +768,7 @@ const GetSingleQuestion = async (req, res) => {
         })
     }
 }
+
 const AddSingleQuestion = async (req, res) => {
     try {
         let update = req.body;
@@ -818,6 +823,7 @@ const AddSingleQuestion = async (req, res) => {
         })
     }
 }
+
 const downloadBooks = async (req, res) => {
     const book_isbn = req.params.isbn;
     const books = await Chapter.find({book_isbn},{__v: 0, status: 0, created_at: 0});
@@ -1872,6 +1878,132 @@ const UpdateChapterName = async (req, res) => {
         })
     }
 }
+
+const getAllQuestionsTbs = async (req, res) => {
+    try {
+        let pageno = parseInt(req.params.pageno);
+        let limit = parseInt(req.params.limit);
+        const myCustomLabels = {
+            totalDocs: 'itemCount',
+            docs: 'itemsList',
+            limit: 'perPage',
+            page: 'currentPage',
+            nextPage: 'next',
+            prevPage: 'prev',
+            totalPages: 'pageCount',
+            pagingCounter: 'slNo',
+            meta: 'paginator',
+          };
+        const options = {
+            page: pageno,
+            limit: limit,
+            customLabels: myCustomLabels,
+            collation: {
+              locale: 'en',
+            },
+            sort: {
+                created_at: -1 
+            }
+        };
+        let query = {answerFlag:req.params.filter}  
+
+        await Chapter.paginate(query, options).then(result => {
+            return res.status(200).json({
+                data: result.itemsList,
+                itemCount: result.paginator.itemCount,
+                perPage: result.paginator.perPage,
+                currentPage: result.paginator.currentPage,
+                pageCount: result.paginator.pageCount,
+                next: result.paginator.next,
+                prev: result.paginator.prev,
+                slNo: result.paginator.slNo,
+                hasNextPage: result.paginator.hasNextPage,
+                hasPrevPage: result.paginator.hasPrevPage
+            });
+        });
+    } catch (error) {
+        console.log(error)
+        res.send({
+            error: true,
+            code: 501,
+            message: error.message
+        })
+    }
+}
+
+const GetSingleQuestionTbs = async (req, res) => {
+    try {
+        const results = await Chapter.findOne({
+            "_id": `${req.params.q_id}`
+        });
+        res.status(200).json({
+            results
+        });
+    } catch (error) {
+        res.send({
+            error: true,
+            code: 501,
+            message: error.message
+        })
+    }
+}
+
+const UpdateAnswerTbs = async (req, res) => {
+    try {
+        let update = req.body
+        update.answerFlag = "answered"
+        update.answerRequestedIds = [];
+        delete update.user_Id;
+        const data = await Chapter.findByIdAndUpdate({ _id: req.params.q_id });
+        const response = await Chapter.findByIdAndUpdate({ _id: req.params.q_id }, update);
+        if(response){
+            let email_ids = [];
+            let notifyData = []
+            data.answerRequestedIds.map((item,key)=>{
+                email_ids.push(item.user_email)
+                notifyData.push({
+                    title: data.question,
+                    info: `<p>Your question has been solved <strong>${response.question}</strong></p>`,
+                    type: 'TBS',
+                    user_Id: item.user_id,
+                })
+            })
+            const noti = new Notify(notifyData);
+            const dt = await noti.save();
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.email,
+                    pass: process.env.password
+                }
+            });
+            const output = emails.askTbsSolutionSolved(response.book_name, response.chapter_name, response.section_name,response.question, response.answer, response._id)
+            var mailOptions = {
+                from: process.env.email,
+                to: email_ids,
+                subject: 'Your TBS Answer is ready!',
+                html: output
+            };
+            transporter.sendMail(mailOptions, function(error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+            return res.status(201).json({
+                message: "Successfull"
+            })
+        }
+    } catch (error) {
+        res.send({
+            error: true,
+            code: 501,
+            message: error.message
+        })
+    }
+}
+
 module.exports = {
     UpdateChapterName,
     oldbookQuestions,
@@ -1912,5 +2044,8 @@ module.exports = {
     addFields,
     deleteChapters,
     deleteQuestions,
-    deleteAllChapters
+    deleteAllChapters,
+    getAllQuestionsTbs,
+    GetSingleQuestionTbs,
+    UpdateAnswerTbs,
 }

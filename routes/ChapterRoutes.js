@@ -64,6 +64,10 @@ router
     .post('/delete-questions', Chapter.deleteQuestions)
     .post('/delete-all',checkAuth, Chapter.deleteAllChapters)
     .get('/search-question/:isbn/:search', checkAuth,Chapter.searchQuestion)
+
+    .get('/get-all-quesions-tbs/:filter?/:pageno/:limit', checkAuth, Chapter.getAllQuestionsTbs)
+    .get('/single-question/:q_id',  checkAuth, Chapter.GetSingleQuestionTbs)
+    .patch('/update-answer/:q_id',  checkAuth, Chapter.UpdateAnswerTbs)
 ;
 
 module.exports = router;

@@ -380,7 +380,7 @@ const adminCancelSubsciptionMail = (reason, message) => {
     return `<p>${reason}</p><p>${message}</p>`
 }
 
-const newQuestionRecieved = (question) => {
+const newQuestionRecieved = (question, subject, sub_subject, subject_id, sub_subject_id, q_id) => {
     return `Hey there, #User!
     
     Your solution is ready for the takeaway.
@@ -390,6 +390,25 @@ const newQuestionRecieved = (question) => {
     
     You’ll get the solution within 2-4 hours. As soon as we get the answer, you will be notified on both your email as well on your CFS My Account section.
     
+    <a href=https://admin.crazyforstudy.com/solve-50-update-answer/${subject_id}/${sub_subject_id}/pending/undefined/${q_id}>Click here to answer the question</a>
+
+    Thank you for using our services,
+    
+    Team CFS`
+}
+
+const newQuestionRecievedAdmin = (question, subject, sub_subject, subject_id, sub_subject_id, q_id) => {
+    return `Hey there, Admin!
+    
+    You have recieved a new question.
+    Here are the details of your question.
+    
+    Question: ${question}
+    
+    Kindly answer the question with 2-4 hours.
+    
+    <a href=https://admin.crazyforstudy.com/solve-50-update-answer/${subject_id}/${sub_subject_id}/pending/undefined/${q_id}>Click here to answer the question</a>
+
     Thank you for using our services,
     
     Team CFS`
@@ -444,7 +463,7 @@ const askTbsSolutionAdmin = (user, book_name, chapter_name, section_name, questi
     <html>
        <head>
           <meta charset="utf-8">
-          <title>Cancellation request received</title>
+          <title>New QUestion Recieved TBS</title>
        </head>
        <body>
         <p>Hey Admin,  user named ${user} has asked a new question from TBS\n</p><p>Here are the details of your question:\n\n</p>
@@ -454,30 +473,29 @@ const askTbsSolutionAdmin = (user, book_name, chapter_name, section_name, questi
         <p><strong>Question:</strong> ${question}</p>
         <p><strong>Question Id:</strong> ${q_id}\n</p>
         
-        <a href=https://admin.crazyforstudy.com/books-chapter-add-question/${q_id}>Click here to answer the question</a>
+        <a href=https://admin.crazyforstudy.com/solve-tbs-update-answer/pending/undefined/${q_id}>Click here to answer the question</a>
         <p>Team CFS</p>
        </body>
     </html>`
 }
 
-const askTbsSolutionSolved = (user, book_name, chapter_name, section_name, question,q_id) => {
+const askTbsSolutionSolved = (book_name, chapter_name, section_name, question, solution, q_id) => {
     return `<!doctype html>
     <html>
-       <head>
-          <meta charset="utf-8">
-          <title>Cancellation request received</title>
-       </head>
-       <body>
-        <p>Hey Admin,  user named ${user} has asked a new question from TBS\n</p><p>Here are the details of your question:\n\n</p>
-        <p><strong>Book:</strong> ${book_name}</p>
-        <p><strong>Chapter:</strong> ${chapter_name}</p>                                                                                                                                     
-        <p><strong>Section:</strong> ${section_name}</p>
-        <p><strong>Question:</strong> ${question}</p>
-        <p><strong>Question Id:</strong> ${q_id}\n</p>
-        
-        <a href=https://admin.crazyforstudy.com/books-chapter-add-question/${q_id}>Click here to answer the question</a>
-        <p>Team CFS</p>
-       </body>
+        <head>
+            <meta charset="utf-8">
+            <title>TBS Question Solved</title>
+        </head>
+        <body>
+            <p>Hello User your question has been answered\n</p><p>Here are the details of your question:\n\n</p>
+            <p><strong>Book:</strong> ${book_name}</p>
+            <p><strong>Chapter:</strong> ${chapter_name}</p>                                                                                                                                     
+            <p><strong>Section:</strong> ${section_name}</p>
+            <p><strong>Question:</strong> ${question}</p>
+            <p><strong>Solution:</strong> ${solution}</p>
+            
+            <p>Team CFS</p>
+        </body>
     </html>`
 }
 
@@ -495,4 +513,5 @@ module.exports = {
     askTbsSolution,
     askTbsSolutionAdmin,
     askTbsSolutionSolved,
+    newQuestionRecievedAdmin
 }
