@@ -30,7 +30,7 @@ function SingleQuestion({problem, search}) {
                 <div className="problem_no">Q.No: {problem?.problem_no} </div>
                 <div>
                     <button className="btn btn-sm bg-primary text-white mr-2"
-                    onClick={rejectQuestion.bind(this,{_id: problem?._id})}>
+                    onClick={rejectQuestion.bind(this,{_id: problem?._id})} disabled={problem.old_qid ? true : false}>
                         <span className="fa fa-eye mr-2"></span>Reject Question</button>
                     <button className="btn btn-sm dark"
                     onClick={manageQuestion.bind(this,{_id: problem?._id})}>Answer Question</button>

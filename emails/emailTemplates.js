@@ -381,7 +381,7 @@ const adminCancelSubsciptionMail = (reason, message) => {
 }
 
 const newQuestionRecieved = (question, subject, sub_subject, subject_id, sub_subject_id, q_id) => {
-    return `Hey there, #User!
+    return `Hey User!
     
     Your solution is ready for the takeaway.
     Here are the details of your question.

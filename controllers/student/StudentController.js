@@ -14,7 +14,6 @@ Date.prototype.addMinutes = function(minutes) {
 
 const askQuestion = async (req, res) => {
     try {
-        console.log(req.body);
         const data = req.body;
         data.image0 = req.files?.image0 ? req?.files?.image0[0].filename : '';
         data.image1 = req.files?.image1 ? req?.files?.image1[0].filename : '';
@@ -31,6 +30,7 @@ const askQuestion = async (req, res) => {
         const noti = new Notify(notifyData);
         const dt = await noti.save();
         const admins = await Admin.find({ role:1 }, {email:1});
+                
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -38,22 +38,29 @@ const askQuestion = async (req, res) => {
                 pass: process.env.password
             }
         });
-        const output = emails.newQuestionRecieved(req.body.question)
-        const outputAdmin = emails.newQuestionRecievedAdmin(question.question)
+        const output = emails.newQuestionRecieved(question.question, req.body.subject, req.body.sub_subject, req.body.subject_id, req.body.sub_subject_id, question._id)
+        const outputAdmin = emails.newQuestionRecievedAdmin(question.question, req.body.subject, req.body.sub_subject, req.body.subject_id, req.body.sub_subject_id, question._id)
         var mailOptionsAdmin = {
             from: process.env.email,
             to: admins,
-            subject: 'New Question Recieved',
+            subject: 'New Question Recieved!',
             html: outputAdmin
-    };
+        };
 
-        transporter.sendMail(mailOptionsAdmin, function(error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Email sent: ' + info.response);
-            }
-        });
+        var mailOptionsStudent = {
+            from: process.env.email,
+            to: req.body.email,
+            subject: 'New Question Recieved!',
+            html: output
+        };
+        
+        Promise.all([
+            transporter.sendMail(mailOptionsStudent),
+            transporter.sendMail(mailOptionsAdmin),
+        ])
+            .then((res) => console.log('Email sent: ' + res))
+            .catch((err) => console.log(err));
+
         res.status(201).json({error: false, message: "Your question is submitted. you will get answer withing 2-4 Hrs."})
     } catch (error) {
         res.status(501).json({error: true, message: error})
