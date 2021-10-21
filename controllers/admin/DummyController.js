@@ -179,7 +179,7 @@ const getCountOfQuestionsAndSolutions = async(req,res) => {
     const chapter = await Chapter.find({book_isbn:req.params.isbn});
     let Data = [];
     if(chapter.length <= 0){
-        Data.push({ ISBN:req.params.isbn, questions: 0, solutions:0 })
+        Data.push({ ISBN:req.params.isbn, no_of_questions: 0, no_of_solutions:0 })
     }else{
         // console.log(chapter)
         let question_count = 0;
@@ -194,7 +194,7 @@ const getCountOfQuestionsAndSolutions = async(req,res) => {
             // console.log(it.problem_no, "problem")
             // console.log(it.question, "question")
         })
-        Data.push({ ISBN:req.params.isbn, questions: question_count, solutions:answer_count })
+        Data.push({ ISBN:req.params.isbn, no_of_questions: question_count, no_of_solutions:answer_count })
     }
     return res.status(201).json({
         data: Data

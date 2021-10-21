@@ -4,9 +4,9 @@
     "description": "this is backend acadmic search engine",
     "main": "index.js",
     "scripts": {
-        "start": "NODE_ENV='production' && node index.js --max-old-space-size=8192",
+        "start": "NODE_ENV='production' && node index.js",
         "client": "cd website && npm run start",
-        "backend": "nodemon index.js --max-old-space-size=8192",
+        "backend": "nodemon index.js",
         "dev": "npm-run-all --parallel backend client",
         "create:build": "rm -rf build && cd website && npm run build"
     },

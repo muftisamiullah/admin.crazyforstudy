@@ -54,6 +54,7 @@ router
     .get('/my-subscription-details', checkAuth, Student.mySubscription)
     .post('/my-textbook-del', checkAuth, Student.deleteTextBook)
     .post('/ask-already-present-question', checkAuth, Student.askAlreadyPQuestion)
+    .get('/get-college-textbooks/:filter/:pageno/:limit',checkAuth, AdminStudent.getAllCollegeTextBooks)
 ;
 
 module.exports = router;

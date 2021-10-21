@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const TextBookSchema = new mongoose.Schema({
     user_Id: {type: String},
@@ -6,6 +7,7 @@ const TextBookSchema = new mongoose.Schema({
     isbn: {type: String},
     book_name: {type: String},
     edition: {type: String},
+    user_name: {type: String},
     inStock:{
         type: Boolean
     },
@@ -15,4 +17,5 @@ const TextBookSchema = new mongoose.Schema({
     }
 });
 
+TextBookSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('TextBook', TextBookSchema);

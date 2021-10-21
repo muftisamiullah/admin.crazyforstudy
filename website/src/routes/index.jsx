@@ -56,6 +56,8 @@ import RejectQuestion from '../Pages/Solve50/RejectQuestion.jsx'
 import SolveTBS from '../Pages/SolveTBS/SolveTBSList.jsx'
 import UpdateAnswerTbs from '../Pages/SolveTBS/UpdateAnswerTbs.jsx'
 
+import CollegeTB from '../Pages/Textbooks/TextbooksList.jsx'
+
 export const guestRoutes =  [
     { 
         path:'/',
@@ -258,6 +260,10 @@ export const privateRoutes = [
         path: '/solve-tbs-update-answer/:filter?/:page_no?/:question_id?',
         component: UpdateAnswerTbs
     },
+    {
+        path: '/college-textbooks/:filter?/:page_no?',
+        component: CollegeTB
+    },
     
 ];
 
@@ -299,8 +305,6 @@ export const adminRoutes = [
         path: '/master-role/update/:id',
         component: CreateRole
     },
-    
-
     {
         path: '/role-modules/:type?/:role?/:role_name?/:role_id?/:email?',
         component: RoleModuleList

@@ -76,7 +76,7 @@ const userQuestion = async (req, res) => {
         }else{
             cond = {user_Id: req.body.user_Id, type: 'QA'}    
         }
-        console.log(cond)
+
         const questions = await Question.find(cond).sort({created_at: -1});
         res.status(201).json({
             error: false,
@@ -151,14 +151,16 @@ const checkBookIsbn = async (req, res) => {
     try {    
         const book_isbn = req.params.isbn;
         const books = await Book.findOne({ISBN13: book_isbn});
+        const student = await Student.findOne({_id:req.body.user_Id});
+
         const filter = {user_Id: req.body.user_Id, isbn: book_isbn}
         var options = { upsert: true, new: true, setDefaultsOnInsert: true };  
         let updateData = '';
         if(books){
-            updateData = {inStock: 1,book_name: books.BookName, edition: books.Edition}
+            updateData = { inStock: 1,book_name: books.BookName, edition: books.Edition, user_name: student.Name }
             var message = "View More";
         }else{
-            updateData = {inStock: 0}
+            updateData = {inStock: 0, user_name: student.Name}
             var message = "Will be available in 3-4 working Days.";
         }
 

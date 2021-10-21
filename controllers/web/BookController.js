@@ -308,7 +308,6 @@ const searchBookNameIsbnIndividual = async (req, res) => {
 }
 
 const getBookChapters = async (req, res) => {
-
     const chapters = [];
     const map = new Map();
     const results = await Chapter.find({
