@@ -175,9 +175,70 @@ const updateAnswersInAlreadyPresentData = async (req,res) => {
     }
 }
 
+const getCountOfQuestionsAndSolutions = async(req,res) => {
+    const chapter = await Chapter.find({book_isbn:req.params.isbn});
+    let Data = [];
+    if(chapter.length <= 0){
+        Data.push({ ISBN:req.params.isbn, questions: 0, solutions:0 })
+    }else{
+        // console.log(chapter)
+        let question_count = 0;
+        let answer_count = 0;
+        chapter.map(async (it, i) => {
+            if(it.problem_no || it.question && it.problem_no != null || it.question != null){
+                question_count++;
+            }
+            if(it.answer){
+                answer_count++;
+            }
+            // console.log(it.problem_no, "problem")
+            // console.log(it.question, "question")
+        })
+        Data.push({ ISBN:req.params.isbn, questions: question_count, solutions:answer_count })
+    }
+    return res.status(201).json({
+        data: Data
+    })  
+    // const books = await Book.find({},{ISBN13:1}).limit(5000);
+    // let Data = [];
+    // let promises = books.map( async (item , i) => {
+    //     const chapter = await Chapter.find({ book_isbn:item.ISBN13 });
+    //     if(chapter.length <= 0){
+    //         console.log("chapter is empty")
+    //         Data.push({ ISBN:item.ISBN13, questions: 0, solutions:0 })
+    //     }else{
+    //         // console.log(chapter)
+    //         let question_count = 0;
+    //         let answer_count = 0;
+    //         chapter.map(async (it, i) => {
+    //             if(it.problem_no || it.question && it.problem_no != null || it.question != null){
+    //                 question_count++;
+    //             }
+    //             if(it.answer){
+    //                 answer_count++;
+    //             }
+    //             // console.log(it.problem_no, "problem")
+    //             // console.log(it.question, "question")
+    //         })
+    //         console.log(question_count, answer_count, "count")
+    //         Data.push({ ISBN:item.ISBN13, questions: question_count, solutions:answer_count })
+    //     }
+    //     console.log(i)
+    //     Promise.allSettled(promises)
+    //         .then(results => {
+    //             console.log(Data.length)
+    //             console.log("******************************** book loop ended ********************************")
+    //         })
+    //     .catch(e => {
+    //       console.error(e);
+    //     })
+    // })
+}
+
 module.exports = {
     UpdateDummyCollection,
     UpdateDummy1Collection,
     InsertUpdatedDummyCollection,
     updateAnswersInAlreadyPresentData,
+    getCountOfQuestionsAndSolutions,
 }

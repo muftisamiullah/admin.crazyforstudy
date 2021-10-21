@@ -4,25 +4,10 @@ const DummySchema = new mongoose.Schema({
     ISBN: {
         type: String,
     },
-    BookName: {
+    questions: {
         type: String,
     },
-    Status: {
-        type: String,
-    },
-    Priority: {
-        type: String,
-    },
-    Available:{
-        type: String,
-    },
-    Questions:{
-        type: String,
-    },
-    pq_type:{
-        type: String,
-    },
-    Solutions:{
+    solutions:{
         type: String,
     },
 });

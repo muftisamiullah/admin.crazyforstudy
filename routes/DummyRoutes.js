@@ -26,6 +26,8 @@ router
     
     .post('/update-dummy1', upload.single('file'), checkAuth, Dummy.UpdateDummy1Collection)
     .post('/update-answers',checkAuth, Dummy.updateAnswersInAlreadyPresentData)
+
+    .get('/get-count/:isbn', Dummy.getCountOfQuestionsAndSolutions)
 ;
 
 module.exports = router;
