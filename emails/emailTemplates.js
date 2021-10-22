@@ -178,16 +178,23 @@ const welcomeEmail = (email, password, link) =>
         </body>
     </html>`
 
-const adminEmail = (userEmail) => {
+const adminEmail = (userName, userEmail) => {
     return `<!doctype html>
     <html>
         <head>
             <meta charset="utf-8">
-            <title>New User Registered!</title>
+            <title>Title: [Student_name] just Signed up on CFS!</title>
         </head>
         <body>
-            <p>new user registered ${userEmail}</p>
-        </body>
+            <p>Hi there!</p>
+            <p>You have a new student registration available at CFS!</p>
+            <p>Student’s basic details -</p>
+            <p>${userName}<p>
+            <p>${userEmail}<p>
+            </br>
+            <p><strong>With regards,</strong></p>
+            <p><strong>Team Crazy For Study</strong></p>
+            </body>
     </html>`
 }
 
@@ -293,8 +300,29 @@ const subscriptionEmail = (name,email,pay_id, sub_id) => {
     </html>`
 }
 
-const failedPayementEmail = () => {
-    return `<p>failed payment</p>`
+const failedPayementEmail = (userName) => {
+    return `<!doctype html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <title>Please Complete your Pending Payment to Proceed Further</title>
+        </head>
+        <body>
+            <p>Hello <strong>${userName}</strong>,</p>
+            <p>Looks like there was some sort of error! </p>
+            <p>We are sorry to inform you that your CFS Subscription could not be completed.</p> 
+            <p>Here are some things that might have gone wrong -</p>
+            <p><strong>Bad Internet Connection:</strong> Ensure that you have a stable cellular/Wi-Fi connection available.</p>
+            <p><strong>Insufficient Balance:</strong> Please check your bank account. Ensure that you have the necessary amount available.</p>
+            <p><strong>Bank Service Error:</strong> If you have the required balance available, then there might be an issue with your bank’s services. Connect with them to fix the issue.</p>
+            <p><strong>Unwanted Clicks:</strong> Avoid clicking the ‘Back’ button or any other button that might hamper the payment process.</p>
+            <p>After checking these, retry your payment again. Hope it Helps!</p>
+            <p>See you soon!</p>
+            </br>
+            <p><strong>With regards,</strong></p>
+            <p><strong>Team Crazy For Study</strong></p>
+            </body>
+    </html>`
 }
 
 const cancelSubscription = (name) => {
@@ -376,8 +404,25 @@ const cancelSubscription = (name) => {
     </html>`
 }
 
-const adminCancelSubsciptionMail = (reason, message) => {
-    return `<p>${reason}</p><p>${message}</p>`
+const adminCancelSubsciptionMail = (name, reason, message, start_date, difference) => {
+    return `<!doctype html>
+        <html>
+            <head>
+                <meta charset="utf-8">
+                <title>Title: ${name} just Signed up on CFS!</title>
+            </head>
+            <body>
+                <p>Hi there!</p>
+                <p>A student just cancelled his/her CFS Subscription. </p>
+                <p>Student’s basic details -</p>
+                <p>${name}</p>
+                <p>${name} just unsubscribed the CFS membership because of ${reason} and ${message}.</p>
+                <p>He/She has been a member of CFS since ${start_date} and has been a member for ${difference}.</p>
+                </br>
+                <p><strong>With regards,</strong></p>
+                <p><strong>Team Crazy For Study</strong></p>
+            </body>
+        </html>`
 }
 
 const newQuestionRecieved = (question, subject, sub_subject, subject_id, sub_subject_id, q_id) => {
@@ -397,21 +442,49 @@ const newQuestionRecieved = (question, subject, sub_subject, subject_id, sub_sub
     Team CFS`
 }
 
-const newQuestionRecievedAdmin = (question, subject, sub_subject, subject_id, sub_subject_id, q_id) => {
-    return `Hey there, Admin!
-    
-    You have recieved a new question.
-    Here are the details of your question.
-    
-    Question: ${question}
-    
-    Kindly answer the question with 2-4 hours.
-    
-    <a href=https://admin.crazyforstudy.com/solve-50-update-answer/${subject_id}/${sub_subject_id}/pending/undefined/${q_id}>Click here to answer the question</a>
+const newQuestionRecievedAdmin = (email, question, subject, sub_subject, subject_id, sub_subject_id, q_id) => {
+    return `<!doctype html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <title> <strong>${email}</strong> just asked a New Question</title>
+        </head>
+        <body>
+            <p>Hi there!</p>
+            <p>A student has just posted a new question on CFS. </p>
+            <p>Student’s basic details -</p>
+            <p><strong>${email}</strong></p>
+            <p>Question(s) asked by the student -</p>
+            <p><strong>${question}</strong></p>
+            <a href=https://admin.crazyforstudy.com/solve-50-update-answer/${subject_id}/${sub_subject_id}/pending/undefined/${q_id}>Click here to answer the question</a>
+            </br>
+            <p><strong>With regards,</strong></p>
+            <p><strong>Team Crazy For Study</strong></p>
+        </body>
+    </html>`
+}
 
-    Thank you for using our services,
-    
-    Team CFS`
+const newQuestionAskedAdmin = (email, question, subject, sub_subject, subject_id, sub_subject_id, q_id) => {
+    return `<!doctype html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <title> <strong>${email}</strong> just asked new Q&A Question</title>
+        </head>
+        <body>
+            <p>Hi there!</p>
+            <p>A student has just posted a new Q&A question on CFS. </p>
+            <p>Student’s basic details -</p>
+            <p><strong>${email}</strong></p>
+            <p>Question(s) asked by the student -</p>
+            <p><strong>${question}</strong></p>
+            <p>click below to answer:</p>
+            <a href=https://admin.crazyforstudy.com/solve-50-update-answer/${subject_id}/${sub_subject_id}/pending/undefined/${q_id}>Click here to answer the question</a>
+            </br>
+            <p><strong>With regards,</strong></p>
+            <p><strong>Team Crazy For Study</strong></p>
+        </body>
+    </html>`
 }
 
 const ask50Solution = (user, question, shortanswer, completeanswer) => {
@@ -463,10 +536,15 @@ const askTbsSolutionAdmin = (user, book_name, chapter_name, section_name, questi
     <html>
        <head>
           <meta charset="utf-8">
-          <title>New QUestion Recieved TBS</title>
+          <title>${user} just asked for new Textbook Solutions
+          </title>
        </head>
        <body>
-        <p>Hey Admin,  user named ${user} has asked a new question from TBS\n</p><p>Here are the details of your question:\n\n</p>
+        <p>Hi there!</p>
+        <p>A student has just posted a new TBS requirement on CFS.</p>
+        <p>Student’s basic details - </p>
+        <p>${user}</p>
+        <p>Question(s) asked by the student - </p>
         <p><strong>Book:</strong> ${book_name}</p>
         <p><strong>Chapter:</strong> ${chapter_name}</p>                                                                                                                                     
         <p><strong>Section:</strong> ${section_name}</p>
@@ -474,7 +552,8 @@ const askTbsSolutionAdmin = (user, book_name, chapter_name, section_name, questi
         <p><strong>Question Id:</strong> ${q_id}\n</p>
         
         <a href=https://admin.crazyforstudy.com/solve-tbs-update-answer/pending/undefined/${q_id}>Click here to answer the question</a>
-        <p>Team CFS</p>
+        <p><strong>With regards,</strong></p>
+        <p><strong>Team Crazy For Study</strong></p>
        </body>
     </html>`
 }
@@ -499,6 +578,75 @@ const askTbsSolutionSolved = (book_name, chapter_name, section_name, question, s
     </html>`
 }
 
+const assignmentSubmitUser = (name, topic_name, Assignment_details, expected_delivery_date) => {
+    return `<!doctype html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <title>Yaay! Your Assignment Request has been Submitted!</title>
+        </head>
+        <body>
+            <p>Hello ${name},</p>
+            <p>We would like to inform you that we have successfully received your Assignment request on ${topic_name}.</p>
+            <p><Here’s a brief about your assignment details - </p>                                                                                                                                     
+            <p>${Assignment_details}</p>
+            <p>If you want to make any changes to any of the provided details, connect with us. </p>
+            <p>You can expect to receive your assignment by <strong> ${expected_delivery_date}.</strong></p>
+            <p>Thanks for choosing CFS!</p>
+            <p><strong>With regards,</strong></p>
+            <p><strong>Team Crazy For Study</strong></p>
+        </body>
+    </html>`
+}
+
+const assignmentSubmitAdmin = (student_name, Assignment_details) => {
+    return `<!doctype html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <title>${Student_name} just requested for Assignment Help
+            </title>
+        </head>
+        <body>
+            <p>Hi there!</p>
+            <p>A student has just submitted a new Assignment Help requirement on crazyforstudy.com.
+            Student’s basic details -</p>
+            <p>${student_name}</p>                                                                                                                                     
+            <p>Assignment requirement details as provided by the student </p>
+            <p>${Assignment_details}</p>
+            <p>Thanks for choosing CFS!</p>
+            <p><strong>With regards,</strong></p>
+            <p><strong>Team Crazy For Study</strong></p>
+        </body>
+    </html>`
+}
+
+const assignmentSubmitUserSolution = (name, order_request_date, delivery_date, number_of_days, order_number) => {
+    return `<!doctype html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <title>Completed Assignment available now. Order No.: ${order_number}</title>
+        </head>
+        <body>
+            <p>Hello ${name},</p>
+            <p>We are excited to announce that our experts have completed your Assignment Help request. You had submitted the request on ${order_request_date} and received it on ${delivery_date}. </p>                                                                                                                                     
+            <p>That’s just ${number_of_days} !!! </p>
+            <p>Trust me, we are sometimes even faster than this!</p>
+            <p>Here’s your Assignment details - </p>
+            <p>order_number</p>
+            <p>order_number</p>
+            <p>You can now view/download the assignment from this link - <a href="https://www.crazyforstudy.com/">crazyforstudy.com</a>.</p>
+            <p>If you need any revisions, connect with us from this link - <a href="https://www.crazyforstudy.com/">crazyforstudy.com</a>.</p>
+            <p>Good grades await you!</p>
+            </br>
+            <p>Thank you for using our services and for choosing CFS!</p>
+            <p><strong>With regards,</strong></p>
+            <p><strong>Team Crazy For Study</strong></p>
+        </body>
+    </html>`
+}
+
 module.exports = { 
     forgotPassword,
     welcomeEmail, 
@@ -513,5 +661,9 @@ module.exports = {
     askTbsSolution,
     askTbsSolutionAdmin,
     askTbsSolutionSolved,
-    newQuestionRecievedAdmin
+    newQuestionRecievedAdmin,
+    newQuestionAskedAdmin,
+    assignmentSubmitUser,
+    assignmentSubmitAdmin,
+    assignmentSubmitUserSolution,
 }

@@ -37,7 +37,7 @@ const Register = async(req, res) => {
         });
         const link = `http:\/\/${req.headers.host}\/student/verify\/${body.Email}\/${token.token}`;
         const studentMail = emails.welcomeEmail(body.Email, body.Password, link)
-        const adminMail = emails.adminEmail(body.Email)
+        const adminMail = emails.adminEmail(body.Name, body.Email)
 
         var mailOptionsStudent = {
             from: process.env.email,
@@ -50,7 +50,7 @@ const Register = async(req, res) => {
         var mailOptionsAdmin = {
             from: process.env.email,
             to: admins,
-            subject: 'New User Registered',
+            subject: 'A student just signed up! Check now.',
             // html: `<h1>Welcome</h1><p><a href=${link}>Click here to verify</a></p>`
             html: adminMail
         };

@@ -658,7 +658,7 @@ const askForSolution = async(req, res) => {
         var mailOptionsAdmin = {
             from: process.env.email,
             to: admins,
-            subject: 'Recieved new question in TBS!',
+            subject: 'A Student just placed a New TBS Request! Check it now',
             // html: `<h1>Welcome</h1><p><a href=${link}>Click here to verify</a></p>`
             html: adminMail
         };

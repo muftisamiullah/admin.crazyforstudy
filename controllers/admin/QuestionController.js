@@ -244,7 +244,7 @@ const UpdateAnswer = async (req, res) => {
             const notifyData = {
                 // {_id:ObjectId('615c053b853c3902f351f007')}
                 title: response.question,
-                info: `<p>Your question has been solved <strong>${response.question}</strong></p>`,
+                info: `<p>Your question has been solved <strong>${response.question?.substr(0,100)}</strong></p>`,
                 type: 'QA',
                 user_Id: response.user_Id,
             }
@@ -308,7 +308,7 @@ const RejectQuestion = async (req, res) => {
                 const notifyData = {
                     // {_id:ObjectId('615c053b853c3902f351f007')}
                     title: response.question,
-                    info: `<p>Your question  <strong> ${response.question}</strong> has been rejected</p>`,
+                    info: `<p>Your question  <strong> ${response.question?.substr(0,100)}</strong> has been rejected</p>`,
                     type: 'QA',
                     user_Id: response.user_Id,
                 }

@@ -39,11 +39,11 @@ const askQuestion = async (req, res) => {
             }
         });
         const output = emails.newQuestionRecieved(question.question, req.body.subject, req.body.sub_subject, req.body.subject_id, req.body.sub_subject_id, question._id)
-        const outputAdmin = emails.newQuestionRecievedAdmin(question.question, req.body.subject, req.body.sub_subject, req.body.subject_id, req.body.sub_subject_id, question._id)
+        const outputAdmin = emails.newQuestionRecievedAdmin(req.body.email,question.question, req.body.subject, req.body.sub_subject, req.body.subject_id, req.body.sub_subject_id, question._id)
         var mailOptionsAdmin = {
             from: process.env.email,
             to: admins,
-            subject: 'New Question Recieved!',
+            subject: 'A Student just placed a New Question! Check now.',
             html: outputAdmin
         };
 
@@ -256,11 +256,11 @@ const askAlreadyPQuestion = async (req, res) => {
                 }
             });
             const output = emails.newQuestionRecieved(question.question, question.subject, question.sub_subject, question.subject_id, question.sub_subject_id, question._id)
-            const outputAdmin = emails.newQuestionRecievedAdmin(question.question, question.subject, question.sub_subject, question.subject_id, question.sub_subject_id, question._id)
+            const outputAdmin = emails.newQuestionAskedAdmin(req.body.email, question.question, question.subject, question.sub_subject, question.subject_id, question.sub_subject_id, question._id)
             var mailOptionsAdmin = {
                 from: process.env.email,
                 to: admins,
-                subject: 'New Question Recieved',
+                subject: 'A Student just placed a New Q&A Question Request! Check it now.',
                 html: outputAdmin
             };
             var mailOptionsStudent = {

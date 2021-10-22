@@ -56,7 +56,11 @@ const cancelSubscription = async(req, res) => {
             });
             
             const output = emails.cancelSubscription(stud.Name)
-            const output2 = emails.adminCancelSubsciptionMail(reason, message)
+            const start_date = new Date(stud.transactions[0].created_at);
+            const start_date1 = new Date(stud.transactions[0].created_at).getDate();
+            const current_date =  new Date().getDate();
+            const difference = current_date - start_date1;
+            const output2 = emails.adminCancelSubsciptionMail(stud.Name, reason, message, start_date, difference)
 
             let mailOptionsStudent = {
                 from: process.env.email,
@@ -69,7 +73,7 @@ const cancelSubscription = async(req, res) => {
             var mailOptionsAdmin = {
                 from: process.env.email,
                 to: admins,
-                subject: 'Cancel Subscription',
+                subject: `${stud.Name} just Cancelled his/her CFS Subscription`,
                 // html: `<h1>Welcome</h1><p><a href=${link}>Click here to verify</a></p>`
                 html: output2
             };
@@ -85,6 +89,7 @@ const cancelSubscription = async(req, res) => {
             message: 'Subscripion cancelled'
         });
     } catch (error) {
+        console.log(error)
         res.status(409).json({
             message: "Error occured",
             errors: error
@@ -184,7 +189,7 @@ const failedPaymentSubscription = async(req, res) => {
                 pass: process.env.password
             }
         });
-        const output = emails.failedPayementEmail()
+        const output = emails.failedPayementEmail(student.Name)
         let mailOptionsStudent = {
             from: process.env.email,
             to: student.Email,
@@ -216,7 +221,6 @@ const failedPaymentAssignment = async(req, res) => {
         console.log(req.body);
         const filter = {_id: req.body.userId};
         const student = await Student.findOne(filter);
-        console.log(student)
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -224,11 +228,11 @@ const failedPaymentAssignment = async(req, res) => {
                 pass: process.env.password
             }
         });
-        const output = emails.failedPayementEmail()
+        const output = emails.failedPayementEmail(student.Name)
         let mailOptionsStudent = {
             from: process.env.email,
             to: student.Email,
-            subject: 'Payment Failure',
+            subject: 'Your Subscription Payment Couldn’t be Completed - CFS',
             // html: `<h1>Welcome</h1><p><a href=${link}>Click here to verify</a></p>`
             html: output
         };
