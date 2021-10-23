@@ -4,10 +4,12 @@ import Dashboard from '../Pages/Dashboard.jsx'
 import MyProfile from '../Pages/MyProfile.jsx'
 import SubjectList from '../Pages/subject/SubjectList.jsx';
 import CreateSubject from '../Pages/subject/CreateSubject.jsx';
+import UpdateSubjectSeo from '../Pages/subject/UpdateSubjectSeo.jsx';
 import SubSubjectList from '../Pages/subject/SubSubjectList.jsx';
 import CreateSubSubject from '../Pages/subject/CreateSubSubject.jsx';
 import AllSubSubjectList from '../Pages/subject/AllSubSubjectList.jsx';
 import UploadSubSubject from '../Pages/subject/UploadSubSubject.jsx';
+import UpdateSeoSubSubject from '../Pages/subject/UpdateSeoSubSubject.jsx';
 import AllBookList from '../Pages/Books/AllBookList.jsx';
 import UploadBooks from '../Pages/Books/UploadBooks.jsx';
 import UploadBulkBooks from '../Pages/Books/UploadBulkBooks.jsx';
@@ -58,6 +60,7 @@ import UpdateAnswerTbs from '../Pages/SolveTBS/UpdateAnswerTbs.jsx'
 
 import CollegeTB from '../Pages/Textbooks/TextbooksList.jsx'
 
+
 export const guestRoutes =  [
     { 
         path:'/',
@@ -92,6 +95,11 @@ export const privateRoutes = [
         component: CreateSubject
     },
     {
+        path: '/subject-seo-update/:id',
+        component: UpdateSubjectSeo
+    },
+    
+    {
         path: '/sub-subject/:subject_name/:subject_id',
         component: SubSubjectList
     },
@@ -102,6 +110,10 @@ export const privateRoutes = [
     {
         path: '/sub-subject',
         component: AllSubSubjectList
+    },
+    {
+        path: '/update-seo-sub-subject/:id',
+        component: UpdateSeoSubSubject
     },
     {
         path: '/sub-subject/create',
