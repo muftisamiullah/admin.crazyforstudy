@@ -54,6 +54,9 @@ function SingleSubject({sub}) {
         <div className="subject-card-heading">
             <div></div>
             <div>
+            <Button className="delBtn" onClick={e => history.push(`/subject-seo-update/${sub._id}`)}>
+                    <span className="text-success mr-2">seo</span>
+                </Button>
                 <Button className="delBtn" onClick={e => history.push(`sub-subject/${util.MakeSlug(sub.subject)}/${sub._id}`)}>
                     <span className="fa fa-eye text-success mr-2"></span>
                 </Button>
