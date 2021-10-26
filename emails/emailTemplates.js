@@ -183,7 +183,7 @@ const adminEmail = (userName, userEmail) => {
     <html>
         <head>
             <meta charset="utf-8">
-            <title>Title: [Student_name] just Signed up on CFS!</title>
+            <title>Title: ${userName} just Signed up on CFS!</title>
         </head>
         <body>
             <p>Hi there!</p>
