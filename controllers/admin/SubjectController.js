@@ -26,6 +26,7 @@ const createSubject = async(req, res) => {
     let FinalData = [];
 
     try {
+
         await SubjectData.forEach(sub => {
             FinalData.push({ subject: sub })
         })
@@ -49,11 +50,12 @@ const createSubject = async(req, res) => {
 
 }
 const updateSubject = async(req, res) => {
+    console.log('req: '+JSON.stringify(req.body));
     try {
         await subject.findByIdAndUpdate({ _id: req.params.id }, req.body)
             .then(response => {
                 return res.status(202).json({
-                    message: "subject, Updated successfully"
+                    message: "subject, Updated successfully33"
                 })
             })
             .catch(error => {
@@ -69,6 +71,53 @@ const updateSubject = async(req, res) => {
         });
     }
 }
+
+const updateQASeoSubject = async(req, res) => {
+    console.log('req: '+JSON.stringify(req.body));
+    try {
+        await subject.findByIdAndUpdate({ _id: req.params.id }, {$set : {qa_seo_details : req.body }})
+            .then(response => {
+                return res.status(202).json({
+                    message: "subject, Updated successfully33"
+                })
+            })
+            .catch(error => {
+                return res.status(500).json({
+                    message: "Error Found",
+                    errors: error.message
+                })
+            });
+
+    } catch (error) {
+        res.status(409).json({
+            message: error.message
+        });
+    }
+}
+
+const updateTextBookSeoSubject = async(req, res) => {
+    console.log('req: '+JSON.stringify(req.body));
+    try {
+        await subject.findByIdAndUpdate({ _id: req.params.id }, {$set : {textbook_seo_details : req.body }})
+            .then(response => {
+                return res.status(202).json({
+                    message: "subject, Updated successfully33"
+                })
+            })
+            .catch(error => {
+                return res.status(500).json({
+                    message: "Error Found",
+                    errors: error.message
+                })
+            });
+
+    } catch (error) {
+        res.status(409).json({
+            message: error.message
+        });
+    }
+}
+
 const deleteSubject = async(req, res) => {
     const id = req.params.id;
     try {
@@ -104,5 +153,7 @@ module.exports = {
     createSubject,
     updateSubject,
     deleteSubject,
-    viewSubject
+    viewSubject,
+    updateQASeoSubject,
+    updateTextBookSeoSubject
 }

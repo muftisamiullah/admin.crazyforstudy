@@ -5,6 +5,8 @@ const SubjectSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    qa_seo_details : Object,
+    textbook_seo_details : Object ,
     total_books: {
         type: Number,
         default: 0,
@@ -14,6 +16,7 @@ const SubjectSchema = new mongoose.Schema({
         required: true,
         default: true
     },
+
     created_at:{
         type: Date,
         default: Date.now

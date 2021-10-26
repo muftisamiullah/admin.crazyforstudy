@@ -8,6 +8,8 @@ router
     .get('/all',checkAuth, Subject.getAllSubject)
     .post('/create',checkAuth, Subject.createSubject)
     .patch('/update/:id',Subject.updateSubject)
+    .patch('/update-QA/:id',Subject.updateQASeoSubject)
+    .patch('/update-textbook/:id',Subject.updateTextBookSeoSubject)
     .delete('/delete/:id',Subject.deleteSubject)
     .get('/view/:id',Subject.viewSubject);
 

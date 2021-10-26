@@ -14,6 +14,8 @@ const SubSubjectSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    qa_seo_details : Object,
+    textbook_seo_details : Object ,
     status: {
         type: Boolean,
         required: true,

@@ -4,12 +4,14 @@ import Dashboard from '../Pages/Dashboard.jsx'
 import MyProfile from '../Pages/MyProfile.jsx'
 import SubjectList from '../Pages/subject/SubjectList.jsx';
 import CreateSubject from '../Pages/subject/CreateSubject.jsx';
-import UpdateSubjectSeo from '../Pages/subject/UpdateSubjectSeo.jsx';
+import UpdateSubjectSeoQA from '../Pages/subject/UpdateSubjectSeoQA.jsx';
+import UpdateSubjectSeoTB from '../Pages/subject/UpdateSubjectSeoTB.jsx';
 import SubSubjectList from '../Pages/subject/SubSubjectList.jsx';
 import CreateSubSubject from '../Pages/subject/CreateSubSubject.jsx';
 import AllSubSubjectList from '../Pages/subject/AllSubSubjectList.jsx';
 import UploadSubSubject from '../Pages/subject/UploadSubSubject.jsx';
-import UpdateSeoSubSubject from '../Pages/subject/UpdateSeoSubSubject.jsx';
+import UpdateSubSubjectSeoQA from '../Pages/subject/UpdateSubSubjectSeoQA.jsx';
+import UpdateSubSubjectSeoTB from '../Pages/subject/UpdateSubSubjectSeoTB.jsx';
 import AllBookList from '../Pages/Books/AllBookList.jsx';
 import UploadBooks from '../Pages/Books/UploadBooks.jsx';
 import UploadBulkBooks from '../Pages/Books/UploadBulkBooks.jsx';
@@ -95,10 +97,13 @@ export const privateRoutes = [
         component: CreateSubject
     },
     {
-        path: '/subject-seo-update/:id',
-        component: UpdateSubjectSeo
+        path: '/subject-seo/qa/update/:id',
+        component: UpdateSubjectSeoQA
     },
-    
+    {
+        path: '/subject-seo/textbook/update/:id',
+        component: UpdateSubjectSeoTB
+    },
     {
         path: '/sub-subject/:subject_name/:subject_id',
         component: SubSubjectList
@@ -112,8 +117,12 @@ export const privateRoutes = [
         component: AllSubSubjectList
     },
     {
-        path: '/update-seo-sub-subject/:id',
-        component: UpdateSeoSubSubject
+        path: '/sub-subject-seo/qa/update/:id',
+        component: UpdateSubSubjectSeoQA
+    },
+    {
+        path: '/sub-subject-seo/textbook/update/:id',
+        component: UpdateSubSubjectSeoTB
     },
     {
         path: '/sub-subject/create',
