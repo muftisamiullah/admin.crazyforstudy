@@ -26,6 +26,8 @@ router
     .post('/create', checkAuth, SubSubject.createSubSubject)
     .post('/upload', upload.single('file'), checkAuth, SubSubject.uploadSubSubject)
     .patch('/update/:id', SubSubject.updateSubSubject)
+    .patch('/update-QA/:id',SubSubject.updateQASeoSubSubject)
+    .patch('/update-textbook/:id',SubSubject.updateTextBookSeoSubSubject)
     .delete('/delete/:id', SubSubject.deleteSubSubject)
     .get('/view/:id', SubSubject.viewSubSubject);
 

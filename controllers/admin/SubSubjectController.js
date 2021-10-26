@@ -113,6 +113,53 @@ const updateSubSubject = async(req, res) => {
     }
 }
 
+const updateQASeoSubSubject = async(req, res) => {
+    console.log('req: '+JSON.stringify(req.body));
+    try {
+        await SubSubject.findByIdAndUpdate({ _id: req.params.id }, {$set : {qa_seo_details : req.body }})
+            .then(response => {
+                return res.status(202).json({
+                    message: "sub subject, Updated successfully33"
+                })
+            })
+            .catch(error => {
+                return res.status(500).json({
+                    message: "Error Found",
+                    errors: error.message
+                })
+            });
+
+    } catch (error) {
+        res.status(409).json({
+            message: error.message
+        });
+    }
+}
+
+const updateTextBookSeoSubSubject = async(req, res) => {
+    console.log('req: '+JSON.stringify(req.body));
+    try {
+        await SubSubject.findByIdAndUpdate({ _id: req.params.id }, {$set : {textbook_seo_details : req.body }})
+            .then(response => {
+                return res.status(202).json({
+                    message: "sub subject, Updated successfully33"
+                })
+            })
+            .catch(error => {
+                return res.status(500).json({
+                    message: "Error Found",
+                    errors: error.message
+                })
+            });
+
+    } catch (error) {
+        res.status(409).json({
+            message: error.message
+        });
+    }
+}
+
+
 const getAllSubSubject = async(req, res) => {
     try {
         const Subjects = await SubSubject.find({ status: true }, { __v: 0 });
@@ -167,5 +214,7 @@ module.exports = {
     uploadSubSubject,
     updateSubSubject,
     deleteSubSubject,
-    viewSubSubject
+    viewSubSubject,
+    updateQASeoSubSubject,
+    updateTextBookSeoSubSubject
 }
