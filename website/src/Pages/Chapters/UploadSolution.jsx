@@ -2,7 +2,7 @@ import React, {useContext,useState, useEffect} from 'react'
 import '../mainDash.css';
 import {  useHistory, Link, useParams  } from "react-router-dom";
 import { Button,Form } from 'react-bootstrap'
-
+import { useToasts } from 'react-toast-notifications';
 
 import {AuthContext} from '../../context/AuthContext';
 import {Notification} from '../../components/Notification';
@@ -20,7 +20,7 @@ import ClassicEditor from 'ckeditor5-classic-with-mathtype';
 export default function ModifyChapters() {
     const history = useHistory();
     const params = useParams();
-    
+    const { addToast } = useToasts();
     const {state} = useContext(AuthContext);
     const {state: errorState, dispatch: errorDispatch} = useContext(ErrorContext);
 
@@ -39,23 +39,26 @@ export default function ModifyChapters() {
         }
     };
     const [btnDisabled, setBtnDisbaled] = useState(false);
+    const [file, setFile] = useState();
+    const [extension, setExtension] = useState();
+
+    const formDataUpload = new FormData();
 
     let _URL = window.URL || window.webkitURL;
-    const [blogImage, setBlogImage] = useState("");
-    const uploadImage = (e) => {
-        e.preventDefault();
-        var file, img, base64,blob, reader;
-        if ((file = e.target.files[0])) {
-            img = new Image();
-            blob = new Blob([file],{ type: file.type })
-            img.src = _URL.createObjectURL(blob);
-            reader = new FileReader(); 
-            reader.readAsDataURL(blob); 
-            reader.onload = function () { 
-               base64 = reader.result;
-               setBlogImage(base64);
-               setFormData({...formData,image: base64}) 
-            }  
+    // const [blogImage, setBlogImage] = useState("");
+    const uploadDoc = (e) => {
+        const filename = e.target.files[0].name;
+            console.log('file onchange ' ,  filename);
+            const ext = filename.split('.')[1];
+            
+            setExtension(ext);
+            if(ext === "docx"){
+                setBtnDisbaled(false);
+                setFile(e.target.files[0]);
+                formDataUpload.append('file', e.target.files[0]);
+            }else{
+                setBtnDisbaled(true);
+                addToast('Only .docx files are allowed', { appearance: 'error', autoDismiss: true });
         }
     }
     const [formData, setFormData] = useState({});
@@ -64,8 +67,11 @@ export default function ModifyChapters() {
         let response = null;
         setLoading(true);
         setBtnDisbaled(true);
-        // console.log(formData); return;
-        response = await axios.patch(`${API_URL}chapter/add-question/${params.q_id}`,formData, options);
+        if(extension != "docx"){
+            return;
+        }
+        formDataUpload.append('file',file)
+        response = await axios.patch(`${API_URL}chapter/upload-solution/${params.q_id}`,formDataUpload, options);
         console.log(response);
         errorDispatch({type: 'SET_SUCCESS', payload: response.message});
         setBtnDisbaled(false);
@@ -95,7 +101,7 @@ return (
         <div className="main-area-all">
             <div className="dashboard_main-container">
                 <div className="dash-main-head">
-                    <h2>Add Question</h2>
+                    <h2>Upload Question</h2>
                 </div>
                 {errorState.error && ( 
                     <Notification>{errorState.error}</Notification>
@@ -119,13 +125,25 @@ return (
                     <div className="col-md-12 row no-gutter p-0 mt-2">
                     {!isLoading && (
                     <Form method="POST" className="col-md-12 pl-2" encType="multipart/form-data">
-                       
+                       <Form.Group className="col-md-12">
+                            <Form.Label>
+                                Choose Solution Doc
+                            </Form.Label> 
+                            <Form.Control name="image" type="file" 
+                            onChange={uploadDoc}
+                            />  
+                            <small style={{color:"green"}}>only .docx extenion files can be uploaded</small>
+                            {/* <div style={{ height: '130px', overflow: 'hidden', marginTop: '10px' }}>
+                                <img src={blogImage ? blogImage: data && data.image} />
+                            </div> */}
+                        </Form.Group>
                     <Form.Group className="col-md-12">
                             <Form.Label>
                                 Question
                             </Form.Label>
                             
                             <CKEditor
+                                disabled
                                 editor={ ClassicEditor }
                                 config={{
                                     toolbar: {
@@ -153,17 +171,6 @@ return (
                                 } }
                             />
                             
-                        </Form.Group>
-                        <Form.Group className="col-md-12">
-                            <Form.Label>
-                                Question Image
-                            </Form.Label> 
-                            <Form.Control name="image" type="file" 
-                            onChange={uploadImage}
-                            />  
-                            <div style={{ height: '130px', overflow: 'hidden', marginTop: '10px' }}>
-                                <img src={blogImage ? blogImage: data && data.image} />
-                            </div>
                         </Form.Group>  
                         <Form.Group className="col-md-12">
                             <Form.Label>
@@ -171,6 +178,7 @@ return (
                             </Form.Label>
                             
                             <CKEditor
+                                disabled
                                 editor={ ClassicEditor }
                                 config={{
                                     toolbar: {
@@ -204,7 +212,7 @@ return (
                             onClick={handleSubmit}
                             disabled={!loading && btnDisabled}
                             className="btn dark btn-md">
-                                {loading ? 'processing...': 'Update Question'} 
+                                {loading ? 'processing...': 'Upload Solution'} 
                             </Button>
                         </Form.Group>
                         </Form>

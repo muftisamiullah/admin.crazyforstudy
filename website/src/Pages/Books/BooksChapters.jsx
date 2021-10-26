@@ -233,6 +233,7 @@ return (
                 <h3 className="mt-0">Question: </h3>  
                 <div className="clearfix"></div>      
                 {problems?.map(problem => {
+                    // {console.log(problem)}
                     return (
                         <Question key={problem?._id} problem={problem} search={search}/>
                     )

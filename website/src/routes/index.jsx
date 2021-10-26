@@ -48,6 +48,7 @@ import RoleModuleList from '../Pages/Permission/RoleModuleList.jsx';
 
 import UploadChapters from '../Pages/Chapters/UploadChapters.jsx';
 import ModifyChapters from '../Pages/Chapters/ModifyChapters.jsx';
+import UploadSolution from '../Pages/Chapters/UploadSolution.jsx';
 
 import SamplePage from '../Pages/Sample/SamplePage.jsx'
 
@@ -180,8 +181,12 @@ export const privateRoutes = [
         component: UploadChapters
     },
     {
-        path: '/books-chapter-add-question/:q_id?',
+        path: '/books-chapter-add-question/:book_id?/:q_id?',
         component: ModifyChapters
+    },
+    {
+        path: '/books-chapter-question-upload/:book_id?/:q_id?',
+        component: UploadSolution
     },
     {
         path: '/books-rating-review/:isbn/:book_id/:review_id?',
