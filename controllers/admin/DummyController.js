@@ -235,10 +235,49 @@ const getCountOfQuestionsAndSolutions = async(req,res) => {
     // })
 }
 
+const deleteSomeBooks = async(req, res) => {
+    const data = req.body;
+    let FinalData = [];
+    try {
+        let results = [];
+        fs.createReadStream(req.file.path)
+            .pipe(csv())
+            .on('data', (data) => results.push(data))
+            .on('end', () => {
+                results.forEach(dummy => {
+                    FinalData.push( 
+                        dummy.ISBN13, 
+                    )
+                })
+                thatFunction(res, FinalData, function() {
+                    fs.unlinkSync(req.file.path)
+                })
+            });
+    } catch (error) {
+        return res.status(409).json({
+            message: "External Error occured",
+            errors: error.message
+        });
+    }
+}
+const thatFunction = async(res, FinalData, callback) => {
+    // console.log(FinalData)
+    // // return;
+    // await Book.deleteMany({ISBN13 : { $in: FinalData }}).then(() => {
+    //     res.status(200).send('Data deleted')
+    //     callback()
+    // }).catch(error => {
+    //     return res.status(409).json({
+    //         message: "Error occured while Inserting Data",
+    //         errors: error.message
+    //     });
+    // })
+}
 module.exports = {
     UpdateDummyCollection,
     UpdateDummy1Collection,
     InsertUpdatedDummyCollection,
     updateAnswersInAlreadyPresentData,
     getCountOfQuestionsAndSolutions,
+    deleteSomeBooks
 }

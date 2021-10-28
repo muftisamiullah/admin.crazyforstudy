@@ -52,7 +52,6 @@ function SingleSubject({sub}) {
         </div>
         <hr className="mt-1 mb-1"/>
         <div className="subject-card-heading">
-            <div></div>
             <div><Button className="btn-sm btn-primary " onClick={e => history.push(`/subject-seo/qa/update/${sub._id}`)}>
                         Update Seo Q and A
                     </Button>

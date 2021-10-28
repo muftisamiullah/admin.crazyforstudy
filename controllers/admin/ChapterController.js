@@ -8,6 +8,8 @@ const QuizletChapter = require('../../models/admin/QuizletChapter.js');
 const Notify = require('../../models/admin/Notification.js');
 const emails = require('../../emails/emailTemplates');
 var nodemailer = require('nodemailer');
+const docxParser = require('docx-parser');
+const {decode} = require('html-entities');
 
 const getChapters = async (isbn) => {
     try {
@@ -771,49 +773,80 @@ const GetSingleQuestion = async (req, res) => {
 
 const AddSingleQuestion = async (req, res) => {
     try {
-        let update = req.body;
-        if(update.answer){
-            const chap = await Chapter.findByIdAndUpdate({ _id: req.params.q_id }, update);
-            console.log(chap)
-            const notifyData = {
-                title: chap.question,
-                info: `<p>You will get solution for <strong>${(chap.question).substr(0,30)}</strong></p>`,
-                type: 'TBS',
-                user_Id: req.body.user_Id,
-            }
-            const noti = new Notify(notifyData);
-            const dt = await noti.save();
-            const student = await Student.findOne({_id:req.body.user_Id});
-            const admins = await Admin.find({ role:1 }, {email:1});
-            var transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: process.env.email,
-                    pass: process.env.password
-                }
+        await Chapter.findByIdAndUpdate({ _id: req.params.q_id }, req.body)
+            .then(response => {
+                return res.status(201).json({
+                    message: "Question, Updated"
+                })
+            })
+            .catch(error => {
+                return res.status(500).json({
+                    message: "Error Found",
+                    errors: error.message
+                })
             });
-            const output = emails.askTbsSolution(student.Name, req.body.book_name, req.body.chapter_name, req.body.section_name, req.body.question)
-            const adminMail = emails.askTbsSolutionAdmin(student.Name, req.body.book_name, req.body.chapter_name, req.body.section_name, req.body.question, req.body.q_id)
-    
-            var mailOptionsStudent = {
-                from: process.env.email,
-                to: student.Email,
-                subject: 'Crazy For Study is working on your question!',
-                text: output
-            };
-    
-            transporter.sendMail(mailOptionsStudent, function(error, info) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log('Email sent: ' + info.response);
-                }
+    } catch (error) {
+        res.send({
+            error: true,
+            code: 501,
+            message: error.message
+        })
+    }
+}
+
+const UpdateSingleSolution = async (req, res) => {
+    try {
+        docxParser.parseDocx(req.file.path, async function(data){
+            // let questionArray = data.split('(a)');
+            // let finalArray = []
+            // // console.log(questionArray, "questionArray")
+
+            // questionArray.forEach( (question, key) => {
+            //     // console.log(question,"key", key);
+            //     let ToDetermine = decode(question).split('To determine:',2).pop().split('Introduction:')[0];
+            //     let desToDetermine = decode(ToDetermine).trim().replace(/\r?\n|\r/g, "");
+
+            //     let Introduction = decode(question).split('Introduction:',2).pop().split('Explanation:')[0];
+            //     let desIntroduction = decode(Introduction).trim().replace(/\r?\n|\r/g, "");
+
+            //     let Explanation = decode(question).split('Explanation:',2).pop().split('Conclusion:')[0];
+            //     let desExplanation = decode(Explanation).trim().replace(/\r?\n|\r/g, "");
+                
+            //     let Conclusion = decode(question).split('Conclusion:',2).pop().split('(b)')[0];
+            //     let desConclusion = decode(Conclusion).trim().replace(/\r?\n|\r/g, "");
+            //     console.log(desToDetermine)
+            //     console.log(desIntroduction)
+            //     console.log(desExplanation)
+            //     console.log(desConclusion)
+            //     return;
+
+            //     if(ToDetermine !== '')
+            //     finalArray.push({
+            //         "user_id": user_id,
+            //         "class_id": class_id,
+            //         "class_name": class_name,
+            //         "chapter_id": chapter_id,
+            //         "chapter_name": chapter_name,
+            //         "chapter_no": chapter_no,
+            //         "extension": extension,
+            //     })
+            // })
+            console.log(data)
+            let converted = decode(data)
+            let new1 =  converted.replace(/\n/g, "<br />")
+            console.log(new1)
+            await Chapter.findByIdAndUpdate({ _id: req.params.q_id },{answer:new1})
+            .then(response => {
+                return res.status(201).json({
+                    message: "Question, Updated"
+                })
+            })
+            .catch(error => {
+                return res.status(500).json({
+                    message: "Error Found",
+                    errors: error.message
+                })
             });
-        }else{
-            const chap = await Chapter.findByIdAndUpdate({ _id: req.params.q_id }, update);
-        }
-        return res.status(200).json({
-            message: "Question, Updated"
         })
     } catch (error) {
         res.send({
@@ -2033,6 +2066,7 @@ module.exports = {
     getBookProblems,
     GetSingleQuestion,
     AddSingleQuestion,
+    UpdateSingleSolution,
     getBookOnlyProblems,
     searchQuestion,
     downloadBooks,

@@ -42,7 +42,7 @@ const Register = async(req, res) => {
         var mailOptionsStudent = {
             from: process.env.email,
             to: newStudent.Email,
-            subject: 'Verify your email address',
+            subject: 'Welcome to Crazy For Study!',
             // html: `<h1>Welcome</h1><p><a href=${link}>Click here to verify</a></p>`
             html: studentMail
         };
@@ -272,6 +272,8 @@ const sendResetEmail = async(req, res) =>{
 
 const verifyOtp = async(req,res) => {
     try{
+        console.log(req.body);
+        return;
         const token = await Token.findOne({ token: req.body.otp });
         // token is not found into database i.e. token may have expired 
         if (!token) {

@@ -5,9 +5,11 @@ const Questions = require('../../models/admin/Question');
 
 const SubSubjects = async(req, res) => {
     try {
-        const SubSubjects = await Sub_Subject.find({ subject: req.params.subject_name }, { __v: 0 }).collation( { locale: 'en', strength: 2 });
+        const SubSubjects = await Sub_Subject.find({ subject: req.params.subject_name }, {  subject:1, sub_subject:1,_id:1, subject_id:1 }).collation( { locale: 'en', strength: 2 });
+        const SubjectSeo = await Subject.findOne({ subject: req.params.subject_name }, {  textbook_seo_details:1, qa_seo_details:1 }).collation( { locale: 'en', strength: 2 });
         return res.status(200).json({
-            data: SubSubjects
+            data: SubSubjects,
+            subject_seo: SubjectSeo
         });
     } catch (error) {
         res.status(409).json({

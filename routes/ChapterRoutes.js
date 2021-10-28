@@ -48,6 +48,7 @@ router
     .post('/qc-answers',  checkAuth, Chapter.QCAnswer)
     .get('/single-question/:q_id',  checkAuth, Chapter.GetSingleQuestion)
     .patch('/add-question/:q_id',  checkAuth, Chapter.AddSingleQuestion)
+    .patch('/upload-solution/:q_id', upload.single('file'), checkAuth, Chapter.UpdateSingleSolution)
     .post('/upload', upload.single('file'), checkAuth, Chapter.UploadChapters)
     .post('/update-chapter-csv', upload.single('file'), checkAuth, Chapter.UdateChaptersCSV)
     .post('/import-data', checkAuth, Chapter.importChapter)
