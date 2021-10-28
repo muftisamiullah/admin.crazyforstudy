@@ -260,6 +260,14 @@ const deleteSomeBooks = async(req, res) => {
         });
     }
 }
+
+const postAllBooks = async(req, res) => {
+    const books = await Book.find({},{ISBN13:1,total_question:1, BookName:1, question_uploaded:1});
+    await Dummy1.insertMany(books).then(() => {
+        res.status(200).send('Data inserted')
+    })  
+}
+
 const thatFunction = async(res, FinalData, callback) => {
     // console.log(FinalData)
     // // return;
@@ -279,5 +287,6 @@ module.exports = {
     InsertUpdatedDummyCollection,
     updateAnswersInAlreadyPresentData,
     getCountOfQuestionsAndSolutions,
-    deleteSomeBooks
+    deleteSomeBooks,
+    postAllBooks,
 }

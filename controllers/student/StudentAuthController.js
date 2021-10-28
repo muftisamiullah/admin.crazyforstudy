@@ -272,9 +272,10 @@ const sendResetEmail = async(req, res) =>{
 
 const verifyOtp = async(req,res) => {
     try{
-        console.log(req.body);
-        return;
-        const token = await Token.findOne({ token: req.body.otp });
+        console.log(req.body.otp);
+        let code = req.body.otp;
+        let otp = code[1]+code[2]+code[3]+code[4];
+        const token = await Token.findOne({ token: otp });
         // token is not found into database i.e. token may have expired 
         if (!token) {
             return res.status(400).send({ msg: 'Otp not found.' });

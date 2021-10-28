@@ -28,6 +28,7 @@ router
     .post('/update-answers',checkAuth, Dummy.updateAnswersInAlreadyPresentData)
 
     .get('/get-count/:isbn', Dummy.getCountOfQuestionsAndSolutions)
+    // .post('/post-all-books', Dummy.postAllBooks)
     .delete('/delete', upload.single('file'),Dummy.deleteSomeBooks)
 ;
 

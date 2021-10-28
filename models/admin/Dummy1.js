@@ -1,10 +1,16 @@
 const mongoose = require('mongoose');
 
 const Dummy1Schema = new mongoose.Schema({
-    ISBN: {
+    ISBN13: {
         type: String,
     },
     BookName: {
+        type: String,
+    },
+    total_question: {
+        type: String,
+    },
+    question_uploaded: {
         type: String,
     },
 });

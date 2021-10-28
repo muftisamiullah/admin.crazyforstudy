@@ -225,8 +225,6 @@ const getAllBook = async(req, res) => {
                 hasPrevPage: result.paginator.hasPrevPage
             });
         });
-        
-        
     } catch (error) {
         res.status(409).json({
             message: "Error occured",
