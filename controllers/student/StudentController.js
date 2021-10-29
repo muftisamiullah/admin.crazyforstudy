@@ -15,6 +15,14 @@ Date.prototype.addMinutes = function(minutes) {
 const askQuestion = async (req, res) => {
     try {
         const data = req.body;
+        const cond = {user_Id: req.body.user_Id, type: 'QA'}    
+        const count =  await Question.find(cond).count();
+        if(count > 50){
+            // const error = new Error("message")
+            // error.code = "501"
+            // throw error;
+            return res.status(501).json({error: true, message: "User can ask only 5o questions"}) 
+        }
         data.image0 = req.files?.image0 ? req?.files?.image0[0].filename : '';
         data.image1 = req.files?.image1 ? req?.files?.image1[0].filename : '';
         data['last_submition'] = "04:00";
