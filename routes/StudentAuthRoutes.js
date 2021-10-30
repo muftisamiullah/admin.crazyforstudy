@@ -55,6 +55,7 @@ router
     .post('/get-user',studentAuth, Auth.getUser)
     .post('/edit-user-profile',upload.single('file'), studentAuth, Auth.editUser)
     .get('/getcountries', Auth.getCountryList)  
-    .post('/update-pass', Auth.updatePass);
+    .post('/update-pass', Auth.updatePass)
+    .post('/update-image-name', Auth.updateImageName);
     
 module.exports = router;

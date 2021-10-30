@@ -381,6 +381,22 @@ const updatePass = async(req,res) => {
     }
 }
 
+const updateImageName = async(req,res) => {
+    try{
+        const filter = {Email: req.body.email};
+        const stud = await Student.findOneAndUpdate(filter, {'img': req.body.image_name })
+        if (stud) {
+            return res.status(200).send({ msg: 'Image changed successfully' });
+        } else {
+            return res.status(401).send({ msg: 'Image couldnt be changed!' });
+        }
+    }catch(e){
+        return res.status(502).json({
+            message: "Something Went Wrong" + e
+        });
+    }
+}
+
 
 module.exports = {
     Register,
@@ -397,4 +413,5 @@ module.exports = {
     getCountryList,
     editUser,
     updatePass,
+    updateImageName
 }
