@@ -9,6 +9,7 @@ router
     // .post('/questions/:child_subject', Subject.GetQuestionAndAnswers)
     .post('/questions/:subject/:sub_subject', Subject.GetQuestionAndAnswers2)
     .post('/get-answer/:old_id', Subject.GetAnswer)
+    .post('/get-answer-sub/:old_id', Subject.GetAnswerSub)
 ;
     
 module.exports = router;

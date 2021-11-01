@@ -71,7 +71,7 @@ const GetQuestionAndAnswers = async (req, res) => {
 
 const GetQuestionAndAnswers2 = async (req, res) => {
     try {
-        const questions = await Questions.find({sub_subject:req.params.sub_subject, subject:req.params.subject}).skip(req.body.pageno * req.body.limit).limit(parseInt(req.body.limit))
+        const questions = await Questions.find({sub_subject:req.params.sub_subject, subject:req.params.subject},{shortanswer:0, completeanswer:0}).skip(req.body.pageno * req.body.limit).limit(parseInt(req.body.limit))
         const total = await Questions.countDocuments(Questions.find({ sub_subject: req.params.sub_subject, subject: req.params.subject }));
         res.status(200).json({
             data: questions,
@@ -86,6 +86,22 @@ const GetQuestionAndAnswers2 = async (req, res) => {
 }
 
 const GetAnswer = async (req, res) => {
+    try {
+        const questions = await Questions.findOne({old_qid:req.params.old_id},{completeanswer:0}).lean()
+        const childSubject =  await ChildSubjects.findOne({chield_subject_id:questions.chield_subject_id})
+        questions.cheild_subject = childSubject.chield_subject;
+        res.status(200).json({
+            data: questions,
+        });
+    } catch (error) {
+        res.status(409).json({
+            message: "Error occured",
+            errors: error.message
+        });
+    }
+}
+
+const GetAnswerSub = async (req, res) => {
     try {
         const questions = await Questions.findOne({old_qid:req.params.old_id}).lean()
         const childSubject =  await ChildSubjects.findOne({chield_subject_id:questions.chield_subject_id})
@@ -107,5 +123,6 @@ module.exports = {
     GetChildSubjects,
     GetQuestionAndAnswers,
     GetAnswer,
+    GetAnswerSub,
     GetQuestionAndAnswers2,
 }
