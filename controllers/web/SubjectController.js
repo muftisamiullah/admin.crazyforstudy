@@ -71,8 +71,7 @@ const GetQuestionAndAnswers = async (req, res) => {
 
 const GetQuestionAndAnswers2 = async (req, res) => {
     try {
-        const questions = await Questions.find({sub_subject:req.params.sub_subject, subject:req.params.subject},{shortanswer:0, completeanswer:0})
-        // .skip(req.body.pageno * req.body.limit).limit(parseInt(req.body.limit))
+        const questions = await Questions.find({sub_subject:req.params.sub_subject, subject:req.params.subject},{shortanswer:0, completeanswer:0}).skip(req.body.pageno * req.body.limit).limit(parseInt(req.body.limit))
         const total = await Questions.countDocuments(Questions.find({ sub_subject: req.params.sub_subject, subject: req.params.subject }));
         res.status(200).json({
             data: questions,
