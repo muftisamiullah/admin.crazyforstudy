@@ -71,7 +71,8 @@ const GetQuestionAndAnswers = async (req, res) => {
 
 const GetQuestionAndAnswers2 = async (req, res) => {
     try {
-        const questions = await Questions.find({sub_subject:req.params.sub_subject, subject:req.params.subject},{shortanswer:0, completeanswer:0}).skip(req.body.pageno * req.body.limit).limit(parseInt(req.body.limit))
+        const questions = await Questions.find({sub_subject:req.params.sub_subject, subject:req.params.subject},{shortanswer:0, completeanswer:0})
+        // .skip(req.body.pageno * req.body.limit).limit(parseInt(req.body.limit))
         const total = await Questions.countDocuments(Questions.find({ sub_subject: req.params.sub_subject, subject: req.params.subject }));
         res.status(200).json({
             data: questions,
@@ -87,9 +88,9 @@ const GetQuestionAndAnswers2 = async (req, res) => {
 
 const GetAnswer = async (req, res) => {
     try {
-        const questions = await Questions.findOne({old_qid:req.params.old_id},{completeanswer:0}).lean()
-        const childSubject =  await ChildSubjects.findOne({chield_subject_id:questions.chield_subject_id})
-        questions.cheild_subject = childSubject.chield_subject;
+        const questions = await Questions.findOne({_id:req.params._id},{completeanswer:0}).lean()
+        const childSubject =  await ChildSubjects.findOne({chield_subject_id:questions?.chield_subject_id})
+        questions.cheild_subject = childSubject?.chield_subject;
         res.status(200).json({
             data: questions,
         });
@@ -103,9 +104,32 @@ const GetAnswer = async (req, res) => {
 
 const GetAnswerSub = async (req, res) => {
     try {
-        const questions = await Questions.findOne({old_qid:req.params.old_id}).lean()
-        const childSubject =  await ChildSubjects.findOne({chield_subject_id:questions.chield_subject_id})
-        questions.cheild_subject = childSubject.chield_subject;
+        const questions = await Questions.findOne({_id:req.params._id}).lean()
+        const childSubject =  await ChildSubjects.findOne({chield_subject_id:questions?.chield_subject_id})
+        questions.cheild_subject = childSubject?.chield_subject;
+        res.status(200).json({
+            data: questions,
+        });
+    } catch (error) {
+        res.status(409).json({
+            message: "Error occured",
+            errors: error.message
+        });
+    }
+}
+
+const GetRandomThreeQuestions = async (req, res) => {
+    try {
+        // const questions = await Questions.find({sub_subject:req.params.sub_subject, subject:req.params.subject, old_qid: { $exists: true } },{shortanswer:0, completeanswer:0}).skip(Math.random).limit(parseInt(req.params.limit))
+        const questions = await Questions.aggregate([
+            { $match: { sub_subject:req.params.sub_subject_name, subject:req.params.subject_name, question: { $exists: true } }  },
+            { $sample: { size: 3 } },
+            {
+                $project: {
+                    completeanswer: 0,
+                }
+            }
+        ]);
         res.status(200).json({
             data: questions,
         });
@@ -125,4 +149,5 @@ module.exports = {
     GetAnswer,
     GetAnswerSub,
     GetQuestionAndAnswers2,
+    GetRandomThreeQuestions,
 }
