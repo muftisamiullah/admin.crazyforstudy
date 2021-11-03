@@ -47,13 +47,11 @@ export default function CreateSubject() {
     
     useEffect( () => {
         if(response !== null){
-            const subRes = response.data.textbook_seo_details;
-            console.log(subRes);
+            console.log(response.data)
+            const subRes = response.data.qa_seo_details;
             sDispatch({type: 'SET_SUBJECT', payload: subRes});
             if(sState){
-
                 if(subRes){
-                    
                         setMetaTitle(subRes.meta_title)
                         setMetaDescription(subRes.meta_description)
                         setMetaKeywords(subRes.meta_keywords)
