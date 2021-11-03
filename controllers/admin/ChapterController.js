@@ -2010,7 +2010,7 @@ const UpdateAnswerTbs = async (req, res) => {
                     pass: process.env.password
                 }
             });
-            const output = emails.askTbsSolutionSolved(response.book_name, response.chapter_name, response.section_name,response.question, response.answer, response._id)
+            const output = emails.askTbsSolutionSolved(response.book_name, response.chapter_name, response.section_name,response.question, update.answer, response._id)
             var mailOptions = {
                 from: process.env.email,
                 to: email_ids,

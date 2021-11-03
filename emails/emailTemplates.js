@@ -13,7 +13,7 @@ const forgotPassword = (name, email, code) =>
                     <table width="600" cellspacing="0" cellpadding="0" border="0" style="border:solid 1px #f8d021">
                         <tbody>
                             <tr>
-                                <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"></a> </td>
+                                <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"/></a> </td>
                             </tr>
                             <tr>
                                 <td valign="middle" align="left" style="background:#fff;padding:0 10px;font-size:15px;line-height:24px;color:#333;padding:10px; font-family:Arial,Helvetica,sans-serif;">
@@ -69,10 +69,10 @@ const forgotPassword = (name, email, code) =>
                                                         <td valign="middle" align="center" style="font-size:12px;font-weight:bold;color:#333;padding:4px 0 0 5px;color:#ffffff;font-family:Arial,Helvetica,sans-serif;" colspan="3">Follow us</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"> </a></td>
-                                                        <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"> </a></td>
-                                                        <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"> </a></td>
-                                                        <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"> </a> </td>
+                                                        <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"/> </a> </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -103,7 +103,7 @@ const welcomeEmail = (email, password, link) =>
                         <table width="600" cellspacing="0" cellpadding="0" border="0" style="border:solid 1px #f8d021">
                             <tbody>
                                 <tr>
-                                <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"></a> </td>
+                                <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"/></a> </td>
                                 </tr>
                                 <tr>
                                 <td valign="middle" align="left" style="background:#fff;padding:0 10px;font-size:15px;line-height:24px;color:#333;padding:10px; font-size:15px; font-family:Arial,Helvetica,sans-serif;">
@@ -134,7 +134,7 @@ const welcomeEmail = (email, password, link) =>
                                             <td></td>
                                             <td></td>
                                             <td valign="bottom" align="right" style="background:#fff;padding:0 5px 10px 5px;color:#333;font-size:11px">
-                                                <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"><img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd">
+                                                <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"/><img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd"/>
                                             </td>
                                             </tr>
                                         </tbody>
@@ -156,10 +156,10 @@ const welcomeEmail = (email, password, link) =>
                                                         <td valign="middle" align="center" style="font-size:12px;font-weight:bold;color:#333;padding:4px 0 0 5px;color:#ffffff;font-family:Arial,Helvetica,sans-serif;" colspan="3">Follow us</td>
                                                         </tr>
                                                         <tr>
-                                                            <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"> </a></td>
-                                                            <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"> </a></td>
-                                                            <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"> </a></td>
-                                                            <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"> </a> </td>
+                                                            <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"/> </a></td>
+                                                            <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"/> </a></td>
+                                                            <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"/> </a></td>
+                                                            <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"/> </a> </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -213,7 +213,7 @@ const subscriptionEmail = (name,email,pay_id, sub_id) => {
                         <table width="600" cellspacing="0" cellpadding="0" border="0" style="border:solid 1px #f8d021">
                             <tbody>
                                 <tr>
-                                <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"></a> </td>
+                                <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"/></a> </td>
                                 </tr>
                                 <tr>
                                 <td valign="middle" align="left" style="background:#fff;padding:0 10px;font-size:15px;line-height:24px;color:#333;padding:10px;font-family:Arial,Helvetica,sans-serif;">
@@ -226,9 +226,6 @@ const subscriptionEmail = (name,email,pay_id, sub_id) => {
                                         <li> 50 new questions every month.</li>
                                     </ul>
                                     <p></p>
-                                    <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;">
-                                        Your subscription will renew on2021-08-24 and the payment for the same will be auto-deducted from your registered payment details.
-                                    </p>
                                     <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;">
                                         If you feel dissatisfied with our services, you can cancel anytime and get a refund in your registered bank account within 24 to 72 hours.
                                     </p>
@@ -254,8 +251,8 @@ const subscriptionEmail = (name,email,pay_id, sub_id) => {
                                             <td></td>
                                             <td></td>
                                             <td valign="bottom" align="right" style="background:#fff;padding:0 5px 10px 5px;color:#333;font-size:11px">
-                                                <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd">
-                                                <img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd">
+                                                <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"/>
+                                                <img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd"/>
                                             </td>
                                             </tr>
                                         </tbody>
@@ -277,10 +274,10 @@ const subscriptionEmail = (name,email,pay_id, sub_id) => {
                                                         <td valign="middle" align="center" style="font-size:12px;font-weight:bold;color:#333;padding:4px 0 0 5px;color:#ffffff;font-family:Arial,Helvetica,sans-serif;" colspan="3">Follow us</td>
                                                         </tr>
                                                         <tr>
-                                                            <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"> </a></td>
-                                                            <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"> </a></td>
-                                                            <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"> </a></td>
-                                                            <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"> </a> </td>
+                                                            <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"/> </a></td>
+                                                            <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"/> </a></td>
+                                                            <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"/> </a></td>
+                                                            <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"/> </a> </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -340,7 +337,7 @@ const cancelSubscription = (name) => {
                    <table width="600" cellspacing="0" cellpadding="0" border="0" style="border:solid 1px #f8d021">
                       <tbody>
                          <tr>
-                            <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"></a> </td>
+                            <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"/></a> </td>
                          </tr>
                          <tr>
                             <td valign="middle" align="left" style="background:#fff;padding:0 10px;font-size:15px;line-height:24px;color:#333;padding:10px; font-family:Arial,Helvetica,sans-serif;">
@@ -363,7 +360,7 @@ const cancelSubscription = (name) => {
                                         <td></td>
                                         <td></td>
                                         <td valign="bottom" align="right" style="background:#fff;padding:0 5px 10px 5px;color:#333;font-size:11px">
-                                           <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"><img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd">
+                                           <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"/><img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd"/>
                                         </td>
                                      </tr>
                                   </tbody>
@@ -385,10 +382,10 @@ const cancelSubscription = (name) => {
                                                     <td valign="middle" align="center" style="font-size:12px;font-weight:bold;color:#333;padding:4px 0 0 5px;color:#ffffff;font-family:Arial,Helvetica,sans-serif;" colspan="3">Follow us</td>
                                                  </tr>
                                                  <tr>
-                                                    <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"> </a></td>
-                                                    <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"> </a></td>
-                                                    <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"> </a></td>
-                                                    <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"> </a> </td>
+                                                    <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"/> </a></td>
+                                                    <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"/> </a></td>
+                                                    <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"/> </a></td>
+                                                    <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"/> </a> </td>
                                                     </tr>
                                               </tbody>
                                            </table>
@@ -440,7 +437,7 @@ const newQuestionRecieved = (question, subject, sub_subject, subject_id, sub_sub
                       <table width="600" cellspacing="0" cellpadding="0" border="0" style="border:solid 1px #f8d021">
                          <tbody>
                             <tr>
-                               <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"></a> </td>
+                               <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"/></a> </td>
                             </tr>
                             <tr>
                                <td valign="middle" align="left" style="background:#fff;padding:0 10px;font-size:15px;line-height:24px;color:#333;padding:10px;font-family:Arial,Helvetica,sans-serif;">
@@ -467,7 +464,7 @@ const newQuestionRecieved = (question, subject, sub_subject, subject_id, sub_sub
                                            <td></td>
                                            <td></td>
                                            <td valign="bottom" align="right" style="background:#fff;padding:0 5px 10px 5px;color:#333;font-size:11px">
-                                           <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"><img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd">
+                                           <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"/><img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd"/>
                                        </td>
                                         </tr>
                                      </tbody>
@@ -489,10 +486,10 @@ const newQuestionRecieved = (question, subject, sub_subject, subject_id, sub_sub
                                                        <td valign="middle" align="center" style="font-size:12px;font-weight:bold;color:#333;padding:4px 0 0 5px;color:#ffffff;font-family:Arial,Helvetica,sans-serif;" colspan="3">Follow us</td>
                                                     </tr>
                                                     <tr>
-                                                    <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"> </a></td>
-                                                    <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"> </a></td>
-                                                    <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"> </a></td>
-                                                    <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"> </a> </td>
+                                                    <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"/> </a></td>
+                                                    <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"/> </a></td>
+                                                    <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"/> </a></td>
+                                                    <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"/> </a> </td>
                                                 </tr>
                                                  </tbody>
                                               </table>
@@ -572,7 +569,7 @@ const ask50Solution = (user, question, shortanswer, completeanswer) => {
                       <table width="600" cellspacing="0" cellpadding="0" border="0" style="border:solid 1px #f8d021">
                          <tbody>
                             <tr>
-                               <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"></a> </td>
+                               <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"/></a> </td>
                             </tr>
                             <tr>
                                <td valign="middle" align="left" style="background:#fff;padding:0 10px;font-size:15px;line-height:24px;color:#333;padding:10px;font-family:Arial,Helvetica,sans-serif;">
@@ -599,7 +596,7 @@ const ask50Solution = (user, question, shortanswer, completeanswer) => {
                                            <td></td>
                                            <td></td>
                                            <td valign="bottom" align="right" style="background:#fff;padding:0 5px 10px 5px;color:#333;font-size:11px">
-                                           <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"><img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd">
+                                           <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"/><img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd"/>
                                        </td>
                                         </tr>
                                      </tbody>
@@ -621,10 +618,10 @@ const ask50Solution = (user, question, shortanswer, completeanswer) => {
                                                        <td valign="middle" align="center" style="font-size:12px;font-weight:bold;color:#333;padding:4px 0 0 5px;color:#ffffff;font-family:Arial,Helvetica,sans-serif;" colspan="3">Follow us</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"> </a></td>
-                                                        <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"> </a></td>
-                                                        <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"> </a></td>
-                                                        <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"> </a> </td>
+                                                        <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"/> </a> </td>
                                                     </tr>
                                                  </tbody>
                                               </table>
@@ -659,7 +656,7 @@ const ask50Rejection = (user, question, rejectionReason, rejectionReason1) => {
                       <table width="600" cellspacing="0" cellpadding="0" border="0" style="border:solid 1px #f8d021">
                          <tbody>
                             <tr>
-                               <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"></a> </td>
+                               <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"/></a> </td>
                             </tr>
                             <tr>
                                <td valign="middle" align="left" style="background:#fff;padding:0 10px;font-size:15px;line-height:24px;color:#333;padding:10px;font-family:Arial,Helvetica,sans-serif;">
@@ -686,7 +683,7 @@ const ask50Rejection = (user, question, rejectionReason, rejectionReason1) => {
                                            <td></td>
                                            <td></td>
                                            <td valign="bottom" align="right" style="background:#fff;padding:0 5px 10px 5px;color:#333;font-size:11px">
-                                           <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"><img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd">
+                                           <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"/><img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd"/>
                                        </td>
                                         </tr>
                                      </tbody>
@@ -708,10 +705,10 @@ const ask50Rejection = (user, question, rejectionReason, rejectionReason1) => {
                                                        <td valign="middle" align="center" style="font-size:12px;font-weight:bold;color:#333;padding:4px 0 0 5px;color:#ffffff;font-family:Arial,Helvetica,sans-serif;" colspan="3">Follow us</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"> </a></td>
-                                                        <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"> </a></td>
-                                                        <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"> </a></td>
-                                                        <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"> </a> </td>
+                                                        <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"/> </a> </td>
                                                     </tr>
                                                  </tbody>
                                               </table>
@@ -746,7 +743,7 @@ const askTbsSolution = (user, book_name, chapter_name, section_name, question) =
                       <table width="600" cellspacing="0" cellpadding="0" border="0" style="border:solid 1px #f8d021">
                          <tbody>
                             <tr>
-                               <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"></a> </td>
+                               <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"/></a> </td>
                             </tr>
                             <tr>
                                <td valign="middle" align="left" style="background:#fff;padding:0 10px;font-size:15px;line-height:24px;color:#333;padding:10px;font-family:Arial,Helvetica,sans-serif;">
@@ -772,7 +769,7 @@ const askTbsSolution = (user, book_name, chapter_name, section_name, question) =
                                            <td></td>
                                            <td></td>
                                            <td valign="bottom" align="right" style="background:#fff;padding:0 5px 10px 5px;color:#333;font-size:11px">
-                                           <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"><img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd">
+                                           <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"/><img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd"/>
                                        </td>
                                         </tr>
                                      </tbody>
@@ -794,10 +791,10 @@ const askTbsSolution = (user, book_name, chapter_name, section_name, question) =
                                                        <td valign="middle" align="center" style="font-size:12px;font-weight:bold;color:#333;padding:4px 0 0 5px;color:#ffffff;font-family:Arial,Helvetica,sans-serif;" colspan="3">Follow us</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"> </a></td>
-                                                        <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"> </a></td>
-                                                        <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"> </a></td>
-                                                        <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"> </a> </td>
+                                                        <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"/> </a> </td>
                                                     </tr>
                                                  </tbody>
                                               </table>
@@ -859,7 +856,7 @@ const askTbsSolutionSolved = (book_name, chapter_name, section_name, question, s
                       <table width="600" cellspacing="0" cellpadding="0" border="0" style="border:solid 1px #f8d021">
                          <tbody>
                             <tr>
-                               <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"></a> </td>
+                               <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"/></a> </td>
                             </tr>
                             <tr>
                                <td valign="middle" align="left" style="background:#fff;padding:0 10px;font-size:15px;line-height:24px;color:#333;padding:10px;font-family:Arial,Helvetica,sans-serif;">
@@ -888,7 +885,7 @@ const askTbsSolutionSolved = (book_name, chapter_name, section_name, question, s
                                            <td></td>
                                            <td></td>
                                            <td valign="bottom" align="right" style="background:#fff;padding:0 5px 10px 5px;color:#333;font-size:11px">
-                                           <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"><img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd">
+                                           <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"/><img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd"/>
                                        </td>
                                         </tr>
                                      </tbody>
@@ -910,10 +907,10 @@ const askTbsSolutionSolved = (book_name, chapter_name, section_name, question, s
                                                        <td valign="middle" align="center" style="font-size:12px;font-weight:bold;color:#333;padding:4px 0 0 5px;color:#ffffff;font-family:Arial,Helvetica,sans-serif;" colspan="3">Follow us</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"> </a></td>
-                                                        <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"> </a></td>
-                                                        <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"> </a></td>
-                                                        <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"> </a> </td>
+                                                        <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"/> </a> </td>
                                                     </tr>
                                                  </tbody>
                                               </table>
