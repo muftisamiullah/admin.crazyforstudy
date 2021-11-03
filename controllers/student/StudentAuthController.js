@@ -229,7 +229,7 @@ const sendResetEmail = async(req, res) =>{
             return res.status(404).send('User not Found');
         }
         const rand = Math.floor(1000 + (9000 - 1000) * Math.random());
-        
+        await Token.deleteMany({ _userId: student._id });
         var token = new Token({ _userId: student._id, token: rand });
         const tsaved = await token.save();
         if (!tsaved) return res.status(500).send("Error in saving Token");
@@ -272,7 +272,6 @@ const sendResetEmail = async(req, res) =>{
 
 const verifyOtp = async(req,res) => {
     try{
-        console.log(req.body.otp);
         let code = req.body.otp;
         let otp = code[1]+code[2]+code[3]+code[4];
         const token = await Token.findOne({ token: otp });

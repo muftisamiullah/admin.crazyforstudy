@@ -426,20 +426,24 @@ const adminCancelSubsciptionMail = (name, reason, message, start_date, differenc
 }
 
 const newQuestionRecieved = (question, subject, sub_subject, subject_id, sub_subject_id, q_id) => {
-    return `Hey User!
-    
-    Your solution is ready for the takeaway.
-    Here are the details of your question.
-    
-    Question: ${question}
-    
-    You’ll get the solution within 2-4 hours. As soon as we get the answer, you will be notified on both your email as well on your CFS My Account section.
-    
-    <a href=https://admin.crazyforstudy.com/solve-50-update-answer/${subject_id}/${sub_subject_id}/pending/undefined/${q_id}>Click here to answer the question</a>
-
-    Thank you for using our services,
-    
-    Team CFS`
+    return `<!doctype html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <title>Your solution is ready</title>
+        </head>
+        <body>
+            <p>Hey User!</p>
+            <p>Your solution is ready for the takeaway.</p>
+            <p>Here are the details of your question.</p>
+            <p><strong>Question:</strong> ${question}</p>
+            <p>You’ll get the solution within 2-4 hours. As soon as we get the answer, you will be notified on both your email as well on your CFS My Account section.</p>
+            <a href=https://admin.crazyforstudy.com/solve-50-update-answer/${subject_id}/${sub_subject_id}/pending/undefined/${q_id}>Click here to answer the question</a>
+            </br>
+            <p><strong>With regards,</strong></p>
+            <p><strong>Team Crazy For Study</strong></p>
+        </body>
+    </html>`
 }
 
 const newQuestionRecievedAdmin = (email, question, subject, sub_subject, subject_id, sub_subject_id, q_id) => {
@@ -488,47 +492,73 @@ const newQuestionAskedAdmin = (email, question, subject, sub_subject, subject_id
 }
 
 const ask50Solution = (user, question, shortanswer, completeanswer) => {
-    return `Hey there, ${user}!
-            Your solution is ready for the takeaway.
-            Here are the details of your question.
+    return `<!doctype html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <title>Your solution is ready for the takeaway.
+            </title>
+        </head>
+        <body>
+            <p>Hey there, ${user}!</p>
+            <p>Here are the details of your question.</p>
             
-            Question: ${question}
-            Answer: ${shortanswer}           
-            Explanation: ${completeanswer}
+            <p><strong>Question:</strong> ${question}</p>
+            <p><strong>Answer:</strong> ${shortanswer}</p>           
+            <p><strong>Explanation:</strong> ${completeanswer}</p>
             
-            Either <a href="https://www.crazyforstudy.com/user/my-question">click here</a> to get the solution or check out your Crazy For Study’s My Account and get your answer.
-            Thank you for using our services,
-            Team CFS`
+            <p> Either <a href="https://www.crazyforstudy.com/user/my-question">click here</a> to get the solution or check out your Crazy For Study’s My Account and get your answer.</p>
+            <p><strong>With regards,</strong></p>
+            <p><strong>Team Crazy For Study</strong></p>
+        </body>
+    </html>`
 }
 
 const ask50Rejection = (user, question, rejectionReason, rejectionReason1) => {
-    return `Hi ${user},
+    return `<!doctype html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <title>The professor has rejected your question.
+            </title>
+        </head>
+        <body>
+        <p>Hi ${user},</p>
     
-    The professor has rejected your question.
+        <p>The professor has rejected your question.</p>
 
-    Question:${question}
+        <p><strong>Question:</strong>${question}</p>
 
-    These are the reasons that lead to rejection: 
-    1. ${rejectionReason} 
-    2. ${rejectionReason1}
+        <p>These are the reasons that lead to rejection: </p></br>
+        <p>1. ${rejectionReason} </p>
+        <p>2. ${rejectionReason1}</p>
     
-    We request you to ask a question that has easy-to-understand language related to the subject.
+        <p>We request you to ask a question that has easy-to-understand language related to the subject.</p>
 
-    Thank you for using our services,
-    Team CFS`
+        <p><strong>With regards,</strong></p>
+        <p><strong>Team Crazy For Study</strong></p>`
 }
 
 const askTbsSolution = (user, book_name, chapter_name, section_name, question) => {
-    return `Hey there, ${user}\nHere are the details of your question:\n\n
-    Book: ${book_name}
-    Chapter: ${chapter_name}                                                                                                                                     
-    Section: ${section_name}
-    Question: ${question}\n
-    
-    You’ll get the solution within 2-4 hours. As soon as we get the answer, you will be notified on both your email as well on your CFS My Account section.
-    
-    Thank you for your patience,
-    Team CFS`
+    return `<!doctype html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <title>Here are the details of your asked question:
+            </title>
+        </head>
+        <body>
+        <p><strong>Book:</strong> ${book_name}</p>
+        <p><strong>Chapter:</strong> ${chapter_name}</p>                                                                                                                                 
+        <p><strong>Section:</strong> ${section_name}</p>
+        <p><strong>Question:</strong> ${question}\n</p>
+        
+        <p>You’ll get the solution within 2-4 hours. As soon as we get the answer, you will be notified on both your email as well on your CFS My Account section.</p>
+   
+        <p><strong>With regards,</strong></p>
+        <p><strong>Team Crazy For Study</strong></p>
+       </body>
+    </html>`
 }
 
 const askTbsSolutionAdmin = (user, book_name, chapter_name, section_name, question,q_id) => {

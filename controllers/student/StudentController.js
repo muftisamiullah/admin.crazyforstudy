@@ -158,7 +158,11 @@ const readNotifications = async (req, res) => {
 const checkBookIsbn = async (req, res) => {
     try {    
         const book_isbn = req.params.isbn;
-        const books = await Book.findOne({ISBN13: book_isbn});
+        console.log(JSON.parse(book_isbn));
+        const books = await Book.find({ISBN13: {$elemMatch : book_isbn}});
+        console.log(books);
+        return;
+        // const books = await Book.findOne({ISBN13: book_isbn});
         const student = await Student.findOne({_id:req.body.user_Id});
 
         const filter = {user_Id: req.body.user_Id, isbn: book_isbn}
