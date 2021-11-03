@@ -578,7 +578,7 @@ const ask50Solution = (user, question, shortanswer, completeanswer) => {
                                   
                                    <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;">Your solution is ready for the takeaway.  </p>
                                    <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;">Here are the details of your question. </p>
-                                      <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Question:</strong> ${question.substr(0,30)} </p>
+                                      <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Question:</strong> ${question} </p>
                                       <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Answer:</strong> ${shortanswer}  </p>
                                       <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Explanation:</strong> ${completeanswer}  </p>
                                   
@@ -730,88 +730,87 @@ const ask50Rejection = (user, question, rejectionReason, rejectionReason1) => {
 
 const askTbsSolution = (user, book_name, chapter_name, section_name, question) => {
     return `<!doctype html>
-    <html>
-       <head>
-          <meta charset="utf-8">
-          <title>Emailer</title>
-       </head>
-       <body>
-          <table width="600" cellspacing="0" cellpadding="0" border="0" align="center" style="border:1px #fff solid">
-             <tbody>
-                <tr>
-                   <td>
-                      <table width="600" cellspacing="0" cellpadding="0" border="0" style="border:solid 1px #f8d021">
-                         <tbody>
-                            <tr>
-                               <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"/></a> </td>
-                            </tr>
-                            <tr>
-                               <td valign="middle" align="left" style="background:#fff;padding:0 10px;font-size:15px;line-height:24px;color:#333;padding:10px;font-family:Arial,Helvetica,sans-serif;">
-                                  <strong>Hey there, ${user} </strong>&nbsp;
-                                 
-                                  
-                                   <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;">Here are the details of your question:   </p>
-                                   <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Book:</strong> ${book_name}</p>
-      <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Chapter:</strong> ${chapter_name}</p>
-      <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Section:</strong> ${section_name}</p>
-      <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Question Number:</strong> ${question.substr(0,30)}</p>
-    
-      <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;">You’ll get the solution within 2-4 hours. As soon as we get the answer, you will be notified on both your email as well on your CFS My Account section.</p> 
-                                      
-                               </td>
-                            </tr>
-                            <tr>
-                               <td>
-                                  <table width="100%">
-                                     <tbody>
-                                        <tr>
-                                           <td valign="bottom" align="left" style="background:#fff;padding:0 5px 10px 5px;color:#333;font-size:14px; font-family:Arial,Helvetica,sans-serif;">Thank you for your patience, <br><br>Team CFS  </td>
-                                           <td></td>
-                                           <td></td>
-                                           <td valign="bottom" align="right" style="background:#fff;padding:0 5px 10px 5px;color:#333;font-size:11px">
-                                           <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"/><img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd"/>
-                                       </td>
-                                        </tr>
-                                     </tbody>
-                                  </table>
-                               </td>
-                            </tr>
-                            <tr>
-                               <td>
-                                  <table width="100%" cellspacing="0" cellpadding="0">
-                                     <tbody>
-                                        <tr>
-                                           <td width="113" valign="top" align="left" style="background:#002147;padding:12px 0 5px 12px;color:#fff;font-size:15px;font-family:Arial,Helvetica,sans-serif;">Contact Us<br><a style="color:#fff;text-decoration:none" href="#" target="_blank">www.<span>crazyforstudy.com</span></a><br>
-                                              <a style="color:#fff;text-decoration:none;font-family:Arial,Helvetica,sans-serif;" href="#" target="_blank">support@<span>crazyforstudy.com</span></a><br>
-                                           </td>
-                                           <td width="299" valign="top" align="right" style="background:#002147;padding:5px 5px">
-                                              <table width="80" height="20px" cellspacing="2" cellpadding="0" border="0" style="font-family:Arial,Helvetica,sans-serif;color:#000;font-style:normal;padding:5px;font-size:11px;line-height:15px">
-                                                 <tbody>
-                                                    <tr>
-                                                       <td valign="middle" align="center" style="font-size:12px;font-weight:bold;color:#333;padding:4px 0 0 5px;color:#ffffff;font-family:Arial,Helvetica,sans-serif;" colspan="3">Follow us</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"/> </a></td>
-                                                        <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"/> </a></td>
-                                                        <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"/> </a></td>
-                                                        <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"/> </a> </td>
-                                                    </tr>
-                                                 </tbody>
-                                              </table>
-                                           </td>
-                                        </tr>
-                                     </tbody>
-                                  </table>
-                               </td>
-                            </tr>
-                         </tbody>
-                      </table>
-                   </td>
-                </tr>
-             </tbody>
-          </table>
-       </body>
-    </html>`
+      <html>
+         <head>
+            <meta charset="utf-8">
+            <title>Emailer</title>
+         </head>
+         <body>
+            <table width="600" cellspacing="0" cellpadding="0" border="0" align="center" style="border:1px #fff solid">
+               <tbody>
+                  <tr>
+                     <td>
+                        <table width="600" cellspacing="0" cellpadding="0" border="0" style="border:solid 1px #f8d021">
+                           <tbody>
+                              <tr>
+                                 <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd"/></a> </td>
+                              </tr>
+                              <tr>
+                                 <td valign="middle" align="left" style="background:#fff;padding:0 10px;font-size:15px;line-height:24px;color:#333;padding:10px;font-family:Arial,Helvetica,sans-serif;">
+                                    <strong>Hey there, ${user} </strong>&nbsp;
+                                    <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;">Here are the details of your question:   </p>
+                                    <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Book:</strong> ${book_name}</p>
+                                       <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Chapter:</strong> ${chapter_name}</p>
+                                       <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Section:</strong> ${section_name}</p>
+                                       <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Question Number:</strong> ${question}</p>
+                                    
+                                       <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;">You’ll get the solution within 2-4 hours. As soon as we get the answer, you will be notified on both your email as well on your CFS My Account section.</p> 
+                                       
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    <table width="100%">
+                                       <tbody>
+                                          <tr>
+                                             <td valign="bottom" align="left" style="background:#fff;padding:0 5px 10px 5px;color:#333;font-size:14px; font-family:Arial,Helvetica,sans-serif;">Thank you for your patience, <br><br>Team CFS  </td>
+                                             <td></td>
+                                             <td></td>
+                                             <td valign="bottom" align="right" style="background:#fff;padding:0 5px 10px 5px;color:#333;font-size:11px">
+                                             <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"/>
+                                             <img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd"/>
+                                          </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td>
+                                    <table width="100%" cellspacing="0" cellpadding="0">
+                                       <tbody>
+                                          <tr>
+                                             <td width="113" valign="top" align="left" style="background:#002147;padding:12px 0 5px 12px;color:#fff;font-size:15px;font-family:Arial,Helvetica,sans-serif;">Contact Us<br><a style="color:#fff;text-decoration:none" href="#" target="_blank">www.<span>crazyforstudy.com</span></a><br>
+                                                <a style="color:#fff;text-decoration:none;font-family:Arial,Helvetica,sans-serif;" href="#" target="_blank">support@<span>crazyforstudy.com</span></a><br>
+                                             </td>
+                                             <td width="299" valign="top" align="right" style="background:#002147;padding:5px 5px">
+                                                <table width="80" height="20px" cellspacing="2" cellpadding="0" border="0" style="font-family:Arial,Helvetica,sans-serif;color:#000;font-style:normal;padding:5px;font-size:11px;line-height:15px">
+                                                   <tbody>
+                                                      <tr>
+                                                         <td valign="middle" align="center" style="font-size:12px;font-weight:bold;color:#333;padding:4px 0 0 5px;color:#ffffff;font-family:Arial,Helvetica,sans-serif;" colspan="3">Follow us</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"/> </a></td>
+                                                         <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"/> </a></td>
+                                                         <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"/> </a></td>
+                                                         <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"/> </a> </td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+      </body>
+   </html>`
 }
 
 const askTbsSolutionAdmin = (user, book_name, chapter_name, section_name, question,q_id) => {
@@ -869,7 +868,7 @@ const askTbsSolutionSolved = (book_name, chapter_name, section_name, question, s
          <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Book:</strong> ${book_name}</p>
          <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Chapter:</strong> ${chapter_name}</p>
          <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Section:</strong> ${section_name}</p>
-         <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Question:</strong> ${question.substr(0,30)}</p>
+         <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Question:</strong> ${question}</p>
          <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Solution:</strong> ${solution}</p>
     
          <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;">In Order to view the solution check out your Crazy For Study’s My Account and get your answer. </p> 
