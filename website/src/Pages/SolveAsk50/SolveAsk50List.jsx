@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from 'react'
 import '../mainDash.css';
 import {  useHistory , useParams , Link, useLocation} from "react-router-dom";
 import { Button } from 'react-bootstrap'
-import SingleQuestion from '../../Pages/Solve50/components/SingleQuestion';
+import SingleQuestion from '../SolveAsk50/components/SingleQuestion';
 
 import useAllSubjects from '../../hooks/useAllSubjects';
 import useGetSubSubjects from '../../hooks/useGetSubSubjects';
@@ -52,9 +52,9 @@ export default function Solve50List() {
                                     const subject = split_val[1];
                                     const subject_id = split_val[0];
                                     if(subject === undefined){
-                                        history.push(`/solve-50`)
+                                        history.push(`/solve-ask50`)
                                     }else{
-                                        history.push(`/solve-50/${subject_id}`)
+                                        history.push(`/solve-ask50/${subject_id}`)
                                     }
                                 }}
                             >
@@ -75,9 +75,9 @@ export default function Solve50List() {
                                     const sub_subject = split_val[1];
                                     const sub_subject_id = split_val[0];
                                     if(sub_subject === undefined){
-                                        history.push(`/solve-50`)
+                                        history.push(`/solve-ask50`)
                                     }else{
-                                        history.push(`/solve-50/${params.subject_id}/${sub_subject_id}`)
+                                        history.push(`/solve-ask50/${params.subject_id}/${sub_subject_id}`)
                                     }
                                 }}
                             >
@@ -95,7 +95,7 @@ export default function Solve50List() {
                                 onChange={e => {   
                                     const filter = e.target.value;
                                     if(filter != 999){
-                                        history.push(`/solve-50/${params.subject_id}/${params.sub_subject_id}/${filter}`)
+                                        history.push(`/solve-ask50/${params.subject_id}/${params.sub_subject_id}/${filter}`)
                                     }
                                 }}
                             >

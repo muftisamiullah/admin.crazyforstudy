@@ -159,6 +159,58 @@ const getAllQuestions = async (req, res) => {
     }
 }
 
+const getAllQuestions50 = async (req, res) => {
+    try {
+        let pageno = parseInt(req.params.pageno);
+        let limit = parseInt(req.params.limit);
+        const myCustomLabels = {
+            totalDocs: 'itemCount',
+            docs: 'itemsList',
+            limit: 'perPage',
+            page: 'currentPage',
+            nextPage: 'next',
+            prevPage: 'prev',
+            totalPages: 'pageCount',
+            pagingCounter: 'slNo',
+            meta: 'paginator',
+          };
+        const options = {
+            page: pageno,
+            limit: limit,
+            customLabels: myCustomLabels,
+            collation: {
+              locale: 'en',
+            },
+            sort: {
+                created_at: -1 
+            }
+        };
+        let query = {type:'ASK50',flag:req.params.filter,subject_id:req.params.subject_id,sub_subject_id:req.params.sub_subject_id}  
+
+        await Question.paginate(query, options).then(result => {
+            return res.status(200).json({
+                data: result.itemsList,
+                itemCount: result.paginator.itemCount,
+                perPage: result.paginator.perPage,
+                currentPage: result.paginator.currentPage,
+                pageCount: result.paginator.pageCount,
+                next: result.paginator.next,
+                prev: result.paginator.prev,
+                slNo: result.paginator.slNo,
+                hasNextPage: result.paginator.hasNextPage,
+                hasPrevPage: result.paginator.hasPrevPage
+            });
+        });
+    } catch (error) {
+        console.log(error)
+        res.send({
+            error: true,
+            code: 501,
+            message: error.message
+        })
+    }
+}
+
 const getQuestionsFlagBased = async (req, res) => {
     try {
         console.log("dsadsd")
@@ -286,7 +338,59 @@ const UpdateAnswer = async (req, res) => {
     }
 }
 
-const RejectQuestion = async (req, res) => {
+const UpdateAnswer50 = async (req, res) => {
+    try {
+        let update = req.body
+        update.flag = "answered"
+        delete update.user_Id;
+        const response = await Question.findByIdAndUpdate({ _id: req.params.q_id }, update);
+        if(response){
+            const notifyData = {
+                // {_id:ObjectId('615c053b853c3902f351f007')}
+                title: response.question,
+                info: `<p>Your question has been solved <strong>${response.question?.substr(0,100)}</strong></p>`,
+                type: 'ASK50',
+                user_Id: response.user_Id,
+            }
+            console.log(notifyData);
+            const noti = new Notify(notifyData);
+            const dt = await noti.save();
+            const student = await Student.findOne({_id:response.user_Id});
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.email,
+                    pass: process.env.password
+                }
+            });
+            const output = emails.ask50Solution(student.Name, response.question, update.shortanswer, update.completeanswer)
+            var mailOptions = {
+                from: process.env.email,
+                to: student.Email,
+                subject: 'Your Homework Answer is ready!',
+                html: output
+            };
+            transporter.sendMail(mailOptions, function(error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+            return res.status(201).json({
+                message: "Question, Updated"
+            })
+        }
+    } catch (error) {
+        res.send({
+            error: true,
+            code: 501,
+            message: error.message
+        })
+    }
+}
+
+const RejectQuestion50 = async (req, res) => {
     try {
         let update = req.body
         update.flag = "rejected"
@@ -309,7 +413,7 @@ const RejectQuestion = async (req, res) => {
                     // {_id:ObjectId('615c053b853c3902f351f007')}
                     title: response.question,
                     info: `<p>Your question  <strong> ${response.question?.substr(0,100)}</strong> has been rejected</p>`,
-                    type: 'QA',
+                    type: 'ASK50',
                     user_Id: response.user_Id,
                 }
                 const noti = new Notify(notifyData);
@@ -355,8 +459,10 @@ module.exports = {
     chieldQuestion,
     deleteChieldQuestion,
     getAllQuestions,
+    getAllQuestions50,
     getQuestionsFlagBased,
     GetSingleQuestion,
     UpdateAnswer,
-    RejectQuestion,
+    UpdateAnswer50,
+    RejectQuestion50,
 }

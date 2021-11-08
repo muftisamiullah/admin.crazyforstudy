@@ -21,7 +21,7 @@ function Pagination({pagination}) {
             onChange={e => {
                 e.preventDefault();
                 console.log(e.target.value)
-                history.push(`/solve-50/${params?.subject_id}/${params?.sub_subject_id}/${e.target.value}`)
+                history.push(`/solve-ask50/${params?.subject_id}/${params?.sub_subject_id}/${e.target.value}`)
             }}
             >
                 <option value="1">{isLoading ?'Pro...':'Page'}</option>

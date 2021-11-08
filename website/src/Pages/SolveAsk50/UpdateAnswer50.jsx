@@ -17,7 +17,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from 'ckeditor5-classic-with-mathtype';
 
 
-export default function RejectQuestion() {
+export default function UpdateAnswer() {
     const history = useHistory();
     const params = useParams();
     
@@ -41,20 +41,37 @@ export default function RejectQuestion() {
     const [btnDisabled, setBtnDisbaled] = useState(false);
 
     let _URL = window.URL || window.webkitURL;
-    
+    const [blogImage, setBlogImage] = useState("");
+    const uploadImage = (e) => {
+        e.preventDefault();
+        var file, img, base64,blob, reader;
+        if ((file = e.target.files[0])) {
+            img = new Image();
+            blob = new Blob([file],{ type: file.type })
+            img.src = _URL.createObjectURL(blob);
+            reader = new FileReader(); 
+            reader.readAsDataURL(blob); 
+            reader.onload = function () { 
+               base64 = reader.result;
+               setBlogImage(base64);
+               setFormData({...formData,image: base64}) 
+            }  
+        }
+    }
     const [formData, setFormData] = useState({});
     async  function handleSubmit(e){
         e.preventDefault();
         let response = null;
         setLoading(true);
         setBtnDisbaled(true);
-        response = await axios.patch(`${API_URL}question/reject-question/${params.question_id}`,formData, options);
+        // console.log(formData); return;
+        response = await axios.patch(`${API_URL}question/update-answer-50/${params.question_id}`,formData, options);
         console.log(response);
         errorDispatch({type: 'SET_SUCCESS', payload: response.message});
         setBtnDisbaled(false);
         setLoading(false);
 
-        history.push(`/solve-50/${params.subject_id}/${params.sub_subject_id}/${params.filter}/${params.page_no}`);
+        history.push(`/solve-ask50/${params.subject_id}/${params.sub_subject_id}/${params.filter}/${params.page_no}`);
     
     }
     const {data, isLoading} = useGetSingleQuestion50();
@@ -78,7 +95,7 @@ return (
         <div className="main-area-all">
             <div className="dashboard_main-container">
                 <div className="dash-main-head">
-                    <h2>Reject Question</h2>
+                    <h2>Answer Question</h2>
                 </div>
                 {errorState.error && ( 
                     <Notification>{errorState.error}</Notification>
@@ -91,7 +108,7 @@ return (
                     <div className="row">
                     <div className="col-md-1 pl-3">
                     
-                    <Link to={`/solve-50/${params.subject_id}/${params.sub_subject_id}/${params.filter}/${params.page_no}`} className="btn btn-sm dark">
+                    <Link to={`/solve-ask50/${params.subject_id}/${params.sub_subject_id}/${params.page_no}`} className="btn btn-sm dark">
                     <span className="fa fa-arrow-left"></span>
                     </Link>
                     </div>
@@ -102,68 +119,10 @@ return (
                     <div className="col-md-12 row no-gutter p-0 mt-2">
                     {!isLoading && (
                     <Form method="POST" className="col-md-12 pl-2" encType="multipart/form-data">
-
+                       
                     <Form.Group className="col-md-12">
                             <Form.Label>
-                                Question:
-                            </Form.Label><br/>
-                            <Form.Label style={{color:"green"}}>
-                                <span dangerouslySetInnerHTML={{__html: data && data.question}}></span>
-                            </Form.Label>                        
-                        </Form.Group>
-                        
-                        {/* <Form.Group className="col-md-12">
-                            <Form.Label>
-                                Question Image
-                            </Form.Label> 
-                            <Form.Control name="image" type="file" 
-                            onChange={uploadImage}
-                            />  
-                            <div style={{ height: '130px', overflow: 'hidden', marginTop: '10px' }}>
-                                <img src={blogImage ? blogImage: data && data.image} />
-                            </div>
-                        </Form.Group>   */}
-                        <Form.Group className="col-md-12">
-                            <Form.Label>
-                                Question Image
-                            </Form.Label> 
-                            {/* <Form.Control name="image" type="file" 
-                            onChange={uploadImage}
-                            />   */}
-                            <div style={{ height: '500px', marginTop: '10px' }}>
-                                <img src={`https://crazyforstudy.s3.ap-south-1.amazonaws.com/uploads/${data && data.image0}`} alt-text="image0" style={{objectFit: "cover", height:"500px"}}/>
-                            </div>
-                            <div style={{ height: '500px', marginTop: '10px' }}>
-                                <img src={`https://crazyforstudy.s3.ap-south-1.amazonaws.com/uploads/${data && data.image1}`} alt-text="image1" style={{objectFit: "cover", height:"500px"}}/>
-                            </div>
-                        </Form.Group>
-                        <Form.Group className="col-md-12">
-                            <Form.Label>
-                                Choose Reason for Rejection:
-                            </Form.Label>
-                            <Form.Check type="radio">
-                                <Form.Check.Input type="radio" name="fav_language" value="Your question is incomplete, or you have provided insufficient information" onChange={ ( event ) => {
-                                    setFormData( { ...formData, rejectionReason: event.target.value, assignment:false } );
-                                } }/>
-                                <Form.Check.Label> Your question is incomplete, or you have provided insufficient information </Form.Check.Label>
-                            </Form.Check>
-                            <Form.Check type="radio">
-                                <Form.Check.Input type="radio" name="fav_language" value="Your question seems to be invalid, or it is out-of-the-subject or has some language issues" onChange={ ( event ) => {
-                                    setFormData( { ...formData, rejectionReason: event.target.value, assignment:false } );
-                                } }/>
-                                <Form.Check.Label>Your question seems to be invalid, or it is out-of-the-subject or has some language issues.</Form.Check.Label>
-                            </Form.Check>
-                            <Form.Check type="radio">
-                                <Form.Check.Input type="radio" name="fav_language" value="99" onChange={ ( event ) => {
-                                    setFormData( { ...formData, rejectionReason: "Your Question will be treated as Assignment", assignment:true } );
-                                } }/>
-                                <Form.Check.Label>Your Question will be treated as Assignment.</Form.Check.Label>
-                            </Form.Check>
-                        </Form.Group>
-
-                        <Form.Group className="col-md-12">
-                            <Form.Label>
-                                Rejection Reason:
+                                Question
                             </Form.Label>
                             
                             <CKEditor
@@ -187,20 +146,104 @@ return (
                                         ]
                                     },
                                 }}
-                                data={data && data.rejectionReason1}
+                                disabled
+                                data={data && data.question}
                                 onChange={ ( event, editor ) => {
                                     const data = editor.getData();
-                                    setFormData( { ...formData, rejectionReason1: data } );
+                                    setFormData( { ...formData, question: data } );
                                 } }
                             />
+                            
                         </Form.Group>
+                        <Form.Group className="col-md-12">
+                            <Form.Label>
+                                Question Image
+                            </Form.Label> 
+                            {/* <Form.Control name="image" type="file" 
+                            onChange={uploadImage}
+                            />   */}
+                            <div style={{ height: '500px', marginTop: '10px' }}>
+                                <img src={`https://crazyforstudy.s3.ap-south-1.amazonaws.com/uploads/${data && data.image0}`} alt-text="image0" style={{objectFit: "cover", height:"500px"}}/>
+                            </div>
+                            <div style={{ height: '500px', marginTop: '10px' }}>
+                                <img src={`https://crazyforstudy.s3.ap-south-1.amazonaws.com/uploads/${data && data.image1}`} alt-text="image1" style={{objectFit: "cover", height:"500px"}}/>
+                            </div>
+                        </Form.Group>  
+                        <Form.Group className="col-md-12">
+                            <Form.Label>
+                                Question Short Answer
+                            </Form.Label>
+                            
+                            <CKEditor
+                                editor={ ClassicEditor }
+                                config={{
+                                    toolbar: {
+                                        items: [
+                                            'MathType', 'ChemType','heading', 
+                                            '|',
+                                            'bold',
+                                            'italic',
+                                            'link',
+                                            'bulletedList',
+                                            'numberedList',
+                                            'imageUpload',
+                                            'mediaEmbed',
+                                            'insertTable',
+                                            'blockQuote',
+                                            'undo',
+                                            'redo'
+                                        ]
+                                    },
+                                }}
+                                data={data && data.shortanswer}
+                                onChange={ ( event, editor ) => {
+                                    const data = editor.getData();
+                                    setFormData( { ...formData, shortanswer: data } );
+                                } }
+                            />
+                            
+                        </Form.Group>  
 
+                        <Form.Group className="col-md-12">
+                            <Form.Label>
+                                Question Complete Answer
+                            </Form.Label>
+                            
+                            <CKEditor
+                                editor={ ClassicEditor }
+                                config={{
+                                    toolbar: {
+                                        items: [
+                                            'MathType', 'ChemType','heading', 
+                                            '|',
+                                            'bold',
+                                            'italic',
+                                            'link',
+                                            'bulletedList',
+                                            'numberedList',
+                                            'imageUpload',
+                                            'mediaEmbed',
+                                            'insertTable',
+                                            'blockQuote',
+                                            'undo',
+                                            'redo'
+                                        ]
+                                    },
+                                }}
+                                data={data && data.completeanswer}
+                                onChange={ ( event, editor ) => {
+                                    const data = editor.getData();
+                                    setFormData( { ...formData, completeanswer: data } );
+                                } }
+                            />
+                            
+                        </Form.Group>      
                         <Form.Group className="col-md-12">
                             <Button 
                             onClick={handleSubmit}
                             disabled={!loading && btnDisabled}
                             className="btn dark btn-md">
-                                {loading ? 'processing...': 'Reject Question'} 
+                                {loading ? 'processing...': 'Update Answer'} 
                             </Button>
                         </Form.Group>
                         </Form>

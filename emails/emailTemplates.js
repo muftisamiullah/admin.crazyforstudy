@@ -523,7 +523,7 @@ const newQuestionRecievedAdmin = (email, question, subject, sub_subject, subject
             <p><strong>${email}</strong></p>
             <p>Question(s) asked by the student -</p>
             <p><strong>${question}</strong></p>
-            <a href=https://admin.crazyforstudy.com/solve-50-update-answer/${subject_id}/${sub_subject_id}/pending/undefined/${q_id}>Click here to answer the question</a>
+            <a href=https://admin.crazyforstudy.com/solve-qa-update-answer/${subject_id}/${sub_subject_id}/pending/undefined/${q_id}>Click here to answer the question</a>
             </br>
             <p><strong>With regards,</strong></p>
             <p><strong>Team Crazy For Study</strong></p>
@@ -546,7 +546,7 @@ const newQuestionAskedAdmin = (email, question, subject, sub_subject, subject_id
             <p>Question(s) asked by the student -</p>
             <p><strong>${question}</strong></p>
             <p>click below to answer:</p>
-            <a href=https://admin.crazyforstudy.com/solve-50-update-answer/${subject_id}/${sub_subject_id}/pending/undefined/${q_id}>Click here to answer the question</a>
+            <a href=https://admin.crazyforstudy.com/solve-qa-update-answer/${subject_id}/${sub_subject_id}/pending/undefined/${q_id}>Click here to answer the question</a>
             </br>
             <p><strong>With regards,</strong></p>
             <p><strong>Team Crazy For Study</strong></p>
@@ -596,7 +596,8 @@ const ask50Solution = (user, question, shortanswer, completeanswer) => {
                                            <td></td>
                                            <td></td>
                                            <td valign="bottom" align="right" style="background:#fff;padding:0 5px 10px 5px;color:#333;font-size:11px">
-                                           <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"/><img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd"/>
+                                           <img src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/rozorpay-icon.jpg" alt="Paypal" class="CToWUd"/>
+                                           <img width="88" height="87" title="100% Satisfaction" alt="100% Satisfaction" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/satisfaction.jpg" class="CToWUd"/>
                                        </td>
                                         </tr>
                                      </tbody>

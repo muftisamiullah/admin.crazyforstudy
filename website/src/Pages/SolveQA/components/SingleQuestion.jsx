@@ -9,10 +9,10 @@ function SingleQuestion({problem, search}) {
     const history = useHistory();
     const params = useParams();
     const manageQuestion = (e) => {
-        history.push(`/solve-50-update-answer/${params.subject_id}/${params.sub_subject_id}/${params.filter}/${params.page_no}/${e?._id}`)
+        history.push(`/solve-qa-update-answer/${params.subject_id}/${params.sub_subject_id}/${params.filter}/${params.page_no}/${e?._id}`)
     }
     const rejectQuestion = (e) => {
-        history.push(`/solve-50-reject-question/${params.subject_id}/${params.sub_subject_id}/${params.filter}/${params.page_no}/${e?._id}`)
+        history.push(`/solve-qa-reject-question/${params.subject_id}/${params.sub_subject_id}/${params.filter}/${params.page_no}/${e?._id}`)
     }
 
     let answers = '';
@@ -29,9 +29,9 @@ function SingleQuestion({problem, search}) {
             <div className="subject-card-heading pt-2"> 
                 <div className="problem_no">Q.No: {problem?.problem_no} </div>
                 <div>
-                    <button className="btn btn-sm bg-primary text-white mr-2"
+                    {/* <button className="btn btn-sm bg-primary text-white mr-2"
                     onClick={rejectQuestion.bind(this,{_id: problem?._id})} disabled={problem.old_qid ? true : false}>
-                        <span className="fa fa-eye mr-2"></span>Reject Question</button>
+                        <span className="fa fa-eye mr-2"></span>Reject Question</button> */}
                     <button className="btn btn-sm dark"
                     onClick={manageQuestion.bind(this,{_id: problem?._id})}>Answer Question</button>
                 </div>    

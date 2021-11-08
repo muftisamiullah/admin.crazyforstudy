@@ -16,7 +16,7 @@ export default function useGetSingleQuestion50() {
         API_URL = cons.LIVE_API_URL;
     }
     return useQuery('question', async () => {
-        const result = await axios.get(`${API_URL}question/single-question/${q_id}`,{
+        const result = await axios.get(`${API_URL}question/single-question-50/${q_id}`,{
             headers: {
                 'Content-Type': 'Application/json',
                 'Authorization':'Bearer '+state.access_token

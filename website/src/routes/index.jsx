@@ -54,9 +54,13 @@ import UploadSolution from '../Pages/Chapters/UploadSolution.jsx';
 
 import SamplePage from '../Pages/Sample/SamplePage.jsx'
 
-import Solve50 from '../Pages/Solve50/Solve50List.jsx'
-import UpdateAnswer from '../Pages/Solve50/UpdateAnswer.jsx'
-import RejectQuestion from '../Pages/Solve50/RejectQuestion.jsx'
+import Solve50 from '../Pages/SolveQA/SolveQAList.jsx'
+import UpdateAnswer from '../Pages/SolveQA/UpdateAnswer.jsx'
+import RejectQuestion from '../Pages/SolveQA/RejectQuestion.jsx'
+
+import SolveAsk50 from '../Pages/SolveAsk50/SolveAsk50List.jsx'
+import UpdateAnswer50 from '../Pages/SolveAsk50/UpdateAnswer50.jsx'
+import RejectQuestion50 from '../Pages/SolveAsk50/RejectQuestion50.jsx'
 
 import SolveTBS from '../Pages/SolveTBS/SolveTBSList.jsx'
 import UpdateAnswerTbs from '../Pages/SolveTBS/UpdateAnswerTbs.jsx'
@@ -267,16 +271,28 @@ export const privateRoutes = [
         component: VendorList
     },
     {
-        path: '/solve-50/:subject_id?/:sub_subject_id?/:filter?/:page_no?',
+        path: '/solve-qa/:subject_id?/:sub_subject_id?/:filter?/:page_no?',
         component: Solve50
     },
     {
-        path: '/solve-50-update-answer/:subject_id?/:sub_subject_id?/:filter?/:page_no?/:question_id?',
+        path: '/solve-qa-update-answer/:subject_id?/:sub_subject_id?/:filter?/:page_no?/:question_id?',
         component: UpdateAnswer
     },
     {
-        path: '/solve-50-reject-question/:subject_id?/:sub_subject_id?/:filter?/:page_no?/:question_id?',
+        path: '/solve-qa-reject-question/:subject_id?/:sub_subject_id?/:filter?/:page_no?/:question_id?',
         component: RejectQuestion
+    },
+    {
+        path: '/solve-ask50/:subject_id?/:sub_subject_id?/:filter?/:page_no?',
+        component: SolveAsk50
+    },
+    {
+        path: '/solve-ask50-update-answer/:subject_id?/:sub_subject_id?/:filter?/:page_no?/:question_id?',
+        component: UpdateAnswer50
+    },
+    {
+        path: '/solve-ask50-reject-question/:subject_id?/:sub_subject_id?/:filter?/:page_no?/:question_id?',
+        component: RejectQuestion50
     },
     {
         path: '/solve-tbs/:filter?/:page_no?',

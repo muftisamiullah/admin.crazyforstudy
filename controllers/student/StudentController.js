@@ -15,7 +15,7 @@ Date.prototype.addMinutes = function(minutes) {
 const askQuestion = async (req, res) => {
     try {
         const data = req.body;
-        const cond = {user_Id: req.body.user_Id, type: 'QA'}    
+        const cond = {user_Id: req.body.user_Id, type: 'ASK50'}    
         const count =  await Question.find(cond).count();
         if(count > 50){
             // const error = new Error("message")
@@ -80,9 +80,9 @@ const userQuestion = async (req, res) => {
         let flag = req.params.flag;
         let cond = '';
         if(req.params.flag){
-            cond = {user_Id: req.body.user_Id, type: 'QA', flag: flag}    
+            cond = {user_Id: req.body.user_Id, type: 'ASK50', flag: flag}    
         }else{
-            cond = {user_Id: req.body.user_Id, type: 'QA'}    
+            cond = {user_Id: req.body.user_Id, type: 'ASK50'}    
         }
 
         const questions = await Question.find(cond).sort({created_at: -1});
