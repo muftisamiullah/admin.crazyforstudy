@@ -1990,19 +1990,34 @@ const UpdateAnswerTbs = async (req, res) => {
         const data = await Chapter.findByIdAndUpdate({ _id: req.params.q_id });
         const response = await Chapter.findByIdAndUpdate({ _id: req.params.q_id }, update);
         if(response){
+            const ques = striptags(decode(response.question.substr(0,100)));
             let email_ids = [];
-            let notifyData = []
+            // let notifyData = [];
+            let ids = [];
             data.answerRequestedIds.map((item,key)=>{
                 email_ids.push(item.user_email)
-                notifyData.push({
-                    title: data.question,
-                    info: `<p>Your question has been solved <strong>${response.question}</strong></p>`,
-                    type: 'TBS',
-                    user_Id: item.user_id,
-                })
+                ids.push(item.user_id)
+                // notifyData.push({
+                //     title: data.question,
+                //     info: `<p>Your question has been solved <strong>${response.question}</strong></p>`,
+                //     type: 'TBS',
+                //     user_Id: item.user_id,
+                //     isRead: false,
+                //     created_at: Date.now()
+                // })
             })
-            const noti = new Notify(notifyData);
-            const dt = await noti.save();
+            // const noti = new Notify(notifyData);
+            // const dt = await noti.save();
+            // await Admin.updateMany({},{isActive: false});
+            const d = await Notify.updateMany({ data_Id: req.params.q_id, type:'TBS', user_Id: {$in: ids} }, 
+                { 
+                    title: data.question,
+                    info: `<p>Your question has been solved <strong>${ques}</strong></p>`,
+                    type: 'TBS',
+                    isRead: false,
+                    created_at: Date.now()
+                });
+                console.log(d)
             var transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
@@ -2010,7 +2025,7 @@ const UpdateAnswerTbs = async (req, res) => {
                     pass: process.env.password
                 }
             });
-            const output = emails.askTbsSolutionSolved(response.book_name, response.chapter_name, response.section_name,response.question, update.answer, response._id)
+            const output = emails.askTbsSolutionSolved(response.book_name, response.chapter_name, response.section_name,ques, update.answer, response._id)
             var mailOptions = {
                 from: process.env.email,
                 to: email_ids,

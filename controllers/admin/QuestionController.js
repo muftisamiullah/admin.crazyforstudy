@@ -4,7 +4,8 @@ const ChieldSubject = require('../../models/admin/ChieldSubject.js');
 const emails = require('../../emails/emailTemplates');
 const Notify = require('../../models/admin/Notification.js');
 const Assignment = require('../../models/admin/Assignment');
-
+var striptags = require('striptags');
+const {decode} = require('html-entities');
 var nodemailer = require('nodemailer');
 
 const importData = async (req, res) => {
@@ -291,18 +292,22 @@ const UpdateAnswer = async (req, res) => {
         let update = req.body
         update.flag = "answered"
         delete update.user_Id;
-        const response = await Question.findByIdAndUpdate({ _id: req.params.q_id }, update);
+        const response = await Question.findByIdAndUpdate({ _id: req.params.q_id, type:'QA' }, update);
         if(response){
+            const ques = striptags(decode(response.question.substr(0,100)));
             const notifyData = {
                 // {_id:ObjectId('615c053b853c3902f351f007')}
-                title: response.question,
-                info: `<p>Your question has been solved <strong>${response.question?.substr(0,100)}</strong></p>`,
+                title: ques,
+                info: `<p>Your question has been solved <strong>${ques}</strong></p>`,
                 type: 'QA',
                 user_Id: response.user_Id,
+                isRead: false,
+                created_at: Date.now()
             }
-            console.log(notifyData);
-            const noti = new Notify(notifyData);
-            const dt = await noti.save();
+
+            const d = await Notify.findOneAndUpdate({ data_Id: req.params.q_id, type:'QA' }, notifyData);
+            // const noti = new Notify(notifyData);
+            // const dt = await noti.save();
             const student = await Student.findOne({_id:response.user_Id});
             var transporter = nodemailer.createTransport({
                 service: 'gmail',
@@ -311,7 +316,7 @@ const UpdateAnswer = async (req, res) => {
                     pass: process.env.password
                 }
             });
-            const output = emails.ask50Solution(student.Name, response.question, update.shortanswer, update.completeanswer)
+            const output = emails.ask50Solution(student.Name, ques, update.shortanswer, update.completeanswer)
             var mailOptions = {
                 from: process.env.email,
                 to: student.Email,
@@ -343,18 +348,21 @@ const UpdateAnswer50 = async (req, res) => {
         let update = req.body
         update.flag = "answered"
         delete update.user_Id;
-        const response = await Question.findByIdAndUpdate({ _id: req.params.q_id }, update);
+        const response = await Question.findByIdAndUpdate({ _id: req.params.q_id, type: "ASK50" }, update);
         if(response){
+            const ques = striptags(decode(response.question.substr(0,100)));
             const notifyData = {
                 // {_id:ObjectId('615c053b853c3902f351f007')}
-                title: response.question,
-                info: `<p>Your question has been solved <strong>${response.question?.substr(0,100)}</strong></p>`,
+                title: ques,
+                info: `<p>Your question has been solved <strong>${ques}</strong></p>`,
                 type: 'ASK50',
                 user_Id: response.user_Id,
+                isRead: false,
+                created_at: Date.now()
             }
-            console.log(notifyData);
-            const noti = new Notify(notifyData);
-            const dt = await noti.save();
+            const d = await Notify.findOneAndUpdate({ data_Id: req.params.q_id, type:'ASK50' }, notifyData);
+            // const noti = new Notify(notifyData);
+            // const dt = await noti.save();
             const student = await Student.findOne({_id:response.user_Id});
             var transporter = nodemailer.createTransport({
                 service: 'gmail',
@@ -363,7 +371,7 @@ const UpdateAnswer50 = async (req, res) => {
                     pass: process.env.password
                 }
             });
-            const output = emails.ask50Solution(student.Name, response.question, update.shortanswer, update.completeanswer)
+            const output = emails.ask50Solution(student.Name, ques, update.shortanswer, update.completeanswer)
             var mailOptions = {
                 from: process.env.email,
                 to: student.Email,
@@ -395,8 +403,9 @@ const RejectQuestion50 = async (req, res) => {
         let update = req.body
         update.flag = "rejected"
         delete update.user_Id;
-        const response = await Question.findByIdAndUpdate({ _id: req.params.q_id }, update);
+        const response = await Question.findByIdAndUpdate({ _id: req.params.q_id, type:"ASK50" }, update);
             if(response){
+                const ques = striptags(decode(response.question.substr(0,100)));
                 if(update.assignment){
                     let content = {};
                     content.question = response.question;
@@ -411,13 +420,16 @@ const RejectQuestion50 = async (req, res) => {
                 }
                 const notifyData = {
                     // {_id:ObjectId('615c053b853c3902f351f007')}
-                    title: response.question,
-                    info: `<p>Your question  <strong> ${response.question?.substr(0,100)}</strong> has been rejected</p>`,
+                    title: ques,
+                    info: `<p>Your question  <strong> ${ques}</strong> has been rejected</p>`,
                     type: 'ASK50',
                     user_Id: response.user_Id,
+                    isRead: false,
+                    created_at: Date.now()
                 }
-                const noti = new Notify(notifyData);
-                const dt = await noti.save();
+                const d = await Notify.findOneAndUpdate({ data_Id: req.params.q_id, type:'ASK50' }, notifyData);
+                // const noti = new Notify(notifyData);
+                // const dt = await noti.save();
                 const student = await Student.findOne({_id:response.user_Id});
                 var transporter = nodemailer.createTransport({
                     service: 'gmail',
@@ -426,7 +438,7 @@ const RejectQuestion50 = async (req, res) => {
                         pass: process.env.password
                     }
                 });
-                const output = emails.ask50Rejection(student.Name, response.question, update.rejectionReason, update.rejectionReason1)
+                const output = emails.ask50Rejection(student.Name, ques, update.rejectionReason, update.rejectionReason1)
                 var mailOptions = {
                     from: process.env.email,
                     to: student.Email,

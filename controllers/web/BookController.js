@@ -633,6 +633,8 @@ const askForSolution = async(req, res) => {
             info: `<p>You will get solution for <strong>${(req.body.question).substr(0,30)}</strong></p>`,
             type: 'TBS',
             user_Id: req.body.user_Id,
+            link: req.body.link,
+            data_Id : req.body.q_id,
         }
         const noti = new Notify(notifyData);
         const dt = await noti.save();

@@ -68,6 +68,12 @@ export function getFilteredData(arrayData, match_field,field_value,field_name){
     }
   }
 
+function htmlDecode(content) {
+    let e = document.createElement('div');
+    e.innerHTML = content;
+    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+}
+
 export {
     MakeSlug,
     SameSlug,
@@ -75,5 +81,6 @@ export {
     GetName,
     getAllValue,
     ObjectToCsv,
-    downloadData
+    downloadData,
+    htmlDecode,
 }

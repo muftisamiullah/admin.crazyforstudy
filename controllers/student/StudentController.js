@@ -6,6 +6,8 @@ const Student = require('../../models/student/Student.js');
 const Admin = require('../../models/admin/Admin');
 const emails = require('../../emails/emailTemplates');
 var nodemailer = require('nodemailer');
+var striptags = require('striptags');
+const {decode} = require('html-entities');
 
 Date.prototype.addMinutes = function(minutes) {
     this.setMinutes(this.getMinutes() + minutes);
@@ -27,12 +29,16 @@ const askQuestion = async (req, res) => {
         data.image1 = req.files?.image1 ? req?.files?.image1[0].filename : '';
         data['last_submition'] = "04:00";
         const question = new Question(data);
-        await question.save();
+
+        const q = await question.save();
+        const ques = striptags(decode(question.question.substr(0,100)));
         const notifyData = {
             // {_id:ObjectId('615c053b853c3902f351f007')}
-            info: `<p>You will get the answer for <strong>${req.body.question}</strong> within next 2-4 hours, Please be patient.</p>`,
-            title: req.body.question,
+            info: `<p>You will get the answer for <strong>${ques}</strong> within next 2-4 hours, Please be patient.</p>`,
+            title: ques,
             type: req.body.type,
+            link: req.body.link,
+            data_Id: q._id,
             user_Id: req.body.user_Id,
         }
         const noti = new Notify(notifyData);
@@ -46,8 +52,8 @@ const askQuestion = async (req, res) => {
                 pass: process.env.password
             }
         });
-        const output = emails.newQuestionRecieved(question.question, req.body.subject, req.body.sub_subject, req.body.subject_id, req.body.sub_subject_id, question._id)
-        const outputAdmin = emails.newQuestionRecievedAdmin(req.body.email,question.question, req.body.subject, req.body.sub_subject, req.body.subject_id, req.body.sub_subject_id, question._id)
+        const output = emails.newQuestionRecieved(ques, req.body.subject, req.body.sub_subject, req.body.subject_id, req.body.sub_subject_id, question._id)
+        const outputAdmin = emails.newQuestionRecievedAdmin(req.body.email,ques, req.body.subject, req.body.sub_subject, req.body.subject_id, req.body.sub_subject_id, question._id)
         var mailOptionsAdmin = {
             from: process.env.email,
             to: admins,
@@ -71,7 +77,7 @@ const askQuestion = async (req, res) => {
 
         res.status(201).json({error: false, message: "Your question is submitted. you will get answer withing 2-4 Hrs."})
     } catch (error) {
-        res.status(501).json({error: true, message: error})
+        res.status(500).json({error: true, message: error})
     } 
 }
 
@@ -158,11 +164,11 @@ const readNotifications = async (req, res) => {
 const checkBookIsbn = async (req, res) => {
     try {    
         const book_isbn = req.params.isbn;
-        console.log(JSON.parse(book_isbn));
-        const books = await Book.find({ISBN13: {$elemMatch : book_isbn}});
-        console.log(books);
-        return;
-        // const books = await Book.findOne({ISBN13: book_isbn});
+        // console.log(JSON.parse(book_isbn));
+        // const books = await Book.find({ISBN13: {$elemMatch : book_isbn}});
+        // console.log(books);
+        // return;
+        const books = await Book.findOne({ISBN13: book_isbn});
         const student = await Student.findOne({_id:req.body.user_Id});
 
         const filter = {user_Id: req.body.user_Id, isbn: book_isbn}
@@ -248,14 +254,17 @@ const askAlreadyPQuestion = async (req, res) => {
         let update = req.body
         update.flag = "pending"
         update.created_at = new Date();
-        const question = await Question.findOne({_id:req.body.q_id})
-        const resolved = await Question.findByIdAndUpdate({_id:req.body.q_id}, update)
+        const question = await Question.findOne({_id:req.body.q_id, type: "QA"})
+        const resolved = await Question.findByIdAndUpdate({_id:req.body.q_id, type: "QA"}, update)
         if(resolved){
+            const ques = striptags(decode(question.question.substr(0,100)));
             const notifyData = {
-                info: `<p>You will get the answer for the question:</p> <p><strong>${question.question}</strong></p> <p>within next 2-4 hours, Please be patient.</p>`,
-                title: question.question,
+                info: `<p>You will get the answer for the question:</p> <p><strong>${ques}</strong></p> <p>within next 2-4 hours, Please be patient.</p>`,
+                title: ques,
                 type: question.type,
                 user_Id: req.body.user_Id,
+                link: req.body.link,
+                data_Id: req.body.q_id,
             }
             const noti = new Notify(notifyData);
             const dt = await noti.save();
@@ -267,8 +276,8 @@ const askAlreadyPQuestion = async (req, res) => {
                     pass: process.env.password
                 }
             });
-            const output = emails.newQuestionRecieved(question.question, question.subject, question.sub_subject, question.subject_id, question.sub_subject_id, question._id)
-            const outputAdmin = emails.newQuestionAskedAdmin(req.body.email, question.question, question.subject, question.sub_subject, question.subject_id, question.sub_subject_id, question._id)
+            const output = emails.newQuestionRecieved(ques, question.subject, question.sub_subject, question.subject_id, question.sub_subject_id, question._id)
+            const outputAdmin = emails.newQuestionAskedAdmin(req.body.email, ques, question.subject, question.sub_subject, question.subject_id, question.sub_subject_id, question._id)
             var mailOptionsAdmin = {
                 from: process.env.email,
                 to: admins,
@@ -290,7 +299,7 @@ const askAlreadyPQuestion = async (req, res) => {
                 .catch((err) => console.log(err));
         }
         return res.status(201).json({
-            message: "Question, Updated"
+            message: "Question, requested"
         })
     } catch (error) {
         res.send({

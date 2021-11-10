@@ -15,7 +15,7 @@ import useGetSingleQuestion50 from './hooks/useGetSingleQuestion50';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from 'ckeditor5-classic-with-mathtype';
-
+import {htmlDecode} from '../../utils/MakeSlug'
 
 export default function UpdateAnswer() {
     const history = useHistory();
@@ -124,8 +124,10 @@ return (
                             <Form.Label>
                                 Question
                             </Form.Label>
-                            
-                            <CKEditor
+                            <Form.Label>
+                                <div className="card-text question" id="high" dangerouslySetInnerHTML={{ __html: htmlDecode(data && data.question)  }} />
+                            </Form.Label>
+                            {/* <CKEditor
                                 editor={ ClassicEditor }
                                 config={{
                                     toolbar: {
@@ -152,7 +154,7 @@ return (
                                     const data = editor.getData();
                                     setFormData( { ...formData, question: data } );
                                 } }
-                            />
+                            /> */}
                             
                         </Form.Group>
                         <Form.Group className="col-md-12">

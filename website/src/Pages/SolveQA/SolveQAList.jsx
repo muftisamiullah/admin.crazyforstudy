@@ -33,7 +33,7 @@ export default function SolveQAList() {
                 <div className="main-area-all">
                     <div className="dashboard_main-container">
                         <div className="dash-main-head">
-                            <h2>Ask 50</h2>
+                            <h2>Ask QA</h2>
                         </div>
                         {isLoadingQestions && (<LoadingComp />)}
                         <div className="dash-con-heading">
