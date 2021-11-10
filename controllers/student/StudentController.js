@@ -161,28 +161,41 @@ const readNotifications = async (req, res) => {
     }
 }
 
+
 const checkBookIsbn = async (req, res) => {
     try {    
-        const book_isbn = req.params.isbn;
-        // console.log(JSON.parse(book_isbn));
-        // const books = await Book.find({ISBN13: {$elemMatch : book_isbn}});
-        // console.log(books);
-        // return;
-        const books = await Book.findOne({ISBN13: book_isbn});
+        const book_isbn = req.body.isbn;
+        // console.log(book_isbn, "book_isbn")
+        var isbns = book_isbn.map(function(x) { return x.value } );
+        const foundBooks = await Book.find( { ISBN13 : { $in : isbns } },{ISBN13:1,BookName:1,Edition:1} );
+        // console.log(foundBooks,"found")
+        const unknownBooks = book_isbn.filter(({ value: id1 }) => !foundBooks.some(({ ISBN13: id2 }) => id2 === id1));
+        // console.log(unknownBooks,"unfound");
         const student = await Student.findOne({_id:req.body.user_Id});
-
-        const filter = {user_Id: req.body.user_Id, isbn: book_isbn}
-        var options = { upsert: true, new: true, setDefaultsOnInsert: true };  
-        let updateData = '';
-        if(books){
-            updateData = { inStock: 1,book_name: books.BookName, edition: books.Edition, user_name: student.Name }
+        const filter = {user_Id: req.body.user_Id }
+        // var options = { upsert: true, new: true, setDefaultsOnInsert: true };  
+        // let updateData = '';
+        let update = [];
+        if(foundBooks){
+            foundBooks.map((item,key)=>{
+                update.push({inStock: 1, book_name: item.BookName, edition: item.Edition, user_name: student.Name, isbn:item.ISBN13 })
+            })
+            // updateData = { inStock: 1,book_name: foundBooks.BookName, edition: foundBooks.Edition, user_name: student.Name }
             var message = "View More";
-        }else{
-            updateData = {inStock: 0, user_name: student.Name}
-            var message = "Will be available in 3-4 working Days.";
+            console.log(update)
+            await TextBook.updateMany(filter, update, {upsert: true, multi: true});
         }
+        // if(unknownBooks){
+        //     unknownBooks.map((item,key)=>{
+        //         console.log(item)
+        //         update.push( {inStock: 0, user_name: student.Name, isbn:item })
+        //     })
+        //     // updateData = {inStock: 0, user_name: student.Name, isbn: item.isbn}
+        //     var message = "Will be available in 3-4 working Days.";
+        //     await TextBook.updateMany(filter, update, options);
+        // }
 
-        await TextBook.findOneAndUpdate(filter, updateData, options);
+        
         res.status(201).json({
             error: false,
             message: message
