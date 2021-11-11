@@ -401,6 +401,7 @@ const getBookProblems = async (req, res) => {
         _id: 1,
         problem_no: 1,
         question: 1,
+        source: 1,
     });
 
     const problems = [];
@@ -413,6 +414,7 @@ const getBookProblems = async (req, res) => {
                 q_id: item._id, 
                 problem_no: item.problem_no, 
                 question: item.question, 
+                source: item.source,
             })
         }
     });
@@ -436,8 +438,9 @@ const getBookProblemsWithAnswer = async (req, res) => {
         problem_no: 1,
         question: 1,
         answer: 1,
-        expert_answer:1,
-        another_answer:1,
+        expert_answer: 1,
+        another_answer: 1,
+        source: 1,
     });
 
     const problems = [];
@@ -453,6 +456,7 @@ const getBookProblemsWithAnswer = async (req, res) => {
                     question: item.question, 
                     answer: item.answer,
                     answerRequestIds : item.answerRequestedIds,
+                    source: item.source,
                 })
             }else if(item.expert_answer!="" && item.expert_answer != undefined){
                 problems.push({
@@ -461,6 +465,7 @@ const getBookProblemsWithAnswer = async (req, res) => {
                     question: item.question, 
                     answer: item.expert_answer,
                     answerRequestIds : item.answerRequestedIds,
+                    source: item.source,
                 })
             }else{
                 problems.push({
@@ -469,6 +474,7 @@ const getBookProblemsWithAnswer = async (req, res) => {
                     question: item.question, 
                     answer: item.another_answer,
                     answerRequestIds : item.answerRequestedIds,
+                    source: item.source,
                 })
             } 
         }
@@ -490,6 +496,7 @@ const getBookOnlyProblems = async (req, res) => {
         _id: 1,
         problem_no: 1,
         question: 1,
+        source: 1,
     });
 
     const problems = [];
@@ -502,6 +509,7 @@ const getBookOnlyProblems = async (req, res) => {
                 q_id: item._id, 
                 problem_no: item.problem_no, 
                 question: item.question, 
+                source: item.source,
             })
         }
     });
@@ -524,6 +532,7 @@ const getBookOnlyProblemsWithAnswers = async (req, res) => {
         expert_answer: 1,
         another_answer: 1,
         answerRequestedIds: 1,
+        source: 1,
     });
 
     const problems = [];
@@ -539,6 +548,7 @@ const getBookOnlyProblemsWithAnswers = async (req, res) => {
                     question: item.question, 
                     answer: item.answer,
                     answerRequestIds : item.answerRequestedIds,
+                    source: item.source
                 })
             }else if(item.expert_answer!="" && item.expert_answer != undefined){
                 problems.push({
@@ -547,6 +557,7 @@ const getBookOnlyProblemsWithAnswers = async (req, res) => {
                     question: item.question, 
                     answer: item.expert_answer,
                     answerRequestIds : item.answerRequestedIds,
+                    source: item.source
                 })
             }else{
                 problems.push({
@@ -555,6 +566,7 @@ const getBookOnlyProblemsWithAnswers = async (req, res) => {
                     question: item.question, 
                     answer: item.another_answer,
                     answerRequestIds : item.answerRequestedIds,
+                    source: item.source
                 })
             }
         }

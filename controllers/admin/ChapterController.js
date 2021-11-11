@@ -1990,7 +1990,7 @@ const UpdateAnswerTbs = async (req, res) => {
         const data = await Chapter.findByIdAndUpdate({ _id: req.params.q_id });
         const response = await Chapter.findByIdAndUpdate({ _id: req.params.q_id }, update);
         if(response){
-            const ques = striptags(decode(response.question.substr(0,100)));
+            const ques = striptags(decode(response.question.substr(0,200)));
             let email_ids = [];
             // let notifyData = [];
             let ids = [];

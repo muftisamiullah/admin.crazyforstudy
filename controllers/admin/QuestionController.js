@@ -297,7 +297,7 @@ const UpdateAnswer = async (req, res) => {
             const ques = striptags(decode(response.question.substr(0,100)));
             const notifyData = {
                 // {_id:ObjectId('615c053b853c3902f351f007')}
-                title: ques,
+                title: response.question,
                 info: `<p>Your question has been solved <strong>${ques}</strong></p>`,
                 type: 'QA',
                 user_Id: response.user_Id,
@@ -353,7 +353,7 @@ const UpdateAnswer50 = async (req, res) => {
             const ques = striptags(decode(response.question.substr(0,100)));
             const notifyData = {
                 // {_id:ObjectId('615c053b853c3902f351f007')}
-                title: ques,
+                title: response.question,
                 info: `<p>Your question has been solved <strong>${ques}</strong></p>`,
                 type: 'ASK50',
                 user_Id: response.user_Id,
@@ -420,7 +420,7 @@ const RejectQuestion50 = async (req, res) => {
                 }
                 const notifyData = {
                     // {_id:ObjectId('615c053b853c3902f351f007')}
-                    title: ques,
+                    title: response.question,
                     info: `<p>Your question  <strong> ${ques}</strong> has been rejected</p>`,
                     type: 'ASK50',
                     user_Id: response.user_Id,

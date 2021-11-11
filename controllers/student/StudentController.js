@@ -31,11 +31,11 @@ const askQuestion = async (req, res) => {
         const question = new Question(data);
 
         const q = await question.save();
-        const ques = striptags(decode(question.question.substr(0,100)));
+        const ques = striptags(decode(question.question.substr(0,200)));
         const notifyData = {
             // {_id:ObjectId('615c053b853c3902f351f007')}
             info: `<p>You will get the answer for <strong>${ques}</strong> within next 2-4 hours, Please be patient.</p>`,
-            title: ques,
+            title: question.question,
             type: req.body.type,
             link: req.body.link,
             data_Id: q._id,
@@ -165,37 +165,27 @@ const readNotifications = async (req, res) => {
 const checkBookIsbn = async (req, res) => {
     try {    
         const book_isbn = req.body.isbn;
-        // console.log(book_isbn, "book_isbn")
         var isbns = book_isbn.map(function(x) { return x.value } );
         const foundBooks = await Book.find( { ISBN13 : { $in : isbns } },{ISBN13:1,BookName:1,Edition:1} );
-        // console.log(foundBooks,"found")
         const unknownBooks = book_isbn.filter(({ value: id1 }) => !foundBooks.some(({ ISBN13: id2 }) => id2 === id1));
-        // console.log(unknownBooks,"unfound");
         const student = await Student.findOne({_id:req.body.user_Id});
         const filter = {user_Id: req.body.user_Id }
-        // var options = { upsert: true, new: true, setDefaultsOnInsert: true };  
-        // let updateData = '';
         let update = [];
+        let update1 = [];
         if(foundBooks){
             foundBooks.map((item,key)=>{
-                update.push({inStock: 1, book_name: item.BookName, edition: item.Edition, user_name: student.Name, isbn:item.ISBN13 })
+                update.push({inStock: 1, book_name: item.BookName, edition: item.Edition, user_name: student.Name, isbn:item.ISBN13, user_Id: req.body.user_Id })
             })
-            // updateData = { inStock: 1,book_name: foundBooks.BookName, edition: foundBooks.Edition, user_name: student.Name }
             var message = "View More";
-            console.log(update)
-            await TextBook.updateMany(filter, update, {upsert: true, multi: true});
+            const dat = await TextBook.insertMany(update);
         }
-        // if(unknownBooks){
-        //     unknownBooks.map((item,key)=>{
-        //         console.log(item)
-        //         update.push( {inStock: 0, user_name: student.Name, isbn:item })
-        //     })
-        //     // updateData = {inStock: 0, user_name: student.Name, isbn: item.isbn}
-        //     var message = "Will be available in 3-4 working Days.";
-        //     await TextBook.updateMany(filter, update, options);
-        // }
-
-        
+        if(unknownBooks){
+            unknownBooks.map((item,key)=>{
+                update1.push( {inStock: 0, user_name: student.Name, isbn:item.value, user_Id: req.body.user_Id })
+            })
+            var message = "Will be available in 3-4 working Days.";
+            const dat = await TextBook.insertMany(update1);
+        }
         res.status(201).json({
             error: false,
             message: message
@@ -270,10 +260,10 @@ const askAlreadyPQuestion = async (req, res) => {
         const question = await Question.findOne({_id:req.body.q_id, type: "QA"})
         const resolved = await Question.findByIdAndUpdate({_id:req.body.q_id, type: "QA"}, update)
         if(resolved){
-            const ques = striptags(decode(question.question.substr(0,100)));
+            const ques = striptags(decode(question.question.substr(0,200)));
             const notifyData = {
                 info: `<p>You will get the answer for the question:</p> <p><strong>${ques}</strong></p> <p>within next 2-4 hours, Please be patient.</p>`,
-                title: ques,
+                title: question.question,
                 type: question.type,
                 user_Id: req.body.user_Id,
                 link: req.body.link,
