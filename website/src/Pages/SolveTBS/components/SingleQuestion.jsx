@@ -27,7 +27,8 @@ function SingleQuestion({problem, search}) {
         <div className="card col-md-12 mb-2" key={problem?.problem_no}>
         <div className="card-title col-md-12 p-0 mb-0" id={problem?.problem_no}> 
             <div className="subject-card-heading pt-2"> 
-                <div className="problem_no">Q.No: {problem?.problem_no} </div>
+                <div className="problem_no" >Q.No: <span style={{"color":"green"}}>{problem?.problem_no}</span> </div>
+                <div className="problem_no" >ISBN: <span style={{"color":"green"}}>{problem?.book_isbn}</span> </div>
                 <div>
                     {/* <button className="btn btn-sm bg-primary text-white mr-2"
                     onClick={rejectQuestion.bind(this,{_id: problem?._id})}>

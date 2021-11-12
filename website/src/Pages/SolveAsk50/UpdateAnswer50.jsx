@@ -122,10 +122,10 @@ return (
                        
                     <Form.Group className="col-md-12">
                             <Form.Label>
-                                Question
-                            </Form.Label>
-                            <Form.Label>
-                                <div className="card-text question" id="high" dangerouslySetInnerHTML={{ __html: htmlDecode(data && data.question)  }} />
+                                <strong>Question:</strong>
+                            </Form.Label><br/>
+                            <Form.Label style={{color:"green"}}>
+                                <div className="card-text" id="high" dangerouslySetInnerHTML={{ __html: data && data.question  }} />
                             </Form.Label>
                             {/* <CKEditor
                                 editor={ ClassicEditor }
@@ -157,23 +157,23 @@ return (
                             /> */}
                             
                         </Form.Group>
-                        <Form.Group className="col-md-12">
-                            <Form.Label>
-                                Question Image
-                            </Form.Label> 
+                        {data && (data.image0 || data.image1) && <Form.Group className="col-md-12">
+                           <Form.Label>
+                                <strong>Question Image:</strong>
+                            </Form.Label>
                             {/* <Form.Control name="image" type="file" 
                             onChange={uploadImage}
                             />   */}
-                            <div style={{ height: '500px', marginTop: '10px' }}>
+                            {data.image0 && <div style={{ height: '500px', marginTop: '10px' }}>
                                 <img src={`https://crazyforstudy.s3.ap-south-1.amazonaws.com/uploads/${data && data.image0}`} alt-text="image0" style={{objectFit: "cover", height:"500px"}}/>
-                            </div>
-                            <div style={{ height: '500px', marginTop: '10px' }}>
+                            </div>}
+                            {data.image1 && <div style={{ height: '500px', marginTop: '10px' }}>
                                 <img src={`https://crazyforstudy.s3.ap-south-1.amazonaws.com/uploads/${data && data.image1}`} alt-text="image1" style={{objectFit: "cover", height:"500px"}}/>
-                            </div>
-                        </Form.Group>  
+                            </div>}
+                        </Form.Group> }
                         <Form.Group className="col-md-12">
                             <Form.Label>
-                                Question Short Answer
+                                <strong>Question Short Answer</strong>
                             </Form.Label>
                             
                             <CKEditor
@@ -208,7 +208,7 @@ return (
 
                         <Form.Group className="col-md-12">
                             <Form.Label>
-                                Question Complete Answer
+                                <strong>Question Complete Answer</strong>
                             </Form.Label>
                             
                             <CKEditor

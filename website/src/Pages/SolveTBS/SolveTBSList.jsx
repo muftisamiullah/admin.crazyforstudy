@@ -61,7 +61,7 @@ export default function SolveTBSList() {
                         </div>
                         <div className="dash-cont-start">
                             <div className="subject-main-container pl-0 pt-0 pr-0 pb-0">    
-                                <h3>UnAnswered Questions: </h3>  
+                                <h3>{params.filter != "undefined" && params.filter} questions: </h3>  
                                 <div className="clearfix"></div>    
                                 {data && data.data.map(problem => {
                                     return (

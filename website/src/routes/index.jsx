@@ -66,6 +66,7 @@ import SolveTBS from '../Pages/SolveTBS/SolveTBSList.jsx'
 import UpdateAnswerTbs from '../Pages/SolveTBS/UpdateAnswerTbs.jsx'
 
 import CollegeTB from '../Pages/Textbooks/TextbooksList.jsx'
+import UpdateTB from '../Pages/Textbooks/UpdateTB.jsx'
 
 
 export const guestRoutes =  [
@@ -303,8 +304,12 @@ export const privateRoutes = [
         component: UpdateAnswerTbs
     },
     {
-        path: '/college-textbooks/:filter?/:page_no?',
+        path: '/college-textbooks/:filter?',
         component: CollegeTB
+    },
+    {
+        path: '/college-textbooks/:filter?/:isbn?/:id?',
+        component: UpdateTB
     },
     
 ];

@@ -100,7 +100,47 @@ const getAllCollegeTextBooks = async (req, res) => {
     }
 }
 
+const getSingleCollegeTextBooks = async (req, res) => {
+    try {
+        const query = {inStock:req.params.filter === "in-stock" ? true : false, isbn: req.params.isbn, _id: req.params.id}  
+        const tbs = await TextBooks.findOne(query);
+        return res.status(200).json({
+            data: tbs,
+        });
+    } catch (error) {
+        console.log(error)
+        res.send({
+            error: true,
+            code: 501,
+            message: error.message
+        })
+    }
+}
+const updateSingleCollegeTextBooks = async (req, res) => {
+    try {
+        console.log(req.body, req.params)
+        let update = req.body
+        update.inStock = true;
+        delete update.user_Id;
+        const response = await TextBooks.findByIdAndUpdate({ _id: req.params.id }, update);
+        if(response){
+            return res.status(201).json({
+                message: "Successfull"
+            })
+        }
+    } catch (error) {
+        console.log(error)
+        res.send({
+            error: true,
+            code: 501,
+            message: error.message
+        })
+    }
+}
+
 module.exports = {
     getAllStudents,
     getAllCollegeTextBooks,
+    getSingleCollegeTextBooks,
+    updateSingleCollegeTextBooks,
 }

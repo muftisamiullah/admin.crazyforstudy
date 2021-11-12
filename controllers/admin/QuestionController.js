@@ -183,7 +183,7 @@ const getAllQuestions50 = async (req, res) => {
               locale: 'en',
             },
             sort: {
-                created_at: -1 
+                created_at: 1 
             }
         };
         let query = {type:'ASK50',flag:req.params.filter,subject_id:req.params.subject_id,sub_subject_id:req.params.sub_subject_id}  

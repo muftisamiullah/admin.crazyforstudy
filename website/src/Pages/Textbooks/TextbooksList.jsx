@@ -20,6 +20,9 @@ export default function TextbooksList() {
 
     const {data, isLoading:isLoadingBooks, error} = useCollegeTB();
 
+    const updateCTBS = (isbn,id) => {
+        history.push(`/college-textbooks/${params.filter}/${isbn.isbn}/${isbn.id}`)
+    }
     return(<>
             {state.isLoggedIn && (
             <div className="col-lg-10 col-md-10 main_dash_area">
@@ -66,8 +69,10 @@ export default function TextbooksList() {
                                     <th>s. no</th>
                                     <th>Isbn</th>
                                     <th>Book Name</th>
+                                    <th>Edition</th>
                                     <th>UserName</th>
                                     <th>Date</th>
+                                    {params.filter == "out-of-stock" && <th>Action</th>}
                                     <tbody>
                                     {data && data.data.map((book,key) => {
                                         const d = new Date(book.created_at)
@@ -76,8 +81,14 @@ export default function TextbooksList() {
                                                 <td>{key+1}</td>
                                                 <td>{book?.isbn}</td>
                                                 <td>{book?.book_name}</td>
+                                                <td>{book?.edition}</td>
                                                 <td>{book?.user_name}</td>
                                                 <td>{d.toString()}</td>
+                                                {params.filter == "out-of-stock" 
+                                                    && 
+                                                    <td>
+                                                        <button className="btn-sm btn-primary" onClick={updateCTBS.bind(this,{isbn: book?.isbn, id:book?._id})}>Update Book</button>
+                                                    </td>}
                                             </tr>
                                         )
                                     })}   

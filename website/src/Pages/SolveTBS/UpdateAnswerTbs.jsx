@@ -116,10 +116,15 @@ return (
                     <div className="col-md-12 row no-gutter p-0 mt-2">
                     {!isLoading && (
                     <Form method="POST" className="col-md-12 pl-2" encType="multipart/form-data">
-                       
+                    
                     <Form.Group className="col-md-12">
+                    <div className="subject-card-heading pt-2"> 
+                        <div className="problem_no" >Q.No: <span style={{"color":"green"}}>{data?.problem_no}</span> </div>
+                        <div className="problem_no" >BookName: <span style={{"color":"green"}}>{data?.book_name}</span> </div>
+                        <div className="problem_no" >ISBN: <span style={{"color":"green"}}>{data?.book_isbn}</span> </div>
+                    </div>   <hr/>
                             <Form.Label>
-                                Question
+                                <strong>Question:</strong>
                             </Form.Label>
                             
                             {/* <CKEditor
@@ -157,7 +162,7 @@ return (
                         
                         <Form.Group className="col-md-12">
                             <Form.Label>
-                                Question  Answer
+                            <strong>Question  Answer: </strong>
                             </Form.Label>
                             
                             <CKEditor

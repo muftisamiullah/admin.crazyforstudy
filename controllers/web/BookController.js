@@ -666,7 +666,7 @@ const askForSolution = async(req, res) => {
             from: process.env.email,
             to: student.Email,
             subject: 'Crazy For Study is working on your question!',
-            text: output
+            html: output
         };
 
         var mailOptionsAdmin = {

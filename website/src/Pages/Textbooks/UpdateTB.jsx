@@ -11,13 +11,13 @@ import {ErrorContext} from '../../context/ErrorContext';
 import * as util from '../../utils/MakeSlug';
 import axios from 'axios'
 import * as cons from '../../Helper/Cons.jsx'
-import useGetSingleQuestion50 from './hooks/useGetSingleQuestion50';
+import useGetSingleCTBS from './hooks/useGetSingleCTBS';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from 'ckeditor5-classic-with-mathtype';
-// import {htmlDecode} from '../../../utils/MakeSlug'
+import {htmlDecode} from '../../utils/MakeSlug'
 
-export default function RejectQuestion() {
+export default function UpdateTB() {
     const history = useHistory();
     const params = useParams();
     
@@ -39,25 +39,22 @@ export default function RejectQuestion() {
         }
     };
     const [btnDisabled, setBtnDisbaled] = useState(false);
-
-    let _URL = window.URL || window.webkitURL;
-    
+  
     const [formData, setFormData] = useState({});
     async  function handleSubmit(e){
         e.preventDefault();
         let response = null;
         setLoading(true);
         setBtnDisbaled(true);
-        response = await axios.patch(`${API_URL}question/reject-question-50/${params.question_id}`,formData, options);
-        console.log(response);
+        response = await axios.patch(`${API_URL}student/update-single-college-textbooks/${params.filter}/${params.isbn}/${params.id}`,formData, options);
         errorDispatch({type: 'SET_SUCCESS', payload: response.message});
         setBtnDisbaled(false);
         setLoading(false);
 
-        history.push(`/solve-ask50/${params.subject_id}/${params.sub_subject_id}/${params.filter}/${params.page_no}`);
-    
+        history.push(`/college-textbooks/${params.filter}`);
     }
-    const {data, isLoading} = useGetSingleQuestion50();
+    // 618daccc03d6bda8875ad991
+    const {data, isLoading} = useGetSingleCTBS();
     
     useEffect( () => {
         let timerError = setTimeout(() => errorDispatch({type: 'SET_ERROR', payload: ''}), 1500);
@@ -73,12 +70,11 @@ return (
 
     <>
     {state.isLoggedIn && (
-      
     <div className="col-lg-10 col-md-10 main_dash_area">
         <div className="main-area-all">
             <div className="dashboard_main-container">
                 <div className="dash-main-head">
-                    <h2>Reject Question</h2>
+                    <h2>Update Book</h2>
                 </div>
                 {errorState.error && ( 
                     <Notification>{errorState.error}</Notification>
@@ -91,7 +87,7 @@ return (
                     <div className="row">
                     <div className="col-md-1 pl-3">
                     
-                    <Link to={`/solve-ask50/${params.subject_id}/${params.sub_subject_id}/${params.filter}/${params.page_no}`} className="btn btn-sm dark">
+                    <Link to={`/college-textbooks/${params.filter}`} className="btn btn-sm dark">
                     <span className="fa fa-arrow-left"></span>
                     </Link>
                     </div>
@@ -102,71 +98,22 @@ return (
                     <div className="col-md-12 row no-gutter p-0 mt-2">
                     {!isLoading && (
                     <Form method="POST" className="col-md-12 pl-2" encType="multipart/form-data">
-
+                    
                     <Form.Group className="col-md-12">
+                    <div className="subject-card-heading pt-2"> 
+                        <div className="problem_no" >ISBN: <span style={{"color":"green"}}>{data?.data?.isbn}</span> </div>
+                    </div>   <hr/>
                             <Form.Label>
-                                <strong>Question:</strong>
-                            </Form.Label><br/>
-                            <Form.Label style={{color:"green"}}>
-                                <span dangerouslySetInnerHTML={{__html: data && data.question}}></span>
-                            </Form.Label>                        
-                        </Form.Group>
-                        
-                        {/* <Form.Group className="col-md-12">
-                            <Form.Label>
-                                Question Image
-                            </Form.Label> 
-                            <Form.Control name="image" type="file" 
-                            onChange={uploadImage}
-                            />  
-                            <div style={{ height: '130px', overflow: 'hidden', marginTop: '10px' }}>
-                                <img src={blogImage ? blogImage: data && data.image} />
-                            </div>
-                        </Form.Group>   */}
-                        {data && (data.image0 || data.image1) && <Form.Group className="col-md-12">
-                            <Form.Label>
-                            <strong>Question Image:</strong>
-                            </Form.Label> 
-                            {/* <Form.Control name="image" type="file" 
-                            onChange={uploadImage}
-                            />   */}
-                            {data.image0 && <div style={{ height: '500px', marginTop: '10px' }}>
-                                <img src={`https://crazyforstudy.s3.ap-south-1.amazonaws.com/uploads/${data && data.image0}`} alt-text="image0" style={{objectFit: "cover", height:"500px"}}/>
-                            </div>}
-                            {data.image1 && <div style={{ height: '500px', marginTop: '10px' }}>
-                                <img src={`https://crazyforstudy.s3.ap-south-1.amazonaws.com/uploads/${data && data.image1}`} alt-text="image1" style={{objectFit: "cover", height:"500px"}}/>
-                            </div>}
-                        </Form.Group>}
-                        <Form.Group className="col-md-12">
-                            <Form.Label>
-                            <strong>Choose Reason for Rejection:</strong>
+                                <strong>Book Name:</strong>
                             </Form.Label>
-                            <Form.Check type="radio">
-                                <Form.Check.Input type="radio" name="fav_language" value="Your question is incomplete, or you have provided insufficient information" onChange={ ( event ) => {
-                                    setFormData( { ...formData, rejectionReason: event.target.value, assignment:false } );
-                                } }/>
-                                <Form.Check.Label> Your question is incomplete, or you have provided insufficient information </Form.Check.Label>
-                            </Form.Check>
-                            <Form.Check type="radio">
-                                <Form.Check.Input type="radio" name="fav_language" value="Your question seems to be invalid, or it is out-of-the-subject or has some language issues" onChange={ ( event ) => {
-                                    setFormData( { ...formData, rejectionReason: event.target.value, assignment:false } );
-                                } }/>
-                                <Form.Check.Label>Your question seems to be invalid, or it is out-of-the-subject or has some language issues.</Form.Check.Label>
-                            </Form.Check>
-                            <Form.Check type="radio">
-                                <Form.Check.Input type="radio" name="fav_language" value="99" onChange={ ( event ) => {
-                                    setFormData( { ...formData, rejectionReason: "Your Question will be treated as Assignment", assignment:true } );
-                                } }/>
-                                <Form.Check.Label>Your Question will be treated as Assignment.</Form.Check.Label>
-                            </Form.Check>
-                        </Form.Group>
+                            <Form.Control type="book-name" placeholder="Enter Book Name" onChange={ ( event ) => {
+                                    setFormData( { ...formData, book_name: event.target.value } );
+                                } } />
 
-                        <Form.Group className="col-md-12">
-                            <Form.Label>
-                            <strong>Rejection Reason:</strong>
-                            </Form.Label>
-                            
-                            <CKEditor
+                            <Form.Text className="text-muted">
+                                Example Book Name: <span style={{"color":"red"}}>Mechanics of Materials: An Integrated Learning System</span>
+                            </Form.Text>
+                            {/* <CKEditor
                                 editor={ ClassicEditor }
                                 config={{
                                     toolbar: {
@@ -187,27 +134,66 @@ return (
                                         ]
                                     },
                                 }}
-                                data={data && data.rejectionReason1}
+                                disabled
+                                data={data && data.question}
                                 onChange={ ( event, editor ) => {
                                     const data = editor.getData();
-                                    setFormData( { ...formData, rejectionReason1: data } );
+                                    setFormData( { ...formData, question: data } );
                                 } }
-                            />
+                            /> */}
                         </Form.Group>
+                        
+                        <Form.Group className="col-md-12">
+                            <Form.Label>
+                            <strong>Book Edition: </strong>
+                            </Form.Label>
+                            <Form.Control type="book-edition" placeholder="Enter Book Edition" onChange={ ( event ) => {
+                                    setFormData( { ...formData, edition: event.target.value } );
+                                } }/>
 
+                            <Form.Text className="text-muted">
+                                Example Book Edition: <span style={{"color":"red"}} >6th Edition</span>
+                            </Form.Text>
+                            {/* <CKEditor
+                                editor={ ClassicEditor }
+                                config={{
+                                    toolbar: {
+                                        items: [
+                                            'MathType', 'ChemType','heading', 
+                                            '|',
+                                            'bold',
+                                            'italic',
+                                            'link',
+                                            'bulletedList',
+                                            'numberedList',
+                                            'imageUpload',
+                                            'mediaEmbed',
+                                            'insertTable',
+                                            'blockQuote',
+                                            'undo',
+                                            'redo'
+                                        ]
+                                    },
+                                }}
+                                data={data && data.answer}
+                                onChange={ ( event, editor ) => {
+                                    const data = editor.getData();
+                                    setFormData( { ...formData, answer: data } );
+                                } }
+                            /> */}
+                            
+                        </Form.Group>      
                         <Form.Group className="col-md-12">
                             <Button 
                             onClick={handleSubmit}
                             disabled={!loading && btnDisabled}
                             className="btn dark btn-md">
-                                {loading ? 'processing...': 'Reject Question'} 
+                                {loading ? 'processing...': 'Update Book'} 
                             </Button>
                         </Form.Group>
                         </Form>
                     )} 
-                    
-                     
-                   
+                                       
                     </div>    
                     
                     </div>

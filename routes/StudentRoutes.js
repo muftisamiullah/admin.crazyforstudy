@@ -55,6 +55,8 @@ router
     .post('/my-textbook-del', checkAuth, Student.deleteTextBook)
     .post('/ask-already-present-question', checkAuth, Student.askAlreadyPQuestion)
     .get('/get-college-textbooks/:filter/:pageno/:limit',checkAuth, AdminStudent.getAllCollegeTextBooks)
+    .get('/get-single-college-textbooks/:filter/:isbn/:id',checkAuth, AdminStudent.getSingleCollegeTextBooks)
+    .patch('/update-single-college-textbooks/:filter/:isbn/:id',checkAuth, AdminStudent.updateSingleCollegeTextBooks)
 ;
 
 module.exports = router;
