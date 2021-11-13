@@ -521,6 +521,8 @@ const newQuestionRecievedAdmin = (email, question, subject, sub_subject, subject
             <p><strong>${email}</strong></p>
             <p>Question(s) asked by the student -</p>
             <p><strong>${question}</strong></p>
+            <p>from -</p>
+            <p>Subject: <strong> ${subject}</strong> Sub Subject: <strong>${sub_subject}</strong></p>
             <a href=https://admin.crazyforstudy.com/solve-qa-update-answer/${subject_id}/${sub_subject_id}/pending/undefined/${q_id}>Click here to answer the question</a>
             </br>
             <p><strong>With regards,</strong></p>

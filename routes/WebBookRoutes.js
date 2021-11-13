@@ -27,6 +27,7 @@ router
     .get('/book/only-problem/:isbn/:chapter_no', Book.getBookOnlyProblems)
     .get('/book/only-problem/answer/:isbn/:chapter_no', Book.getBookOnlyProblemsWithAnswers)
     .post('/book/ask-for-solution', checkAuth, Book.askForSolution)
+    .post('/book/ask-for-book', checkAuth, Book.askForBook)
 
 
 module.exports = router;

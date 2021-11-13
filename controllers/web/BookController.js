@@ -5,6 +5,7 @@ const emails = require('../../emails/emailTemplates');
 const Notify = require('../../models/admin/Notification.js');
 const Student = require('../../models/student/Student');
 const Admin = require('../../models/admin/Admin.js');
+const TextBook =  require('../../models/admin/TextBook.js');
 
 var nodemailer = require('nodemailer');
 
@@ -696,6 +697,73 @@ const askForSolution = async(req, res) => {
     }
 }
 
+const askForBook = async(req, res) => {
+    try {
+        const textbook = await TextBook.findOneAndUpdate(
+            { isbn: req.body.isbn },
+            { $set : { ...req.body } },
+            { upsert: true },
+        )
+        if(!textbook){
+            return res.status(200).json({
+                msg: "Already present",
+            });
+        }
+        // const notifyData = {
+        //     title: req.body.question,
+        //     info: `<p>You will get solution for <strong>${(req.body.question).substr(0,30)}</strong></p>`,
+        //     type: 'TBS',
+        //     user_Id: req.body.user_Id,
+        //     link: req.body.link,
+        //     data_Id : req.body.q_id,
+        // }
+        // const noti = new Notify(notifyData);
+        // const dt = await noti.save();
+        // const student = await Student.findOne({_id:req.body.user_Id});
+        // const admins = await Admin.find({ role:1 }, {email:1});
+        // var transporter = nodemailer.createTransport({
+        //     service: 'gmail',
+        //     auth: {
+        //         user: process.env.email,
+        //         pass: process.env.password
+        //     }
+        // });
+        // const output = emails.askTbsSolution(student.Name, req.body.book_name, req.body.chapter_name, req.body.section_name, req.body.question)
+        // const adminMail = emails.askTbsSolutionAdmin(student.Name, req.body.book_name, req.body.chapter_name, req.body.section_name, req.body.question, req.body.q_id)
+
+        // var mailOptionsStudent = {
+        //     from: process.env.email,
+        //     to: student.Email,
+        //     subject: 'Crazy For Study is working on your question!',
+        //     html: output
+        // };
+
+        // var mailOptionsAdmin = {
+        //     from: process.env.email,
+        //     to: admins,
+        //     subject: 'A Student just placed a New TBS Request! Check it now',
+        //     html: adminMail
+        // };
+
+        // Promise.all([
+        //     transporter.sendMail(mailOptionsStudent),
+        //     transporter.sendMail(mailOptionsAdmin),
+        //   ])
+        //     .then((res) => console.log('Email sent: ' + res))
+        //     .catch((err) => console.log(err));
+    
+        return res.status(200).json({
+            msg: "Success",
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(409).json({
+            message: "Error occured",
+            errors: error.message
+        });
+    }
+}
+
 module.exports = {
     getAllBook,
     getBook,
@@ -717,4 +785,5 @@ module.exports = {
     searchChapterQuestionIndividual,
     searchQuestionAndAnswerIndividual,
     askForSolution,
+    askForBook,
 }

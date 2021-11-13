@@ -30,6 +30,7 @@ const createBook = async(req, res) => {
             subject_id: req.body.subject_id,
             sub_subject_name: req.body.sub_subject_name,
             sub_subject_id: req.body.sub_subject_id,
+            image: req?.file.filename,
         },{ $set: req.body},options, async (err, doc) => {
             if(err) {
                 return res.status(409).json({
@@ -266,7 +267,7 @@ const deleteBook = async(req, res) => {
 
 const viewBook = async(req, res) => {
     try {
-        const SingleBook = await Book.findOne({ISBN13: req?.params?.id }, { __v: 0 });
+        const SingleBook = await Book.findOne({_id: req?.params?.id }, { __v: 0 });
         return res.status(200).json({
             data: SingleBook
         });
