@@ -1,6 +1,6 @@
 import React from 'react'
 import {useHistory, useParams} from 'react-router-dom'
-import {htmlDecode} from '../../../utils/MakeSlug'
+import {htmlDecode, calculateTime} from '../../../utils/MakeSlug'
 // import Answers from './Answers'
 
 // import '../Chapters/math.css';
@@ -22,7 +22,8 @@ function SingleQuestion({problem, search}) {
     }else{
         answers = problem?.answer;
     }
-
+    var utcDate =  problem?.created_at;// ISO-8601 formatted date returned from server
+    var localDate = new Date(utcDate);
     return (
         <>
         <div className="card col-md-12 mb-2" key={problem?.problem_no}>
@@ -30,6 +31,11 @@ function SingleQuestion({problem, search}) {
             <div className="subject-card-heading pt-2"> 
                 <div className="problem_no">Q.No: {problem?.problem_no} </div>
                 <div>
+                    {params?.filter === 'pending' && (
+                        <button className="btn btn-sm bg-warning text-white mr-2">
+                            <span id={`${problem?._id}_timer`}>{calculateTime(`${problem?._id}_timer`, localDate.getTime(), 'time-over')}</span>
+                        </button>
+                    )}
                     <button className="btn btn-sm bg-primary text-white mr-2"
                     onClick={rejectQuestion.bind(this,{_id: problem?._id})} disabled={problem.old_qid ? true : false}>
                         <span className="fa fa-eye mr-2"></span>Reject Question</button>
