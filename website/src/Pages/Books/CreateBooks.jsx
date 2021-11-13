@@ -58,12 +58,24 @@ export default function CreateBooks() {
       formData['subject_id'] = params.subject_id
       formData['sub_subject_name'] = subSubjectName;
       formData['sub_subject_id'] = subSubjectId;
+      formDataUpload.append('subject_name',params.subject_name)
+      formDataUpload.append('subject_id',params.subject_id)
+      formDataUpload.append('sub_subject_name',subSubjectName)
+      formDataUpload.append('sub_subject_id',subSubjectId)
+      formDataUpload.append('Author1',formData.Author1)
+      formDataUpload.append('Author2',formData.Author2)
+      formDataUpload.append('Author3',formData.Author3)
+      formDataUpload.append('BookName',formData.BookName)
+      formDataUpload.append('Description',formData.Description)
+      formDataUpload.append('Edition',formData.Edition)
+      formDataUpload.append('ISBN10',formData.ISBN10)
+      formDataUpload.append('ISBN13',formData.ISBN13)
+      formDataUpload.append('file',formData.file)
       let book_id = params.book_id
-      console.log(formData);
       if(book_id){
-        response = await axios.patch(`${API_URL}books/update/${book_id}`, formData,options);
+        response = await axios.patch(`${API_URL}books/update/${book_id}`, formDataUpload,options);
       }else{
-        response = await axios.post(`${API_URL}books/create`, formData, options);
+        response = await axios.post(`${API_URL}books/create`, formDataUpload, options);
       }
       errorDispatch({ type: "SET_SUCCESS", payload: response.message });
       history.push(`/books`);
@@ -72,6 +84,10 @@ export default function CreateBooks() {
   
     async function handleFormField(e){
       setFormData({...formData, [e.target.name]: e.target.value});
+    }
+
+    async function handleImageField(e){
+      setFormData({...formData, [e.target.name]: e.target.files[0] })
     }
 
 
@@ -205,7 +221,7 @@ export default function CreateBooks() {
                             </Form.Group>
                           </>
                         )}
-                        <Form.Group>
+                        <Form.Group>{console.log(SingleBook)}
                           <Form.Label>Book Name</Form.Label>
                           <input
                             type="text"
@@ -230,6 +246,21 @@ export default function CreateBooks() {
                           />
                         </Form.Group>
                         
+                        {!params.book_id && <Form.Group>
+                          <Form.Label>Image</Form.Label>
+                          <input
+                            type="file"
+                            autoComplete="off"
+                            className="form-control"
+                            name="file"
+                            defaultValue={SingleBook && SingleBook.image}
+                            onChange={handleImageField}
+                          />
+                          <Form.Text className="text-muted">
+                            Example Image Name: <span style={{"color":"red"}} >9780131453401-us-300.jpg</span><br/>
+                            Image Name Format: <span style={{"color":"red"}} >ISBN-us-300.jpg</span>
+                          </Form.Text>
+                        </Form.Group>}
                       </div>
                        <div className="col-md-4">
                        <Form.Group>
@@ -276,8 +307,7 @@ export default function CreateBooks() {
                             defaultValue={SingleBook && SingleBook.Author2}
                             onChange={handleFormField}
                           />
-                        </Form.Group>
-                        
+                        </Form.Group>   
                         
                         </div>          
                         <div className="col-md-4">
@@ -300,7 +330,7 @@ export default function CreateBooks() {
                             className="form-control"
                             name="Description"
                             defaultValue={SingleBook && SingleBook.Description}
-                            style={{ height: '190px' }}
+                            style={{ height: '210px' }}
                             onChange={handleFormField}
                           />
                         </Form.Group>
