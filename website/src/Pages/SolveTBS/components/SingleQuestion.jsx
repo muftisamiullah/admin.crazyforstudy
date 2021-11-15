@@ -21,7 +21,18 @@ function SingleQuestion({problem, search}) {
     }else{
         answers = problem?.answer;
     }
-    var utcDate =  problem?.updated_at;// ISO-8601 formatted date returned from server
+    const sortRequested = problem.answerRequestedIds;
+    sortRequested.sort(function(a, b){
+        var keyA = new Date(a.answerRequestDate),
+            keyB = new Date(b.answerRequestDate);
+        // Compare the 2 dates
+        if(keyA > keyB) return -1;
+        if(keyA < keyB) return 1;
+        return 0;
+    });
+    //console.log(sortRequested[0].answerRequestDate, sortRequested.length);
+    var utcDate =  sortRequested[0].answerRequestDate;// ISO-8601 formatted date returned from server
+    console.log(utcDate,);
     var localDate = new Date(utcDate);
     return (
         <>
@@ -31,7 +42,7 @@ function SingleQuestion({problem, search}) {
                 <div className="problem_no" >Q.No: <span style={{"color":"green"}}>{problem?.problem_no}</span> </div>
                 <div className="problem_no" >ISBN: <span style={{"color":"green"}}>{problem?.book_isbn}</span> </div>
                 <div>
-                    {params?.filter === 'pending' && problem?.updated_at && (
+                    {params?.filter === 'pending' && sortRequested[0]?.answerRequestDate && (
                         <button className="btn btn-sm bg-warning text-white mr-2">
                             <span id={`${problem?._id}_timer`}>{calculateTime(`${problem?._id}_timer`, localDate.getTime(), 'time-over')}</span>
                         </button>
