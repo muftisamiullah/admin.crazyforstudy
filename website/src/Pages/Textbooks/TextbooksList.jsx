@@ -80,7 +80,7 @@ export default function TextbooksList() {
                                         const d = new Date(book.created_at)
                                         return (
                                             <tr key={key}>
-                                                <td>{key+1}</td>{console.log(book.authoring)}
+                                                <td>{key+1}</td>
                                                 <td>{book?.isbn}</td>
                                                 {params.filter != "out-of-stock" 
                                                     && <><td>{book?.book_name}</td>
