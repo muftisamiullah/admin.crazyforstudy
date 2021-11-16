@@ -34,7 +34,7 @@ var storage =  multerS3({
     },
     key: function (req, file, cb) {
         file.filename = Date.now() + "-" + file.originalname
-        cb(null, "uploads/" + file.originalname)
+        cb(null, "uploads/" +  file.filename)
     }
 })
 

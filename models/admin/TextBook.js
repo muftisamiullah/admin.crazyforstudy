@@ -8,6 +8,7 @@ const TextBookSchema = new mongoose.Schema({
     book_name: {type: String},
     edition: {type: String},
     user_name: {type: String},
+    authoring: { type: Boolean, default: false },
     inStock:{
         type: Boolean
     },

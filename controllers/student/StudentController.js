@@ -203,7 +203,7 @@ const checkBookIsbn = async (req, res) => {
 const myTextBook = async (req, res) => {
     try {    
         const filter = {user_Id: req.body.user_Id}
-        const TextBooks = await TextBook.find(filter,{_id: 1, isbn: 1, book_name: 1, edition: 1, user_Id: 1});
+        const TextBooks = await TextBook.find(filter,{_id: 1, isbn: 1, book_name: 1, edition: 1, user_Id: 1, authoring: 1, inStock: 1});
         res.status(200).json({
             error: false,
             data: TextBooks
