@@ -257,6 +257,7 @@ const askAlreadyPQuestion = async (req, res) => {
         let update = req.body
         update.flag = "pending"
         update.created_at = new Date();
+        update.updated_at = new Date();
         const question = await Question.findOne({_id:req.body.q_id, type: "QA"})
         const resolved = await Question.findByIdAndUpdate({_id:req.body.q_id, type: "QA"}, update)
         if(resolved){
