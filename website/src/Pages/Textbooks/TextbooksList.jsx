@@ -68,8 +68,10 @@ export default function TextbooksList() {
                                 <table>
                                     <th>s. no</th>
                                     <th>Isbn</th>
-                                    <th>Book Name</th>
-                                    <th>Edition</th>
+                                    {params.filter != "out-of-stock" 
+                                                    && <><th>Book Name</th>
+                                    <th>Edition</th></>}
+                                    <th>Authoring</th>
                                     <th>UserName</th>
                                     <th>Date</th>
                                     {params.filter == "out-of-stock" && <th>Action</th>}
@@ -78,10 +80,12 @@ export default function TextbooksList() {
                                         const d = new Date(book.created_at)
                                         return (
                                             <tr key={key}>
-                                                <td>{key+1}</td>
+                                                <td>{key+1}</td>{console.log(book.authoring)}
                                                 <td>{book?.isbn}</td>
-                                                <td>{book?.book_name}</td>
-                                                <td>{book?.edition}</td>
+                                                {params.filter != "out-of-stock" 
+                                                    && <><td>{book?.book_name}</td>
+                                                <td>{book?.edition}</td></>}
+                                                <td className="text-center">{book.authoring ? <span className="badge badge-dark"> Yes</span> : <span className="badge badge-secondary">No</span>}</td>
                                                 <td>{book?.user_name}</td>
                                                 <td>{d.toString()}</td>
                                                 {params.filter == "out-of-stock" 
