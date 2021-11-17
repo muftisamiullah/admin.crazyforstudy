@@ -19,6 +19,92 @@ const responseTime = require('response-time')
 
 const app = express();
 
+//for mongodb backup
+const { spawn } = require('child_process');
+// const path = require('path');
+// const cronJob = require('cron').CronJob;
+
+const DB_NAME = 'crazyForStudy';
+const DB_HOST = '65.0.252.57';
+const DB_PORT = '27017';
+const DB_USERNAME = 'cfsadmin';
+const DB_PASSWORD = '37cjK5tYZNvguXSw';
+const DB_AUTHENTICATIONDB = 'admin';
+const ARCHIVE_PATH = path.join(__dirname, 'backup', `${DB_NAME}.gzip`);
+var backupJob = new cronJob({
+    cronTime: '* 0 0 * * SUN',         // 0 0 * * 0   once a week             // */5 * * * * *  every 5 seconds
+    onTick: function() {
+        backupMongoDB()
+    },
+    start: false,
+    timeZone: 'Asia/Kolkata'
+});
+backupJob.start();
+
+function uploadToS3() {
+    var aws = require('aws-sdk') //s3
+    const fs = require('fs');
+    var s3 = new aws.S3({secretAccessKey: process.env.awsAcessSecret,
+        accessKeyId: process.env.awsAccessKey,
+        region: process.env.awsRegion}) //s3
+
+    // var params = {
+    //     Bucket : process.env.awsS3Bucket, /* Another bucket working fine */ 
+    //     CopySource : ARCHIVE_PATH, /* required */
+    //     Key : DB_NAME, /* required */
+    //     ACL : 'public-read',
+    // };
+
+    const fileContent = fs.readFileSync(ARCHIVE_PATH);
+    const params = {
+        Bucket: process.env.awsS3Bucket,
+        Key: DB_NAME+".gzip", // File name you want to save as in S3
+        Body: fileContent
+    };
+
+    s3.upload(params, function(err, data) {
+        if (err)
+            console.log(err, err); // an error occurred
+        else {
+            console.log(data); // successful response
+        }
+    });
+}
+
+function backupMongoDB() {
+    const child = spawn('mongodump', [
+        `--db=${DB_NAME}`,
+        `--host=${DB_HOST}`,
+        `--port=${DB_PORT}`,
+        `--username=${DB_USERNAME}`,
+        `--password=${DB_PASSWORD}`,
+        `--authenticationDatabase=${DB_AUTHENTICATIONDB}`,
+        `--archive=${ARCHIVE_PATH}`,
+        '--gzip',
+    ]);
+
+    child.stdout.on('data', (data) => {
+        console.log('stdout:\n', data);
+    });
+    
+    child.stderr.on('data', (data) => {
+        console.log('stderr:\n', Buffer.from(data).toString());
+    });
+    
+    child.on('error', (error) => {
+        console.log('error:\n', error);
+    });
+    
+    child.on('exit', (code, signal) => {
+        if (code) console.log('Process exit with code:', code);
+        else if (signal) console.log('Process killed with signal:', signal);
+        else {
+            console.log('Backup is successfull ✅'); 
+            uploadToS3()
+        }
+    });
+}
+
 app.use(responseTime())
 /* Cron Task */
 var job = new cronJob({
