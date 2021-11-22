@@ -7,7 +7,7 @@ Route,
 import Navigation from './components/Navigation.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import '../node_modules/react-datepicker/dist/react-datepicker.min.css'
+import 'react-datepicker/dist/react-datepicker.css'
 
 import PrivateRoute from './Helper/PrivateRoute.jsx';
 import AdminRoute from './Helper/AdminRoute.jsx';
