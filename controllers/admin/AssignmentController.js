@@ -54,6 +54,8 @@ const updateSingleAssignment = async (req, res) => {
         let update = req.body
         update.assignment_status = "answered"
         update.updated_at = Date.now()
+        update.solutionHalf = req.files.file1 ? req.files.file1[0].filename : '';
+        update.solutionFull = req.files.file2 ? req.files.file2[0].filename : '' 
         delete update.user_Id;
         const response = await Assignment.findByIdAndUpdate({ _id: req.params.id }, update);
         if(response){
@@ -85,6 +87,16 @@ const updateSingleAssignment = async (req, res) => {
             });
             const output = emails.assignmentSubmitUserSolution(student.Name, ques, update.answer, req.params.id, newCreatedAtDate, newDeadlineDate)
             var mailOptions = {
+                attachments: [
+                    {
+                        // filename: req?.files?.file1[0].filename,
+                        path: process.env.s3Path + req?.files?.file1[0].filename,
+                    }, // stream this file
+                    {
+                        // filename: req?.files?.file2[0].filename,
+                        path: process.env.s3Path + req?.files?.file2[0].filename,
+                    } // stream this file
+                ],
                 from: process.env.email,
                 to: student.Email,
                 subject: 'Your Assignment is ready!',

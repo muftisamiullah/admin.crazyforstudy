@@ -17,10 +17,12 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from 'ckeditor5-classic-with-mathtype';
 import {htmlDecode} from '../../utils/MakeSlug'
 import {s3Path} from '../../Helper/ApiUrl'
+import { useToasts } from 'react-toast-notifications';
 
 export default function UpdateAnswer() {
     const history = useHistory();
     const params = useParams();
+    const { addToast } = useToasts();
     
     const {state} = useContext(AuthContext);
     const {state: errorState, dispatch: errorDispatch} = useContext(ErrorContext);
@@ -43,30 +45,66 @@ export default function UpdateAnswer() {
 
     let _URL = window.URL || window.webkitURL;
     const [blogImage, setBlogImage] = useState("");
-    const uploadImage = (e) => {
-        e.preventDefault();
-        var file, img, base64,blob, reader;
-        if ((file = e.target.files[0])) {
-            img = new Image();
-            blob = new Blob([file],{ type: file.type })
-            img.src = _URL.createObjectURL(blob);
-            reader = new FileReader(); 
-            reader.readAsDataURL(blob); 
-            reader.onload = function () { 
-               base64 = reader.result;
-               setBlogImage(base64);
-               setFormData({...formData,image: base64}) 
-            }  
+    const [extension, setExtension] = useState();
+    const [file, setFile] = useState();
+    const [formData, setFormData] = useState({});
+
+    const uploadHalf = (e) => {
+        const filename = e.target.files[0].name;
+            const ext = filename.split('.')[1];
+            setExtension(ext);
+            if(ext === "docx"){
+                setBtnDisbaled(false);
+                setFile(e.target.files[0]);
+                setFormData({...formData, [e.target.name]: e.target.files[0] })
+            }else{
+                setBtnDisbaled(true);
+                addToast('Only .docx files are allowed', { appearance: 'error', autoDismiss: true });
         }
     }
-    const [formData, setFormData] = useState({});
+
+    // const uploadFull = (e) => {
+    //     const filename = e.target.files[0].name;
+    //         console.log('file onchange ' ,  filename);
+    //         const ext = filename.split('.')[1];
+    //         setExtension(ext);
+    //         if(ext === "docx"){
+    //             setBtnDisbaled(false);
+    //             setFile(e.target.files[0]);
+    //             formDataUpload.append('file2', e.target.files[0]);
+    //         }else{
+    //             setBtnDisbaled(true);
+    //             addToast('Only .docx files are allowed', { appearance: 'error', autoDismiss: true });
+    //     }
+    // }
+
+    // const uploadImage = (e) => {
+    //     e.preventDefault();
+    //     var file, img, base64,blob, reader;
+    //     if ((file = e.target.files[0])) {
+    //         img = new Image();
+    //         blob = new Blob([file],{ type: file.type })
+    //         img.src = _URL.createObjectURL(blob);
+    //         reader = new FileReader(); 
+    //         reader.readAsDataURL(blob); 
+    //         reader.onload = function () { 
+    //            base64 = reader.result;
+    //            setBlogImage(base64);
+    //            setFormData({...formData,image: base64}) 
+    //         }  
+    //     }
+    // }
+
     async  function handleSubmit(e){
         e.preventDefault();
+        const formDataUpload = new FormData();
         let response = null;
         setLoading(true);
         setBtnDisbaled(true);
-        response = await axios.patch(`${API_URL}assignment/update-answer-assignment/${params.id}`,formData, options);
-        console.log(response);
+        formDataUpload.append('file1', formData.file1)
+        formDataUpload.append('file2', formData.file2)
+
+        response = await axios.patch(`${API_URL}assignment/update-answer-assignment/${params.id}`, formDataUpload, options);
         errorDispatch({type: 'SET_SUCCESS', payload: response.message});
         setBtnDisbaled(false);
         setLoading(false);
@@ -127,36 +165,9 @@ return (
                             <Form.Label style={{color:"green"}}>
                                 <div className="card-text" id="high" dangerouslySetInnerHTML={{ __html: data && data.question  }} />
                             </Form.Label>
-                            {/* <CKEditor
-                                editor={ ClassicEditor }
-                                config={{
-                                    toolbar: {
-                                        items: [
-                                            'MathType', 'ChemType','heading', 
-                                            '|',
-                                            'bold',
-                                            'italic',
-                                            'link',
-                                            'bulletedList',
-                                            'numberedList',
-                                            'imageUpload',
-                                            'mediaEmbed',
-                                            'insertTable',
-                                            'blockQuote',
-                                            'undo',
-                                            'redo'
-                                        ]
-                                    },
-                                }}
-                                disabled
-                                data={data && data.question}
-                                onChange={ ( event, editor ) => {
-                                    const data = editor.getData();
-                                    setFormData( { ...formData, question: data } );
-                                } }
-                            /> */}
                             
-                        </Form.Group>{console.log(data)}
+                            
+                        </Form.Group>
                         {/* <FileViewer
                             fileType={"png"}
                             filePath={s3Path+data.image0}
@@ -168,51 +179,45 @@ return (
                         <FileViewer
                             filePath={s3Path+data.image2}
                         /> */}
+                        <hr/>
                         <Form.Group className="col-md-12">
-                            {data.image0 != "" && <button className="btn btn-sm bg-secondary text-white mr-2">
-                                <a href={s3Path + data.image0} target="_blank" download={data.image0}><i class="fa fa-download"></i> Download Attachment 1</a>
-                            </button>}
-                            {data.image1 != "" && <button className="btn btn-sm bg-secondary text-white mr-2">
-                                <a href={s3Path + data.image1} target="_blank" download={data.image1}><i class="fa fa-download"></i> Download Attachment 2</a>
-                            </button>}
-                            {data.image2 != "" && <button className="btn btn-sm bg-secondary text-white mr-2">
-                                <a href={s3Path + data.image2} target="_blank" download={data.image2}><i class="fa fa-download"></i> Download Attachment 3</a>
-                            </button>}
-
+                        <div className="problem_no">{data?._id} | <span style={{color:"red"}}>{data?.payment_status}</span> | <span style={{color:"green"}}>{data?.subject+"/"+data?.sub_subject}</span> | <span style={{color:"red"}}>Pages: {data?.pages}</span> | <span style={{color:"grey"}}>Reference: {data?.referenceString}</span></div>
                         </Form.Group>
                         <Form.Group className="col-md-12">
+                            {data.image0 != "" && 
+                            <a href={s3Path + data.image0} target="_blank" download={data.image0} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> 1</a>
+                            }
+                            {data.image1 != "" && 
+                                <a href={s3Path + data.image1} target="_blank" download={data.image1} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> 2</a>
+                            }
+                            {data.image2 != "" &&
+                                <a href={s3Path + data.image2} target="_blank" download={data.image2} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> 3</a>
+                            }
+                            {data.solutionHalf != "undefined" &&
+                                <a href={s3Path + data.solutionHalf} target="_blank" download={data.solutionHalf} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> Soltuion Half</a>
+                            }
+                            {data.solutionFull != "undefined" && 
+                                <a href={s3Path + data.solutionFull} target="_blank" download={data.solutionFull} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> Solution Full</a>
+                            }
+                        </Form.Group >
+                        <hr/>
+                        <Form.Group className="col-md-12">
                             <Form.Label>
-                                <strong>Complete Answer</strong>
-                            </Form.Label>
-                            
-                            <CKEditor
-                                editor={ ClassicEditor }
-                                config={{
-                                    toolbar: {
-                                        items: [
-                                            'MathType', 'ChemType','heading', 
-                                            '|',
-                                            'bold',
-                                            'italic',
-                                            'link',
-                                            'bulletedList',
-                                            'numberedList',
-                                            'imageUpload',
-                                            'mediaEmbed',
-                                            'insertTable',
-                                            'blockQuote',
-                                            'undo',
-                                            'redo'
-                                        ]
-                                    },
-                                }}
-                                data={data && data.completeanswer}
-                                onChange={ ( event, editor ) => {
-                                    const data = editor.getData();
-                                    setFormData( { ...formData, answer: data } );
-                                } }
-                            />
-                            
+                                Choose Half Solution
+                            </Form.Label> 
+                            <Form.Control name="file1" type="file" 
+                            onChange={uploadHalf}
+                            />  
+                            <small style={{color:"green"}}>only .docx extenion files can be uploaded</small>
+                        </Form.Group>      
+                        <Form.Group className="col-md-12">
+                            <Form.Label>
+                                Choose Full Solution
+                            </Form.Label> 
+                            <Form.Control name="file2" type="file" 
+                            onChange={uploadHalf}
+                            />  
+                            <small style={{color:"green"}}>only .docx extenion files can be uploaded</small>
                         </Form.Group>      
                         <Form.Group className="col-md-12">
                             <Button 
@@ -224,9 +229,6 @@ return (
                         </Form.Group>
                         </Form>
                     )} 
-                    
-                     
-                   
                     </div>    
                     
                     </div>

@@ -41,8 +41,8 @@ var upload = multer({ storage: storage })
 
 const router = express.Router();
 
-router.get('/get-assignment-all/:filter?/:subject?/:sub_subject?/:page?/:limit?', checkAuth, Assignment.getAssignmentAll);
+router.get('/get-assignment-all/:filter?/:subject?/:sub_subject?/:page?/:limit?',  checkAuth, Assignment.getAssignmentAll);
 router.get('/single-question-assignment/:id?', checkAuth, Assignment.getSingleAssignment);
-router.patch('/update-answer-assignment/:id?', checkAuth, Assignment.updateSingleAssignment);
+router.patch('/update-answer-assignment/:id?',upload.fields([{name:'file1'},{name:'file2'}]), checkAuth, Assignment.updateSingleAssignment);
 
 module.exports = router;

@@ -48,7 +48,6 @@ export default function ModifyChapters() {
     // const [blogImage, setBlogImage] = useState("");
     const uploadDoc = (e) => {
         const filename = e.target.files[0].name;
-            console.log('file onchange ' ,  filename);
             const ext = filename.split('.')[1];
             
             setExtension(ext);
@@ -72,7 +71,6 @@ export default function ModifyChapters() {
         }
         formDataUpload.append('file',file)
         response = await axios.patch(`${API_URL}chapter/upload-solution/${params.q_id}`,formDataUpload, options);
-        console.log(response);
         errorDispatch({type: 'SET_SUCCESS', payload: response.message});
         setBtnDisbaled(false);
         setLoading(false);

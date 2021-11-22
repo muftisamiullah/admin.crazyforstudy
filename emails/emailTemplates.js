@@ -985,7 +985,7 @@ const assignmentSubmitUserSolution = (name, question, answer, order_id, order_re
             <p>Trust me, we are sometimes even faster than this!</p>
             <p>Here’s your Assignment details - </p>
             <p>${order_id}</p>
-            <p>You can now view/download the assignment from this link - <a href="https://www.crazyforstudy.com/">crazyforstudy.com</a>.</p>
+            <p>You can now view/download the assignment from this link - <a href="https://www.crazyforstudy.com/user/my-orders">crazyforstudy.com</a>.</p>
             <p>If you need any revisions, connect with us from this link - <a href="https://www.crazyforstudy.com/">crazyforstudy.com</a>.</p>
             <p>Good grades await you!</p>
             </br>

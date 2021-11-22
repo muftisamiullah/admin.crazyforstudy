@@ -29,17 +29,23 @@ function SingleQuestion({problem, search}) {
         <div className="card col-md-12 mb-2" key={problem?.problem_no}>
         <div className="card-title col-md-12 p-0 mb-0" id={problem?.problem_no}> 
             <div className="subject-card-heading pt-2"> 
-                <div className="problem_no">Q.No: {problem?.problem_no} </div>
-                <div className="problem_no">{problem?.subject+"/"+problem?.sub_subject}</div>
+                <div className="problem_no"><span style={{color:"red"}}>{problem?.payment_status}</span> | <span style={{color:"green"}}>{problem?.subject+"/"+problem?.sub_subject}</span> | <span style={{color:"red"}}>Pages: {problem?.pages}</span> | <span style={{color:"grey"}}>Reference: {problem?.referenceString}</span></div>
+
                 <div>
-                    {problem.image0 != "" && <button className="btn btn-sm bg-secondary text-white mr-2">
-                        <a href={s3Path + problem.image0} target="_blank" download={problem.image0}><i class="fa fa-download"></i> Download Attachment 1</a>
+                    {problem.image0 != "" && 
+                        <a href={s3Path + problem.image0} target="_blank" download={problem.image0} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> Download 1</a>
+                    }
+                    {problem.image1 != "" && 
+                        <a href={s3Path + problem.image1} target="_blank" download={problem.image1} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> Download 2</a>
+                    }
+                    {problem.image2 != "" &&
+                        <a href={s3Path + problem.image2} target="_blank" download={problem.image2} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> Download 3</a>
+                    }
+                    {problem.solutionHalf != "" || problem.solutionHalf != "undefined" && <button className="btn btn-sm bg-secondary text-white mr-2">
+                        <a href={s3Path + problem.solutionHalf} target="_blank" download={problem.solutionHalf}><i className="fa fa-download"></i> Download Soltuion Half</a>
                     </button>}
-                    {problem.image1 != "" && <button className="btn btn-sm bg-secondary text-white mr-2">
-                        <a href={s3Path + problem.image1} target="_blank" download={problem.image1}><i class="fa fa-download"></i> Download Attachment 2</a>
-                    </button>}
-                    {problem.image2 != "" && <button className="btn btn-sm bg-secondary text-white mr-2">
-                        <a href={s3Path + problem.image2} target="_blank" download={problem.image2}><i class="fa fa-download"></i> Download Attachment 3</a>
+                    {problem.solutionFull != "" || problem.solutionFull != "undefined" && <button className="btn btn-sm bg-secondary text-white mr-2">
+                        <a href={s3Path + problem.solutionFull} target="_blank" download={problem.solutionFull}><i className="fa fa-download"></i> Download Solution Full</a>
                     </button>}
                     {params?.filter === 'pending' && (
                         <button className="btn btn-sm bg-warning text-white mr-2">

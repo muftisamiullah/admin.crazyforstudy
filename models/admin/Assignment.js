@@ -90,7 +90,10 @@ const AssignmentSchema = new mongoose.Schema({
     image2:{
         type: String,
     },
-    answer:{
+    solutionHalf:{
+        type: String,
+    },
+    solutionFull:{
         type: String,
     },
     created_at: {
