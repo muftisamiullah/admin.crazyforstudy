@@ -930,7 +930,7 @@ const askTbsSolutionSolved = (book_name, chapter_name, section_name, question, s
     </html>`
 }
 
-const assignmentSubmitUser = (name, topic_name, Assignment_details, expected_delivery_date) => {
+const assignmentSubmitUser = (question, subject, sub_subject, date) => {
     return `<!doctype html>
     <html>
         <head>
@@ -938,12 +938,12 @@ const assignmentSubmitUser = (name, topic_name, Assignment_details, expected_del
             <title>Yaay! Your Assignment Request has been Submitted!</title>
         </head>
         <body>
-            <p>Hello ${name},</p>
-            <p>We would like to inform you that we have successfully received your Assignment request on ${topic_name}.</p>
+            <p>Hello User,</p>
+            <p>We would like to inform you that we have successfully received your Assignment request from subject: <strong>${subject}</strong> and sub_subject: <strong>${sub_subject}</strong>.</p>
             <p><Here’s a brief about your assignment details - </p>                                                                                                                                     
-            <p>${Assignment_details}</p>
+            <p><strong>Question: </strong>s${question}</p>
             <p>If you want to make any changes to any of the provided details, connect with us. </p>
-            <p>You can expect to receive your assignment by <strong> ${expected_delivery_date}.</strong></p>
+            <p>You can expect to receive your assignment by <strong> ${date}.</strong></p>
             <p>Thanks for choosing CFS!</p>
             <p><strong>With regards,</strong></p>
             <p><strong>Team Crazy For Study</strong></p>
@@ -951,21 +951,20 @@ const assignmentSubmitUser = (name, topic_name, Assignment_details, expected_del
     </html>`
 }
 
-const assignmentSubmitAdmin = (student_name, Assignment_details) => {
+const assignmentSubmitAdmin = (question, subject, sub_subject, date) => {
     return `<!doctype html>
     <html>
         <head>
             <meta charset="utf-8">
-            <title>${Student_name} just requested for Assignment Help
+            <title>User just requested for Assignment Help
             </title>
         </head>
         <body>
             <p>Hi there!</p>
-            <p>A student has just submitted a new Assignment Help requirement on crazyforstudy.com.
-            Student’s basic details -</p>
-            <p>${student_name}</p>                                                                                                                                     
+            <p>A student has just submitted a new Assignment Help requirement on crazyforstudy.com for subject: <strong>${subject}</strong> and sub_subject: <strong>${sub_subject}</strong>.                                                                                                                                   
             <p>Assignment requirement details as provided by the student </p>
-            <p>${Assignment_details}</p>
+            <p><strong>Question: </strong>${question}</p>
+            <p><strong>Deadline Date: </strong>${date}</p>
             <p>Thanks for choosing CFS!</p>
             <p><strong>With regards,</strong></p>
             <p><strong>Team Crazy For Study</strong></p>
@@ -973,21 +972,19 @@ const assignmentSubmitAdmin = (student_name, Assignment_details) => {
     </html>`
 }
 
-const assignmentSubmitUserSolution = (name, order_request_date, delivery_date, number_of_days, order_number) => {
+const assignmentSubmitUserSolution = (name, question, answer, order_id, order_request_date, delivery_date) => {
     return `<!doctype html>
     <html>
         <head>
             <meta charset="utf-8">
-            <title>Completed Assignment available now. Order No.: ${order_number}</title>
+            <title>Completed Assignment available now. Order No.: ${order_id}</title>
         </head>
         <body>
             <p>Hello ${name},</p>
             <p>We are excited to announce that our experts have completed your Assignment Help request. You had submitted the request on ${order_request_date} and received it on ${delivery_date}. </p>                                                                                                                                     
-            <p>That’s just ${number_of_days} !!! </p>
             <p>Trust me, we are sometimes even faster than this!</p>
             <p>Here’s your Assignment details - </p>
-            <p>order_number</p>
-            <p>order_number</p>
+            <p>${order_id}</p>
             <p>You can now view/download the assignment from this link - <a href="https://www.crazyforstudy.com/">crazyforstudy.com</a>.</p>
             <p>If you need any revisions, connect with us from this link - <a href="https://www.crazyforstudy.com/">crazyforstudy.com</a>.</p>
             <p>Good grades await you!</p>

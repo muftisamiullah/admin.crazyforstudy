@@ -66,6 +66,9 @@ const AssignmentSchema = new mongoose.Schema({
     reference:{
         type: String,
     },
+    referenceString:{
+        type: String,
+    },
     payment_status:{
         type: String,
         default: "unpaid"
@@ -76,7 +79,7 @@ const AssignmentSchema = new mongoose.Schema({
     },
     assignment_status:{
         type: String,
-        default: "Pending"
+        default: "pending"
     },
     transactions: {
         type: [TransactionSchema]
@@ -85,6 +88,9 @@ const AssignmentSchema = new mongoose.Schema({
         type: String,
     },
     image2:{
+        type: String,
+    },
+    answer:{
         type: String,
     },
     created_at: {

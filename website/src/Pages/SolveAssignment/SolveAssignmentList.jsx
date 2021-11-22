@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from 'react'
 import '../mainDash.css';
 import {  useHistory , useParams , Link, useLocation} from "react-router-dom";
 import { Button } from 'react-bootstrap'
-import SingleQuestion from '../SolveAsk50/components/SingleQuestion';
+import SingleQuestion from '../SolveAssignment/components/SingleQuestion'
 
 import useAllSubjects from '../../hooks/useAllSubjects';
 import useGetSubSubjects from '../../hooks/useGetSubSubjects';
@@ -11,18 +11,19 @@ import {AuthContext} from '../../context/AuthContext';
 import {Notification} from '../../components/Notification';
 import {LoadingComp} from '../../components/LoadingComp';
 
-import useAsk50 from './hooks/useAsk50';
+import useAllAssignments from './hooks/useAllAssignments';
 
 import Pagination from './Pagination';
 import * as utils from '../../utils/MakeSlug';
 
-export default function Solve50List() {
+
+export default function SolveAssignmentList() {
     const history = useHistory();
     const params = useParams();
     const location = useLocation();
     const {state} = useContext(AuthContext);
 
-    const {data, isLoading:isLoadingQestions, error} = useAsk50();
+    const {data, isLoading:isLoadingQestions, error} = useAllAssignments();
     const {data:subjects,isLoading: isLoadingSubject} = useAllSubjects();
     const {data:sub_subjects,isLoading: isLoadingSubSubject} = useGetSubSubjects();
 
@@ -33,7 +34,7 @@ export default function Solve50List() {
                 <div className="main-area-all">
                     <div className="dashboard_main-container">
                         <div className="dash-main-head">
-                            <h2>Ask 50</h2>
+                            <h2>Assignments</h2>
                         </div>
                         {isLoadingQestions && (<LoadingComp />)}
                         <div className="dash-con-heading">
@@ -42,9 +43,19 @@ export default function Solve50List() {
                                     <span className="fa fa-arrow-left"></span>
                                 </button> */}
                                 <div className="col-md-12 row">
-                                {/* <div className="col-md-2">
-                                    <h2>Questions</h2>
-                                </div> */}
+                                <select className="col-md-2 form-control"
+                                onChange={e => {   
+                                    const filter = e.target.value;
+                                    if(filter != 999){
+                                        history.push(`/solve-assignment/${filter}/${params.subject_id}/${params.sub_subject_id}`)
+                                    }
+                                }}
+                            >
+                                <option value="999">Select Completion Filter</option>
+                                <option value="pending" selected={params.filter == "pending" ? true : false}>Pending</option>
+                                <option value="answered" selected={params.filter == "answered" ? true : false}>Answered</option>
+                                {/* <option value="rejected" selected={params.filter == "rejected" ? true : false}>Rejected</option> */}
+                                </select>
                                 <select className="col-md-2 ml-2 form-control"
                                 onChange={e => {
                                     const data = e.target.value;
@@ -52,9 +63,9 @@ export default function Solve50List() {
                                     const subject = split_val[1];
                                     const subject_id = split_val[0];
                                     if(subject === undefined){
-                                        history.push(`/solve-ask50`)
+                                        history.push(`/solve-assignment`)
                                     }else{
-                                        history.push(`/solve-ask50/${subject_id}`)
+                                        history.push(`/solve-assignment/${params.filter}/${subject_id}`)
                                     }
                                 }}
                             >
@@ -75,9 +86,9 @@ export default function Solve50List() {
                                     const sub_subject = split_val[1];
                                     const sub_subject_id = split_val[0];
                                     if(sub_subject === undefined){
-                                        history.push(`/solve-ask50`)
+                                        history.push(`/solve-assignment`)
                                     }else{
-                                        history.push(`/solve-ask50/${params.subject_id}/${sub_subject_id}`)
+                                        history.push(`/solve-assignment/${params.filter}/${params.subject_id}/${sub_subject_id}`)
                                     }
                                 }}
                             >
@@ -91,22 +102,10 @@ export default function Solve50List() {
                                     )
                                 })}
                             </select>
-                            <select className="col-md-2 ml-2 form-control"
-                                onChange={e => {   
-                                    const filter = e.target.value;
-                                    if(filter != 999){
-                                        history.push(`/solve-ask50/${params.subject_id}/${params.sub_subject_id}/${filter}`)
-                                    }
-                                }}
-                            >
-                                <option value="999">Select Filter</option>
-                                <option value="pending" selected={params.filter == "pending" ? true : false}>Pending</option>
-                                <option value="answered" selected={params.filter == "answered" ? true : false}>Answered</option>
-                                <option value="rejected" selected={params.filter == "rejected" ? true : false}>Rejected</option>
-                                </select>
-                                <div className="col-md-3 pr-0 pull-right te xt-right">
-                                    <Pagination pagination={data && data.pagination}/>  
-                                </div>
+                            
+                            <div className="col-md-2 pr-0 pull-right text-right">
+                                <Pagination pagination={data && data.pagination}/>  
+                            </div>
                                 
                             </div>
                             </div>
@@ -114,8 +113,8 @@ export default function Solve50List() {
                         <div className="dash-cont-start">
                             <div className="subject-main-container pl-0 pt-0 pr-0 pb-0">    
                                 <h3>{params.filter != "undefined" && params.filter} questions: </h3>  
-                                <div className="clearfix"></div>    
-                                {data && data.data.map(problem => {
+                                <div className="clearfix"></div>
+                                {data && data.data.assignment.map(problem => {
                                     return (
                                         <SingleQuestion key={problem._id} problem={problem}/>
                                     )

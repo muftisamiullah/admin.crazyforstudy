@@ -4,8 +4,9 @@ var aws = require('aws-sdk') //s3
 
 var multer = require('multer')
 
-const Assignment = require('../controllers/admin/AssignmentController.js');
-const checkAuth = require("../middleware/check-auth.js");
+const Assignment = require('../controllers/web/AssignmentController');
+const studentAuth = require("../middleware/student-auth");
+const adminAuth = require("../middleware/admin-auth");
 
 var s3 = new aws.S3({secretAccessKey: process.env.awsAcessSecret,
     accessKeyId: process.env.awsAccessKey,
@@ -41,8 +42,18 @@ var upload = multer({ storage: storage })
 
 const router = express.Router();
 
-router.get('/get-assignment-all/:filter?/:subject?/:sub_subject?/:page?/:limit?', checkAuth, Assignment.getAssignmentAll);
-router.get('/single-question-assignment/:id?', checkAuth, Assignment.getSingleAssignment);
-router.patch('/update-answer-assignment/:id?', checkAuth, Assignment.updateSingleAssignment);
+router
+    // .get('/all/:pageno/:limit',checkAuth, AdminStudent.getAllStudents)
+    .post('/save-assignment', upload.fields([{name:'image0'},{name:'image1'},{name:'image2'}]), studentAuth, Assignment.saveAssignmentOne)
+    .put('/save-assignment2', studentAuth, Assignment.saveAssignmentTwo)
+    .post('/save-local-assignment',upload.fields([{name:'image0'},{name:'image1'},{name:'image2'}]), studentAuth, Assignment.saveAssignmentLocal)
+    .post('/get-assignment-info', studentAuth, Assignment.getAssignmentInfo)
+    .post('/get-assignment-all', studentAuth, Assignment.getAssignmentAll)
+
+    //admin routes
+
+    // .get('/get-all-quesions-50', adminAuth, Assignment.getAllPendingQuestions)
+    
+;
 
 module.exports = router;

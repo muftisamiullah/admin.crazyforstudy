@@ -68,6 +68,11 @@ import UpdateAnswerTbs from '../Pages/SolveTBS/UpdateAnswerTbs.jsx'
 import CollegeTB from '../Pages/Textbooks/TextbooksList.jsx'
 import UpdateTB from '../Pages/Textbooks/UpdateTB.jsx'
 
+import ReportList from '../Pages/SolutionsReport/ReportList.jsx'
+
+import SolveAssignmentList from '../Pages/SolveAssignment/SolveAssignmentList.jsx'
+import UpdateAssignment from '../Pages/SolveAssignment/UpdateAnswerAssignment'
+
 
 export const guestRoutes =  [
     { 
@@ -310,6 +315,18 @@ export const privateRoutes = [
     {
         path: '/college-textbooks/:filter?/:isbn?/:id?',
         component: UpdateTB
+    },
+    {
+        path: '/solutions-report/:question_type?/:filter?/:date?',
+        component: ReportList
+    },
+    {
+        path: '/solve-assignment/:filter?/:subject_id?/:sub_subject_id?/:page_no?',
+        component: SolveAssignmentList
+    },
+    {
+        path: '/solve-assignment-update-answer/:filter?/:subject_id?/:sub_subject_id?/:page_no?/:id?',
+        component: UpdateAssignment
     },
     
 ];

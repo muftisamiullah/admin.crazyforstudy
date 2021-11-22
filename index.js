@@ -32,7 +32,7 @@ const DB_PASSWORD = '37cjK5tYZNvguXSw';
 const DB_AUTHENTICATIONDB = 'admin';
 const ARCHIVE_PATH = path.join(__dirname, 'backup', `${DB_NAME}.gzip`);
 var backupJob = new cronJob({
-    cronTime: '* 0 0 * * SUN',         // 0 0 * * 0   once a week             // */5 * * * * *  every 5 seconds
+    cronTime: '0 0 * * 0',         // 0 0 * * 0   once a week             // */5 * * * * *  every 5 seconds
     onTick: function() {
         backupMongoDB()
     },
@@ -222,6 +222,7 @@ app.use("/api/v1/student", Routes.StudentRoutes);
 app.use("/api/v1/tutor", Routes.TutorRoutes);
 app.use("/api/v1/faq", Routes.FaqRoutes);
 app.use("/api/v1/vendor", Routes.VendorRoutes);
+app.use("/api/v1/assignment", Routes.AssignmentRoutes);
 
 app.use("/api/v1/dummy", Routes.DummyRoutes);
 
@@ -233,7 +234,7 @@ app.use("/web/v1/category", WebRoutes.CategoryRoutes);
 app.use("/web/v1/student", WebRoutes.StudentAuthRoutes);
 app.use("/web/v1/student", WebRoutes.StudentRoutes);
 app.use("/web/v1/payment", WebRoutes.WebPaymentRoutes);
-app.use("/web/v1/assignment", WebRoutes.AssignmentRoutes);
+app.use("/web/v1/assignment", WebRoutes.WebAssignmentRoutes);
 
 // app.use("/web/v1/tutor", WebRoutes.TutorAuthRoutes);
 app.use("/web/v1/subject", WebRoutes.WebSubjectRoutes);

@@ -7,6 +7,8 @@ Route,
 import Navigation from './components/Navigation.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import '../node_modules/react-datepicker/dist/react-datepicker.min.css'
+
 import PrivateRoute from './Helper/PrivateRoute.jsx';
 import AdminRoute from './Helper/AdminRoute.jsx';
 import GuestRoute from './Helper/GuestRoute.jsx';
@@ -68,7 +70,7 @@ return (
     </AdminProvider>  
     </AuthProvider>  
     </QueryClientProvider>
-</div>
+  </div>
   </div>
 </Router>
 
