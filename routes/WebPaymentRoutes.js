@@ -1,0 +1,18 @@
+const express = require("express");
+const Payment = require('../controllers/web/PaymentController.js');
+const studentAuth = require('../middleware/student-auth')
+const router = express.Router();
+
+router
+    .post('/razorpay-create-subs',studentAuth, Payment.createSubscription)
+    .post('/razorpay-cancel-subs',studentAuth, Payment.cancelSubscription)
+    .post('/stripe-create-customer', studentAuth, Payment.createCustomer)
+
+    .post('/save-transaction',studentAuth, Payment.saveTransaction)
+    .post('/failure-payment-subscription',studentAuth, Payment.failedPaymentSubscription)
+    .post('/failure-payment-assignment',studentAuth, Payment.failedPaymentAssignment)
+    .post('/save-transaction-assignment',studentAuth, Payment.saveTransactionAssignment)
+    .post('/razorpay-create-order',studentAuth, Payment.createOrder)
+;
+    
+module.exports = router;

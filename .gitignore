@@ -1,0 +1,13 @@
+website/node_modules/
+node_modules/
+uploads/
+build/
+config/
+.env/
+.idea/
+.vs/
+.env
+.pk
+.pem
+.pub
+.vercel

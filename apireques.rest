@@ -1,0 +1,92 @@
+### Login ### 
+
+POST http://localhost:8080/api/v1/admin/login 
+Content-Type: application/json
+
+{
+      "email": "rohit21oct85@gmail.com",
+      "password": "password"
+}
+
+### Update Module ###
+POST http://localhost:8080/api/v1/master-module/update-all
+
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZmE5MzY4ZTVhMWZmMzc3NTVmODVkZSIsInJvbGUiOjEsImlhdCI6MTYyODg1Nzc1NiwiZXhwIjoxNjMxNDQ5NzU2fQ.gmy8WYziVIIg_qcV4SyUfXKxFJPnmEP9BTHOanxPfeA
+
+### Add Fields ###
+POST http://localhost:3000/api/v1/admin/add-fields
+Content-Type: application/json
+
+### delete Chapters ###
+POST http://localhost:8080/api/v1/chapter/delete-chapters
+Content-Type: application/json
+
+{
+      "isbn":"9781323156759",
+      "chapter_no":"2"
+}
+
+### dashboard ###
+GET https://admin.crazyforstudy.com/api/v1/master-admin/statics
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZmE5MzY4ZTVhMWZmMzc3NTVmODVkZSIsInJvbGUiOjEsImlhdCI6MTYyODg1Nzc1NiwiZXhwIjoxNjMxNDQ5NzU2fQ.gmy8WYziVIIg_qcV4SyUfXKxFJPnmEP9BTHOanxPfeA
+
+
+### delete Chapters ###
+POST http://localhost:3000/api/v1/chapter/delete-all
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZmE5MzY4ZTVhMWZmMzc3NTVmODVkZSIsInJvbGUiOjEsImlhdCI6MTYyOTM2MDc1NywiZXhwIjoxNjMxOTUyNzU3fQ.IMmgLaYZodeY8t38jKqhU2K32smChLpT7cNax_SPids
+
+{
+      "book_isbn":"9781285858913",
+      "delete_salt":"server-delete"
+}
+
+### delete Chield Chapters ###
+POST http://localhost:3000/api/v1/chield-subject/delete-chapters
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZmE5MzY4ZTVhMWZmMzc3NTVmODVkZSIsInJvbGUiOjEsImlhdCI6MTYyOTM2MDc1NywiZXhwIjoxNjMxOTUyNzU3fQ.IMmgLaYZodeY8t38jKqhU2K32smChLpT7cNax_SPids
+
+{
+      "chield_subject_id":"466",
+      "delete_salt":"server-delete"
+}
+
+
+### Logout ### 
+GET  http://localhost:3000/api/v1/admin/account-logout/rohit21oct85@gmail.com
+
+
+### delete Chapters Test Questions ###
+POST http://localhost:3000/api/v1/chapter/delete-questions
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZmE5MzY4ZTVhMWZmMzc3NTVmODVkZSIsInJvbGUiOjEsImlhdCI6MTYyOTM2MDc1NywiZXhwIjoxNjMxOTUyNzU3fQ.IMmgLaYZodeY8t38jKqhU2K32smChLpT7cNax_SPids
+
+{
+      "book_isbn":"9781285858913"
+}
+### update Chapters ###
+POST http://localhost:3000/api/v1/chapter/update-chaptername
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZmE5MzY4ZTVhMWZmMzc3NTVmODVkZSIsInJvbGUiOjEsImlhdCI6MTYyOTM2MDc1NywiZXhwIjoxNjMxOTUyNzU3fQ.IMmgLaYZodeY8t38jKqhU2K32smChLpT7cNax_SPids
+
+// QZ = QuizLet , BB = Bartleby , OB = OldBook
+
+{
+      "update_salt":"server-update",
+      "book_isbn":"9781285867045",
+      "source":"QZ",
+      "chapter_no":"3",
+      "chapter_name":"Descriptive Statistics: Numerical Measures"
+}
+
+### delete Chapters Test Questions ###
+POST http://localhost:3000/api/v1/master-admin/delete-old-role
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZmE5MzY4ZTVhMWZmMzc3NTVmODVkZSIsInJvbGUiOjEsImlhdCI6MTYyOTM2MDc1NywiZXhwIjoxNjMxOTUyNzU3fQ.IMmgLaYZodeY8t38jKqhU2K32smChLpT7cNax_SPids
+
+{
+      "email":"harendra.tomar@cfs.com",
+      "role": 6
+}
