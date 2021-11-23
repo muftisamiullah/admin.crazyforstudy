@@ -8,12 +8,19 @@ var nodemailer = require('nodemailer');
 
 const getAssignmentAll = async (req, res) => {
     try {
-        let filter = { assignment_status: req.params.filter}
+        let filter = {}; 
+        // { assignment_status: req.params.filter}
         if(req.params.subject != "undefined"){
             filter.subject_id = req.params.subject
         }
         if(req.params.sub_subject != "undefined"){
             filter.sub_subject_id = req.params.sub_subject
+        }
+        if(req.params.pfilter != "undefined"){
+            filter.payment_status = req.params.pfilter
+        }
+        if(req.params.filter != "undefined"){
+            filter.assignment_status = req.params.filter
         }
         const assignment = await Assignment.find(filter).sort({created_at: -1});
         if(assignment){

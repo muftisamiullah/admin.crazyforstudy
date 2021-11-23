@@ -321,11 +321,11 @@ export const privateRoutes = [
         component: ReportList
     },
     {
-        path: '/solve-assignment/:filter?/:subject_id?/:sub_subject_id?/:page_no?',
+        path: '/solve-assignment/:filter?/:subject_id?/:sub_subject_id?/:pfilter?/:page_no?',
         component: SolveAssignmentList
     },
     {
-        path: '/solve-assignment-update-answer/:filter?/:subject_id?/:sub_subject_id?/:page_no?/:id?',
+        path: '/solve-assignment-update-answer/:filter?/:subject_id?/:sub_subject_id?/:pfilter?/:page_no?/:id?',
         component: UpdateAssignment
     },
     

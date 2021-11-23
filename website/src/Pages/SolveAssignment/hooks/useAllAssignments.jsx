@@ -20,9 +20,8 @@ export default function useAllAssignments() {
     }
     let limit = 20;
     let pageno = (params.page_no === undefined ) ? 1 : params.page_no;
-    let url = `${API_URL}assignment/get-assignment-all/${params.filter}/${params.subject_id}/${params.sub_subject_id}/${pageno}/${limit}`;
-    console.log(params)
-    return useQuery([`get-all-quesions-assign-${params.filter}-${params.subject_id}-${params.sub_subject_id}`,pageno], async () => {
+    let url = `${API_URL}assignment/get-assignment-all/${params.filter}/${params.subject_id}/${params.sub_subject_id}/${params.pfilter}/${pageno}/${limit}`;
+    return useQuery([`get-all-quesions-assign-${params.filter}-${params.subject_id}-${params.sub_subject_id}-${params.pfilter}`,pageno], async () => {
         const result = await axios.get(url,{
             headers: {
                 'Content-Type': 'Application/json',

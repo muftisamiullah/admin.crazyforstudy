@@ -19,6 +19,7 @@ import {htmlDecode} from '../../utils/MakeSlug'
 import {s3Path} from '../../Helper/ApiUrl'
 import { useToasts } from 'react-toast-notifications';
 
+
 export default function UpdateAnswer() {
     const history = useHistory();
     const params = useParams();
@@ -171,8 +172,8 @@ return (
                         {/* <FileViewer
                             fileType={"png"}
                             filePath={s3Path+data.image0}
-                        />
-                        <FileViewer
+                        /> */}
+                        {/*<FileViewer
                             fileType={"docx"}
                             filePath={s3Path+data.image1}
                         />
@@ -210,7 +211,7 @@ return (
                             />  
                             <small style={{color:"green"}}>only .docx extenion files can be uploaded</small>
                         </Form.Group>      
-                        <Form.Group className="col-md-12">
+                        {data.payment_status == "half-paid" || data.payment_status == "paid-full" ? <Form.Group className="col-md-12">
                             <Form.Label>
                                 Choose Full Solution
                             </Form.Label> 
@@ -218,7 +219,7 @@ return (
                             onChange={uploadHalf}
                             />  
                             <small style={{color:"green"}}>only .docx extenion files can be uploaded</small>
-                        </Form.Group>      
+                        </Form.Group> : ""} 
                         <Form.Group className="col-md-12">
                             <Button 
                             onClick={handleSubmit}

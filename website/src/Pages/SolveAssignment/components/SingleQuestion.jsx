@@ -10,7 +10,7 @@ function SingleQuestion({problem, search}) {
     const history = useHistory();
     const params = useParams();
     const manageQuestion = (e) => {
-        history.push(`/solve-assignment-update-answer/${params.filter}/${params.subject_id}/${params.sub_subject_id}/${params.page_no}/${e?._id}`)
+        history.push(`/solve-assignment-update-answer/${params.filter}/${params.subject_id}/${params.sub_subject_id}/${params.pfilter}/${params.page_no}/${e?._id}`)
     }
     // const rejectQuestion = (e) => {
     //     history.push(`/solve-assignment-reject-question/${params.subject_id}/${params.sub_subject_id}/${params.filter}/${params.page_no}/${e?._id}`)

@@ -43,14 +43,20 @@ export default function SolveAssignmentList() {
                                     <span className="fa fa-arrow-left"></span>
                                 </button> */}
                                 <div className="col-md-12 row">
-                                <select className="col-md-2 form-control"
-                                onChange={e => {   
-                                    const filter = e.target.value;
-                                    if(filter != 999){
-                                        history.push(`/solve-assignment/${filter}/${params.subject_id}/${params.sub_subject_id}`)
-                                    }
-                                }}
-                            >
+                                <Button 
+                                    className="btn btn-warning btn-sm" onClick={()=>{
+                                        history.push(`/solve-assignment`)
+                                    }}>
+                                        No filters
+                                </Button>
+                                <select className="col-md-2 ml-2 form-control"
+                                    onChange={e => {   
+                                        const filter = e.target.value;
+                                        if(filter != 999){
+                                            history.push(`/solve-assignment/${filter}/${params.subject_id}/${params.sub_subject_id}`)
+                                        }
+                                    }}
+                                >
                                 <option value="999">Select Completion Filter</option>
                                 <option value="pending" selected={params.filter == "pending" ? true : false}>Pending</option>
                                 <option value="answered" selected={params.filter == "answered" ? true : false}>Answered</option>
@@ -102,7 +108,20 @@ export default function SolveAssignmentList() {
                                     )
                                 })}
                             </select>
-                            
+                            <select className="col-md-2 ml-2 form-control"
+                                    onChange={e => {   
+                                        const filter = e.target.value;
+                                        if(filter != 999){
+                                            history.push(`/solve-assignment/${params.filter}/${params.subject_id}/${params.sub_subject_id}/${filter}`)
+                                        }
+                                    }}
+                                >
+                                <option value="999">Select Payment Filter</option>
+                                <option value="unpaid" selected={params.pfilter == "unpaid" ? true : false}>Unpaid</option>
+                                <option value="half-paid" selected={params.pfilter == "half-paid" ? true : false}>Half Paid</option>
+                                <option value="paid-full" selected={params.pfilter == "paid-full" ? true : false}>Fully Paid</option>
+                                {/* <option value="rejected" selected={params.filter == "rejected" ? true : false}>Rejected</option> */}
+                            </select>
                             <div className="col-md-2 pr-0 pull-right text-right">
                                 <Pagination pagination={data && data.pagination}/>  
                             </div>
