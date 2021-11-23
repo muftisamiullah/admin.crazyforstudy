@@ -61,8 +61,12 @@ const updateSingleAssignment = async (req, res) => {
         let update = req.body
         update.assignment_status = "answered"
         update.updated_at = Date.now()
-        update.solutionHalf = req.files.file1 ? req.files.file1[0].filename : '';
-        update.solutionFull = req.files.file2 ? req.files.file2[0].filename : '' 
+        if(req.files.file1){
+            update.solutionHalf = req.files.file1 && req.files.file1[0].filename;
+        }
+        if(req.files.file2){
+            update.solutionFull = req.files.file2 && req.files.file2[0].filename; 
+        }   
         delete update.user_Id;
         const response = await Assignment.findByIdAndUpdate({ _id: req.params.id }, update);
         if(response){

@@ -134,7 +134,7 @@ return (
         <div className="main-area-all">
             <div className="dashboard_main-container">
                 <div className="dash-main-head">
-                    <h2>Answer Question</h2>
+                    <h2>Update Assignment Solution</h2>
                 </div>
                 {errorState.error && ( 
                     <Notification>{errorState.error}</Notification>
@@ -161,7 +161,7 @@ return (
                        
                     <Form.Group className="col-md-12">
                             <Form.Label>
-                                <strong>Question:</strong>
+                                <strong>Assignment:</strong>
                             </Form.Label><br/>
                             <Form.Label style={{color:"green"}}>
                                 <div className="card-text" id="high" dangerouslySetInnerHTML={{ __html: data && data.question  }} />
@@ -194,15 +194,15 @@ return (
                             {data.image2 != "" &&
                                 <a href={s3Path + data.image2} target="_blank" download={data.image2} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> 3</a>
                             }
-                            {data.solutionHalf != "undefined" &&
+                            {data.solutionHalf != "undefined" && data.solutionFull != "" && data.solutionFull != undefined &&
                                 <a href={s3Path + data.solutionHalf} target="_blank" download={data.solutionHalf} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> Soltuion Half</a>
                             }
-                            {data.solutionFull != "undefined" && 
+                            {data.solutionFull != "undefined" &&  data.solutionFull != "" && data.solutionFull != undefined &&
                                 <a href={s3Path + data.solutionFull} target="_blank" download={data.solutionFull} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> Solution Full</a>
                             }
                         </Form.Group >
                         <hr/>
-                        <Form.Group className="col-md-12">
+                        {data.payment_status != "unpaid" ? <Form.Group className="col-md-12">
                             <Form.Label>
                                 Choose Half Solution
                             </Form.Label> 
@@ -210,8 +210,8 @@ return (
                             onChange={uploadHalf}
                             />  
                             <small style={{color:"green"}}>only .docx extenion files can be uploaded</small>
-                        </Form.Group>      
-                        {data.payment_status == "half-paid" || data.payment_status == "paid-full" ? <Form.Group className="col-md-12">
+                        </Form.Group> :""}
+                        {data.payment_status == "paid-full" ? <Form.Group className="col-md-12">
                             <Form.Label>
                                 Choose Full Solution
                             </Form.Label> 
@@ -220,14 +220,14 @@ return (
                             />  
                             <small style={{color:"green"}}>only .docx extenion files can be uploaded</small>
                         </Form.Group> : ""} 
-                        <Form.Group className="col-md-12">
+                        {data.payment_status != "unpaid" ? <Form.Group className="col-md-12">
                             <Button 
                             onClick={handleSubmit}
                             disabled={!loading && btnDisabled}
                             className="btn dark btn-md">
                                 {loading ? 'processing...': 'Update Answer'} 
                             </Button>
-                        </Form.Group>
+                        </Form.Group> : ""}
                         </Form>
                     )} 
                     </div>    

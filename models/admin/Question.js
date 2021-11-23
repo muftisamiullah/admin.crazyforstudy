@@ -76,5 +76,5 @@ const QuestionSchema = new mongoose.Schema({
   });
 
 QuestionSchema.plugin(mongoosePaginate);
- QuestionSchema.index({'subject_id': 1, 'sub_subject_id': 1},{unique:false});
+QuestionSchema.index({'subject_id': 1, 'sub_subject_id': 1},{unique:false});
 module.exports = mongoose.model('Question', QuestionSchema);

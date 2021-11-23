@@ -33,20 +33,20 @@ function SingleQuestion({problem, search}) {
 
                 <div>
                     {problem.image0 != "" && 
-                        <a href={s3Path + problem.image0} target="_blank" download={problem.image0} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> Download 1</a>
+                        <a href={s3Path + problem.image0} target="_blank" download={problem.image0} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> 1</a>
                     }
                     {problem.image1 != "" && 
-                        <a href={s3Path + problem.image1} target="_blank" download={problem.image1} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> Download 2</a>
+                        <a href={s3Path + problem.image1} target="_blank" download={problem.image1} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> 2</a>
                     }
                     {problem.image2 != "" &&
-                        <a href={s3Path + problem.image2} target="_blank" download={problem.image2} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> Download 3</a>
+                        <a href={s3Path + problem.image2} target="_blank" download={problem.image2} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> 3</a>
                     }
-                    {problem.solutionHalf != "" || problem.solutionHalf != "undefined" && <button className="btn btn-sm bg-secondary text-white mr-2">
-                        <a href={s3Path + problem.solutionHalf} target="_blank" download={problem.solutionHalf}><i className="fa fa-download"></i> Download Soltuion Half</a>
-                    </button>}
-                    {problem.solutionFull != "" || problem.solutionFull != "undefined" && <button className="btn btn-sm bg-secondary text-white mr-2">
-                        <a href={s3Path + problem.solutionFull} target="_blank" download={problem.solutionFull}><i className="fa fa-download"></i> Download Solution Full</a>
-                    </button>}
+                    {problem.solutionHalf != "" && problem.solutionHalf != undefined && problem.solutionHalf != "undefined" &&
+                        <a href={s3Path + problem.solutionHalf} target="_blank" download={problem.solutionHalf} className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> Soln Half</a>
+                    }
+                    {problem.solutionFull != "" && problem.solutionFull != undefined && problem.solutionHalf != "undefined" &&
+                        <a href={s3Path + problem.solutionFull} target="_blank" download={problem.solutionFull}  className="btn btn-sm bg-secondary text-white mr-2"><i className="fa fa-download"></i> Soln Full</a>
+                    }
                     {params?.filter === 'pending' && (
                         <button className="btn btn-sm bg-warning text-white mr-2">
                             <span id={`${problem?._id}_timer`}>{calculateTime1(`${problem?._id}_timer`, localDate.getTime(), 'time-over')}</span>
@@ -56,7 +56,7 @@ function SingleQuestion({problem, search}) {
                         onClick={rejectQuestion.bind(this,{_id: problem?._id})} disabled={problem.old_qid ? true : false}>
                         <span className="fa fa-eye mr-2"></span>Reject Question</button> */}
                     <button className="btn btn-sm dark"
-                        onClick={manageQuestion.bind(this,{_id: problem?._id})}>Answer Question</button>
+                        onClick={manageQuestion.bind(this,{_id: problem?._id})}>Solve Asgmt</button>
                 </div>    
             </div>
         </div>
