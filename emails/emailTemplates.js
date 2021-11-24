@@ -930,7 +930,7 @@ const askTbsSolutionSolved = (book_name, chapter_name, section_name, question, s
     </html>`
 }
 
-const assignmentSubmitUser = (question, subject, sub_subject, date) => {
+const assignmentSubmitUser = (question, subject, sub_subject, dated) => {
     return `<!doctype html>
     <html>
         <head>
@@ -943,7 +943,7 @@ const assignmentSubmitUser = (question, subject, sub_subject, date) => {
             <p><Here’s a brief about your assignment details - </p>                                                                                                                                     
             <p><strong>Question: </strong>s${question}</p>
             <p>If you want to make any changes to any of the provided details, connect with us. </p>
-            <p>You can expect to receive your assignment by <strong> ${date}.</strong></p>
+            <p>You can expect to receive your assignment by <strong> ${dated}.</strong></p>
             <p>Thanks for choosing CFS!</p>
             <p><strong>With regards,</strong></p>
             <p><strong>Team Crazy For Study</strong></p>
@@ -951,7 +951,7 @@ const assignmentSubmitUser = (question, subject, sub_subject, date) => {
     </html>`
 }
 
-const assignmentSubmitAdmin = (question, subject, sub_subject, date) => {
+const assignmentSubmitAdmin = (question, subject, sub_subject, dated) => {
     return `<!doctype html>
     <html>
         <head>
@@ -964,7 +964,7 @@ const assignmentSubmitAdmin = (question, subject, sub_subject, date) => {
             <p>A student has just submitted a new Assignment Help requirement on crazyforstudy.com for subject: <strong>${subject}</strong> and sub_subject: <strong>${sub_subject}</strong>.                                                                                                                                   
             <p>Assignment requirement details as provided by the student </p>
             <p><strong>Question: </strong>${question}</p>
-            <p><strong>Deadline Date: </strong>${date}</p>
+            <p><strong>Deadline Date: </strong>${dated}</p>
             <p>Thanks for choosing CFS!</p>
             <p><strong>With regards,</strong></p>
             <p><strong>Team Crazy For Study</strong></p>

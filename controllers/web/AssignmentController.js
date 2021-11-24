@@ -56,7 +56,7 @@ const saveAssignmentLocal = async (req, res) => {
             const dt = await noti.save();
 
             var localDate = new Date(req.body.deadline_date);
-            newDate = localDate.toLocaleString();
+            newDate = localDate.toLocaleString(undefined, { timeZone: 'Asia/Kolkata'} );
 
             const admins = await Admin.find({ role:1 }, {email:1});
                 
@@ -130,7 +130,7 @@ const saveAssignmentTwo = async (req, res) => {
             const dt = await noti.save();
 
             var localDate = new Date(req.body.deadline_date);
-            newDate = localDate.toLocaleString();
+            newDate = localDate.toLocaleString(undefined, { timeZone: 'Asia/Kolkata'} );
 
             const admins = await Admin.find({ role:1 }, {email:1});
                 

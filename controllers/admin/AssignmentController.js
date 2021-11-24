@@ -81,9 +81,9 @@ const updateSingleAssignment = async (req, res) => {
             }
             var localDate = new Date(response.deadline_date);
             var localCDate = new Date(response.created_at);
-            newDeadlineDate = localDate.toLocaleString();
-            newCreatedAtDate = localCDate.toLocaleString();
-
+            newDeadlineDate = localDate.toLocaleString(undefined, { timeZone: 'Asia/Kolkata'} );
+            newCreatedAtDate = localCDate.toLocaleString(undefined, { timeZone: 'Asia/Kolkata'} );
+            
             const d = await Notify.findOneAndUpdate({ data_Id: req.params.id, type:'ASSIGNMENT' }, notifyData);
             // const noti = new Notify(notifyData);
             // const dt = await noti.save();
