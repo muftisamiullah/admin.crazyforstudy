@@ -55,9 +55,9 @@ const saveAssignmentLocal = async (req, res) => {
             const noti = new Notify(notifyData);
             const dt = await noti.save();
 
-            var localDate = new Date(assign.deadline_date);
+            var localDate = new Date(req.body.deadline_date);
             newDate = localDate.toLocaleString();
-            console.log(newDate);
+
             const admins = await Admin.find({ role:1 }, {email:1});
                 
             var transporter = nodemailer.createTransport({
@@ -129,7 +129,7 @@ const saveAssignmentTwo = async (req, res) => {
             const noti = new Notify(notifyData);
             const dt = await noti.save();
 
-            var localDate = new Date(assignment.deadline_date);
+            var localDate = new Date(req.body.deadline_date);
             newDate = localDate.toLocaleString();
 
             const admins = await Admin.find({ role:1 }, {email:1});
