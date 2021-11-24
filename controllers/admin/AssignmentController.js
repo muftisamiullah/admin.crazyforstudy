@@ -1,5 +1,4 @@
 const Assignment = require('../../models/admin/Assignment');
-const Tutor = require('../../models/tutor/Tutor');
 const Notify = require('../../models/admin/Notification.js');
 const Student = require('../../models/student/Student');
 const Admin = require('../../models/admin/Admin');

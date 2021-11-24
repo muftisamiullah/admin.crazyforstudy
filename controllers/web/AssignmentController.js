@@ -1,5 +1,5 @@
 const Assignment = require('../../models/admin/Assignment');
-const Tutor = require('../../models/tutor/Tutor');
+const Tutor = require('../../models/tutor/CFSTutor');
 const Notify = require('../../models/admin/Notification.js');
 const Admin = require('../../models/admin/Admin');
 const emails = require('../../emails/emailTemplates');
@@ -39,7 +39,7 @@ const saveAssignmentLocal = async (req, res) => {
                             deadline_date: req.body.deadline_date,
                             deadline_time: req.body.deadline_time,pages: req.body.pages, 
                             reference: req.body.reference,
-                            tutor_id: tutor[0]._id, tutor_name: tutor[0].fname +" "+tutor[0].lname,
+                            tutor_id: tutor[0]._id, tutor_name: tutor[0].Name,
                             type: req.body.type, link: req.body.link,email:req.body.email, referenceString:req.body.referenceString, amount:req.body.amount
                         };
         const assign = await new Assignment(content).save()
@@ -114,7 +114,7 @@ const saveAssignmentTwo = async (req, res) => {
         const filter = {_id:req.body.id,user_id:req.body.user_Id}
         const content = {   deadline_date: req.body.deadline_date,deadline_time: req.body.deadline_time, 
                             pages: req.body.pages, reference: req.body.reference,amount:req.body.amount,
-                            tutor_id: tutor[0]._id, tutor_name: tutor[0].fname+" "+tutor[0].lname, referenceString: req.body.referenceString
+                            tutor_id: tutor[0]._id, tutor_name: tutor[0].Name, referenceString: req.body.referenceString
                         };
         const assignment = await Assignment.findOneAndUpdate(filter, content);
         if(assignment){
