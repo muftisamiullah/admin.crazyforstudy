@@ -57,7 +57,7 @@ const saveAssignmentLocal = async (req, res) => {
 
             var localDate = new Date(assign.deadline_date);
             newDate = localDate.toLocaleString();
-
+            console.log(newDate);
             const admins = await Admin.find({ role:1 }, {email:1});
                 
             var transporter = nodemailer.createTransport({
