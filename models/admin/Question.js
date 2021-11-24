@@ -34,7 +34,7 @@ const QuestionSchema = new mongoose.Schema({
         default: 3
     },
     user_Id: {
-        type: String
+        type: mongoose.Schema.ObjectId
     },
     user_role: {
         type: String
@@ -76,5 +76,7 @@ const QuestionSchema = new mongoose.Schema({
   });
 
 QuestionSchema.plugin(mongoosePaginate);
-QuestionSchema.index({'subject_id': 1, 'sub_subject_id': 1},{unique:false});
+ QuestionSchema.index({'subject_id': 1, 'sub_subject_id': 1},{unique:false});
+ QuestionSchema.index({'user_Id': 1},{unique:false});
+ QuestionSchema.index({'question': 'text'},{unique:false});
 module.exports = mongoose.model('Question', QuestionSchema);

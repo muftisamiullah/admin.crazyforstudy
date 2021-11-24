@@ -18,7 +18,8 @@ const askQuestion = async (req, res) => {
     try {
         const data = req.body;
         const cond = {user_Id: req.body.user_Id, type: 'ASK50'}    
-        const count =  await Question.find(cond).count();
+        const count =  await Question.find(cond).countDocuments();
+        console.log('count', count);
         if(count > 50){
             // const error = new Error("message")
             // error.code = "501"
