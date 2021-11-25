@@ -5,9 +5,12 @@ const Student = require('../../models/student/Student');
 const Admin = require('../../models/admin/Admin');
 const emails = require('../../emails/emailTemplates');
 var nodemailer = require('nodemailer');
+// const fileUpload = require('./FileUpload.js');
 
 const getAssignmentAll = async (req, res) => {
     try {
+        let pageno = parseInt(req.params.pageno);
+        let limit = parseInt(req.params.limit);
         let filter = {}; 
         // { assignment_status: req.params.filter}
         if(req.params.subject != "undefined"){
@@ -22,14 +25,52 @@ const getAssignmentAll = async (req, res) => {
         if(req.params.filter != "undefined"){
             filter.assignment_status = req.params.filter
         }
-        const assignment = await Assignment.find(filter).sort({created_at: -1});
-        if(assignment){
+
+       
+        const myCustomLabels = {
+            totalDocs: 'itemCount',
+            docs: 'itemsList',
+            limit: 'perPage',
+            page: 'currentPage',
+            nextPage: 'next',
+            prevPage: 'prev',
+            totalPages: 'pageCount',
+            pagingCounter: 'slNo',
+            meta: 'paginator',
+          };
+        const options = {
+            page: pageno,
+            limit: limit,
+            customLabels: myCustomLabels,
+            collation: {
+              locale: 'en',
+            },
+            sort: {
+                created_at: -1 
+            }
+        };
+        await Assignment.paginate(filter, options).then(result => {
             return res.status(200).json({
-                error: false,
-                message: "Assignment data",
-                assignment:assignment
+                data: result.itemsList,
+                itemCount: result.paginator.itemCount,
+                perPage: result.paginator.perPage,
+                currentPage: result.paginator.currentPage,
+                pageCount: result.paginator.pageCount,
+                next: result.paginator.next,
+                prev: result.paginator.prev,
+                slNo: result.paginator.slNo,
+                hasNextPage: result.paginator.hasNextPage,
+                hasPrevPage: result.paginator.hasPrevPage
             });
-        }
+        });
+        // const assignment = await Assignment.find(filter).sort({created_at: -1});
+        // if(assignment){
+        //     return res.status(200).json({
+        //         error: false,
+        //         message: "Assignment data",
+        //         assignment:assignment
+        //     });
+        // }
     } catch (error) {
         res.status(409).json({
             message: "Error occured",
