@@ -18,6 +18,7 @@ const VendorRoutes = require('./vendorRoutes.js');
 const DummyRoutes = require('./DummyRoutes.js');
 const AssignmentRoutes = require('./AssignmentRoutes.js');
 
+
 module.exports = {
     AdminAuthRoutes,
     roleRoutes,
@@ -37,4 +38,5 @@ module.exports = {
     VendorRoutes,
     DummyRoutes,
     AssignmentRoutes,
+    
 }
