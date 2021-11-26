@@ -21,7 +21,6 @@ export default function useAskTBS() {
     let limit = 20;
     let pageno = (params.page_no === undefined ) ? 1 : params.page_no;
     let url = `${API_URL}chapter/get-all-quesions-tbs/${params.filter}/${pageno}/${limit}`;
-    console.log(params)
     return useQuery([`get-all-quesions-tbs-${params.filter}`,pageno], async () => {
         const result = await axios.get(url,{
             headers: {
@@ -29,18 +28,20 @@ export default function useAskTBS() {
                 'Authorization':'Bearer '+state.access_token
             }
         });
-        
+        console.log(result, limit)
         return {
-            data: result.data.data, 
-            pagination: {
-                currentPage: result.data.currentPage,
-                hasNextPage: result.data.hasNextPage,
-                hasPrevPage: result.data.hasPrevPage,
-                next: result.data.next,
-                pageCount: result.data.pageCount,
-                itemCount: result.data.itemCount,
-                prev: result.data.prev,
-            }
+            data: result.data.chapps, 
+            pagination : Math.floor(result.data.totalRecords / limit)
+            
+            // pagination: {
+            //     currentPage: result.data.currentPage,
+            //     hasNextPage: result.data.hasNextPage,
+            //     hasPrevPage: result.data.hasPrevPage,
+            //     next: result.data.next,
+            //     pageCount: result.data.pageCount,
+            //     itemCount: result.data.itemCount,
+            //     prev: result.data.prev,
+            // }
         }; 
     },{enabled: params.filter === undefined ? false : true});
 }

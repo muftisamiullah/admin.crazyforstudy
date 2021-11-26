@@ -31,7 +31,7 @@ function SingleQuestion({problem, search}) {
         return 0;
     });
     //console.log(sortRequested[0].answerRequestDate, sortRequested.length);
-    var utcDate =  sortRequested[0].answerRequestDate;// ISO-8601 formatted date returned from server
+    var utcDate =  sortRequested[0]?.answerRequestDate;// ISO-8601 formatted date returned from server
     console.log(utcDate,);
     var localDate = new Date(utcDate);
     return (

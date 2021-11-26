@@ -28,9 +28,8 @@ export default function useAllAssignments() {
                 'Authorization':'Bearer '+state.access_token
             }
         });
-        
         return {
-            data: result.data, 
+            data: result.data.data, 
             pagination: {
                 currentPage: result.data.currentPage,
                 hasNextPage: result.data.hasNextPage,

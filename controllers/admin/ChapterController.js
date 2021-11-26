@@ -2065,14 +2065,15 @@ const getAllQuestionsTbs = async (req, res) => {
     let pageno = parseInt(req.params.pageno);
     let limit = parseInt(req.params.limit);
     let query = { answerFlag: req.params.filter };
-    console.log(query);
+    // console.log(query);
 
     let chapps = await Chapter.find(query)
       .sort({ created_at: -1 })
       .skip(limit * (pageno - 1))
       .limit(limit);
+    let totalRecords = await Chapter.find(query).countDocuments();
 
-    return res.status(200).json(chapps);
+    return res.status(200).json({chapps : chapps, totalRecords : totalRecords});
 
     // const myCustomLabels = {
     //     totalDocs: 'itemCount',
@@ -2111,7 +2112,7 @@ const getAllQuestionsTbs = async (req, res) => {
     //         hasNextPage: result.paginator.hasNextPage,
     //         hasPrevPage: result.paginator.hasPrevPage
     //     });
-    //});
+    // });
   } catch (error) {
     console.log(error);
     res.send({
