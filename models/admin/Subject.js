@@ -6,6 +6,10 @@ const ReviewsSchema = new mongoose.Schema({
   img_path: { type: String },
   institute: { type: String },
   rating: { type: String },
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const SubjectSchema = new mongoose.Schema(
