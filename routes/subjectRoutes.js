@@ -15,6 +15,7 @@ router
     .delete('/delete/:id',Subject.deleteSubject)
     .get('/view/:id',Subject.viewSubject)
     .get('/review/:id/:reviewId',Subject.getReview)
-    .get('/content/:id',Subject.getContent);
+    .get('/content/:id',Subject.getContent)
+    .patch('/update-review/:id/:reviewId',Subject.updateReview);
 
 module.exports = router;
