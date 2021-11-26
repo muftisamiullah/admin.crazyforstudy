@@ -13,6 +13,8 @@ router
     .patch('/save-content/:id',Subject.SaveContent)
     .patch('/save-reviews/:id',Subject.SaveReviews)
     .delete('/delete/:id',Subject.deleteSubject)
-    .get('/view/:id',Subject.viewSubject);
+    .get('/view/:id',Subject.viewSubject)
+    .get('/review/:id/:reviewId',Subject.getReview)
+    .get('/content/:id',Subject.getContent);
 
 module.exports = router;
