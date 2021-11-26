@@ -2111,7 +2111,7 @@ const getAllQuestionsTbs = async (req, res) => {
     //         hasNextPage: result.paginator.hasNextPage,
     //         hasPrevPage: result.paginator.hasPrevPage
     //     });
-    //});
+    // });
   } catch (error) {
     console.log(error);
     res.send({
