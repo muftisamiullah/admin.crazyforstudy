@@ -8,6 +8,7 @@ import {AuthContext} from '../../context/AuthContext';
 import {Notification} from '../../components/Notification';
 import {ErrorContext} from '../../context/ErrorContext';
 import {SubjectContext} from '../../context/SubjectContext';
+import Breadcrumb from './SeoBreadCrumbSubject';
 
 export default function CreateSubject() {
     const history = useHistory();
@@ -87,16 +88,19 @@ return (
         <div className="main-area-all">
             <div className="dashboard_main-container">
                 <div className="dash-main-head">
-                    <h2>Manage Textbook Subject Seo</h2>
+                    <h2>Manage Textbook Subject</h2>
                 </div>
-                
+                <div className="dash-con-heading">
+                    <div className="col-md-12 pl-0">
+                        {/* <Link to={`/subject`} className="btn btn-sm dark">
+                            <span className="fa fa-arrow-left text-success mr-2"></span>
+                        </Link> */}
+                        <Breadcrumb/>
+                    </div>
+                </div>
                 <div className="dash-cont-start">
                     <div className="org-main-area">
-                        <div className="col-md-3 pl-0">
-                        <Link to={`/subject`} className="btn btn-sm dark">
-                            <span className="fa fa-arrow-left text-success mr-2"></span>
-                        </Link>
-                        </div>
+                        
                         <div className="col-md-12 no-gutter p-0 mt-2">
                         {errorState.error && ( 
                             <Notification>{errorState.error}</Notification>
@@ -105,7 +109,8 @@ return (
                         {errorState.success && ( 
                             <Notification>{errorState.success}</Notification>
                         )}
-
+                        <h6> <span className="fa fa-globe"></span> Manage SEO</h6>
+                        <hr />
                         <Form method="POST" className="col-md-6 p-0">
 
                             <Form.Group>    

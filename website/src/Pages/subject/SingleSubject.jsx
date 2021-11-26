@@ -53,10 +53,10 @@ function SingleSubject({sub}) {
         <hr className="mt-1 mb-1"/>
         <div className="subject-card-heading">
             <div><Button className="btn-sm btn-primary " onClick={e => history.push(`/subject-seo/qa/update/${sub._id}`)}>
-                        Update Seo Q and A
+                        Update Seo/Content Q&A
                     </Button>
                     <Button className="btn-sm btn-primary ml-1" onClick={e => history.push(`/subject-seo/textbook/update/${sub._id}`)}>
-                        Update Seo Solution Manuals
+                        Update Seo/Content Soln Manuals
                     </Button>
                 </div>
             <div>
