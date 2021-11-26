@@ -48,16 +48,23 @@ export default function UpdateSubjectContentTB() {
     const ratingRef = useRef('');
     const [upload, setUpload] = useState(false);
 
-    const backUrl = params?.book_id 
-        ? `/book-seo/${params.isbn}/${params.book_id}`
-        : `/books`;
+    const backUrl = `/subject`;
 
     const handleContent = async (e) => {
         e.preventDefault();
-        console.log(formData)
         setLoading(true);
-        // await mutation.mutate(formData);
+        await mutation.mutate(formData);
     }
+
+    const mutation = useMutation(formData => {
+            return axios.patch(`${API_URL}subject/save-content/${params.id}`, formData, options)
+        },{
+        onSuccess: () => {
+            setLoading(false);
+            history.push(`/subject`);
+            addToast('Content updated successfully', { appearance: 'success',autoDismiss: true });
+        }
+    });
 
     return(
         <>
