@@ -31,9 +31,9 @@ const SubjectSchema = new mongoose.Schema(
     },
 
     content: {
-      bannerHeading: { type: String, required: true },
-      askAnExpertText: { type: String, required: true },
-      collegeTextBooks: { type: String, required: true },
+      bannerHeading: { type: String },
+      askAnExpertText: { type: String },
+      collegeTextBooks: { type: String },
       question: {
         heading: { type: String },
         content: { type: String },
