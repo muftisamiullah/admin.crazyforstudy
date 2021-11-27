@@ -224,6 +224,35 @@ const updateReview = async (req, res) => {
   }
 };
 
+const deleteReview = async (req, res) => {
+    try {
+      
+      await SubSubject
+        .updateMany(
+          { _id: req.params.id, "reviews._id": req.params.reviewId },
+          { $pull:  {"reviews":{"_id": req.params.reviewId } } },
+          
+        )
+        .then((response) => {
+          return res.status(202).json({
+            message: "Review Deleted",
+            data: response,
+          });
+        })
+        .catch((error) => {
+          return res.status(500).json({
+            message: "Error Found",
+            errors: error.message,
+          });
+        });
+    } catch (error) {
+      res.status(409).json({
+        message: error.message,
+      });
+    }
+  };
+  
+
 const otherFunction = async (res, FinalData, callback) => {
   await SubSubject.insertMany(FinalData)
     .then(() => {
@@ -371,4 +400,5 @@ module.exports = {
   SaveReviews,
   getReview,
   updateReview,
+  deleteReview
 };

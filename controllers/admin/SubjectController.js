@@ -123,7 +123,7 @@ const getContent = async (req, res) => {
 
 const SaveReviews = async (req, res) => {
   try {
-    console.log('req.body', req.body);
+    
     req.body.img_path = req.file && req.file.filename ? req.file.filename : ''
     const item = await subject.findById(req.params.id);
     if (item && item.reviews) {
@@ -218,10 +218,8 @@ const deleteReview = async (req, res) => {
     await subject
       .updateMany(
         { _id: req.params.id, "reviews._id": req.params.reviewId },
-        { $unset:  ["reviews.$[e]"]  },
-        {
-          arrayFilters: [{ "e._id": req.params.reviewId }],
-        }
+        { $pull:  {"reviews":{"_id": req.params.reviewId } } },
+        
       )
       .then((response) => {
         return res.status(202).json({

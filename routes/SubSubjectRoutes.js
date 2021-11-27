@@ -39,6 +39,7 @@ router
     .get('/content/:id',checkAuth,SubSubject.getContent)
     .patch('/save-reviews/:id',upload.single('img_path'),checkAuth,SubSubject.SaveReviews)
     .get('/review/:id/:reviewId',checkAuth,SubSubject.getReview)    
-    .patch('/update-review/:id/:reviewId',upload.single('img_path'),checkAuth,SubSubject.updateReview);
+    .patch('/update-review/:id/:reviewId',upload.single('img_path'),checkAuth,SubSubject.updateReview)
+    .patch('/delete-review/:id/:reviewId',checkAuth,SubSubject.deleteReview);
 
 module.exports = router;
