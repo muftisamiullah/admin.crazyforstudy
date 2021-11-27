@@ -195,7 +195,7 @@ const updateReview = async (req, res) => {
       )
       .then((response) => {
         return res.status(202).json({
-          message: "Review Found",
+          message: "Review successfull updated",
           data: response,
         });
       })

@@ -153,7 +153,7 @@ const SaveReviews = async (req, res) => {
       await item.save().then((result) => {
         res.status(202).json({
           message: "Review saved successfully!",
-          data: result,
+          data: req.body,
         });
       });
     } else {
@@ -207,7 +207,7 @@ const updateReview = async (req, res) => {
     )
       .then((response) => {
         return res.status(202).json({
-          message: "Review Found",
+          message: "Review successfully updated",
           data: response,
         });
       })
@@ -234,6 +234,7 @@ const deleteReview = async (req, res) => {
           
         )
         .then((response) => {
+
           return res.status(202).json({
             message: "Review Deleted",
             data: response,
