@@ -16,7 +16,7 @@ function ReviewSubjectHeading({review}) {
     const { addToast } = useToasts();
 
     const handleUpdate = async (id) => {
-        history.push(`/book-rating-review/${params.isbn}/${params.book_id}/${id}`);
+        // history.push(`/book-rating-review/${params.isbn}/${params.book_id}/${id}`);
     }
     
     const {state} = useContext(AuthContext);
@@ -48,23 +48,20 @@ function ReviewSubjectHeading({review}) {
         }
     });
 
-    const [checked, setChecked] = useState(false);
-    const handleChange = async ({review_id,status}) => {
-        setChecked(status);
-        const formData = {book_id: params.book_id, review_id, status}
-        await mutation.mutate(formData);
-    };
+    // const [checked, setChecked] = useState(false);
+    // const handleChange = async ({review_id,status}) => {
+    //     setChecked(status);
+    //     const formData = {book_id: params.book_id, review_id, status}
+    //     await mutation.mutate(formData);
+    // };
 
     const [loading, setLoading] = useState(false);
     const deleteMutation = useMutation(formData => {
-        return axios.delete(`${API_URL}books/delete-review/${params.book_id}/${formData.review_id}`, options)
+        return axios.delete(`${API_URL}subject/delete-review/${params.id}/${formData.review_id}`, options)
     },{
         onSuccess: () => {
-            queryClient.invalidateQueries('reviews')
-            history.push(`/book-rating-review/${params.isbn}/${params.book_id}`);
+            queryClient.invalidateQueries(['reviews',params.id])
             addToast('Deleted Successfully', { appearance: 'success',autoDismiss: true });
-            var objDiv = document.getElementById("reviewDiv");
-            objDiv.scrollTop = 0;
         }
     });
     const handleDelete = async (id) => {

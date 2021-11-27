@@ -109,7 +109,7 @@ return (
 <div className="main-area-all">
 <div className="dashboard_main-container">
 <div className="dash-main-head">
-    <h2>Manage Textbook Subject</h2>
+    <h2>Manage Sub Subject</h2>
 </div>
 {error && <Notification>{error.message}</Notification>}
 {isLoading && <LoadingComp />}
@@ -190,7 +190,7 @@ return (
 
             <div className="col-md-8 offset-1">
                 <h6> <span className="fa fa-star"></span>
-                {data && data.reviews.length ? data && data.reviews.length : 'All ' } Reviews for this Subject:</h6>
+                {data && data.reviews.length ? data && data.reviews.length : 'All ' } Reviews for this Sub Subject:</h6>
                 <hr />
                 <div style={{ height: '420px', overflowY: 'scroll', paddingRight: '15px'}} id="reviewDiv">
                     {data && data.reviews.map(review => {

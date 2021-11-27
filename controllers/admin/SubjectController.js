@@ -123,6 +123,8 @@ const getContent = async (req, res) => {
 
 const SaveReviews = async (req, res) => {
   try {
+    console.log(req.body)
+    return;
     const item = await subject.findById(req.params.id);
     if (item && item.reviews) {
       if (item.reviews.length < 5) {
