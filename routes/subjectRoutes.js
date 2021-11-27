@@ -14,7 +14,8 @@ router
     .patch('/save-reviews/:id',Subject.SaveReviews)
     .delete('/delete/:id',Subject.deleteSubject)
     .get('/view/:id',Subject.viewSubject)
-    .get('/review/:id/:reviewId',Subject.getReview)
+    // .get('/review/:id/:reviewId',Subject.getReview)
+    .get('/review/:id',Subject.getReview)
     .get('/content/:id',Subject.getContent)
     .patch('/update-review/:id/:reviewId',Subject.updateReview);
 

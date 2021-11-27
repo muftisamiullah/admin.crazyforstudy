@@ -22,7 +22,6 @@ export default function CreateSubject() {
     async  function handleSubmit(e){
         e.preventDefault();
         let response = null;
-        console.log(formData);
         if(formData == ''){
             errorDispatch({type: 'SET_ERROR', payload: "You haven't change anything"});
         }else{
@@ -49,7 +48,6 @@ export default function CreateSubject() {
     useEffect( () => {
         if(response !== null){
             const subRes = response.data.textbook_seo_details;
-            console.log(subRes);
             sDispatch({type: 'SET_SUBJECT', payload: subRes});
             if(sState){
 

@@ -35,9 +35,14 @@ export default function UpdateSubjectContentTB() {
     };
 
     const [formData, setFormData] = useState({});
-    const [question, setQuestion] = useState({});
-    const [answer, setAnswer] = useState({});
-    const [feature, setFeature] = useState({});
+    const [question, setQuestion] = useState({heading:'', content:''});
+    const [answer, setAnswer] = useState({heading:'',content:''});
+    const [feature, setFeature] = useState(
+                                        {
+                                            mainHeading:'',mainContent:'',serviceHeading:'',serviceContent:'',subServiceHeading1:'',
+                                            subServiceHeading2:'',subServiceHeading3:'',subServiceHeading4:'',subServiceContent1:'',
+                                            subServiceContent2:'',subServiceContent3:'',subServiceContent4:'',
+                                        });
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
 
@@ -64,31 +69,45 @@ export default function UpdateSubjectContentTB() {
 
     const handleContent = async (e) => {
         e.preventDefault();
-        console.log(question)
-        console.log(formData)
-        console.log(questionContent.current.value)
+        if(formData.question == undefined){
+            let question = { heading:"", content:"" }
+            // setFormData(() => ({...formData, question: question}))
+            formData.question = question;
+        }
+        if(formData.answer == undefined){
+            let answer = { heading:"", content:"" }
+            // setFormData(() => ({...formData, answer: answer}))
+            formData.answer = answer;
+        }
+        if(formData.feature == undefined){
+            let feature = 
+                        { 
+                            mainHeading:"",mainContent:"",serviceHeading:"",serviceContent:"",subServiceHeading1:"",subServiceContent1:"",subServiceHeading2:"",
+                            subServiceContent2:"",subServiceHeading3:"",subServiceContent3:"",subServiceHeading4:"",subServiceContent4:"", 
+                        }
+            // setFormData(() => ({...formData, feature: feature}))
+            formData.feature = feature;
+        }
         formData['bannerHeading'] = formData.bannerHeading !== '' ? bannerHeading.current.value : formData.bannerHeading
         formData['askAnExpertText'] = formData.askAnExpertText !== '' ? askAnExpertText.current.value : formData.askAnExpertText
         formData['collegeTextBooks'] = formData.collegeTextBooks !== '' ? collegeTextBooks.current.value : formData.collegeTextBooks
-        formData.question.heading = formData?.question.heading !== '' ? questionHeading.current.value : formData.question.heading
-        formData.question.content = formData?.question.content !== '' ? questionContent.current.value : formData.question.content
-        formData.answer.heading = formData?.answer.heading !== '' ? answerHeading.current.value : formData.answer.heading
-        formData.answer.content = formData?.answer.content !== '' ? answerContent.current.value : formData.answer.content
-        formData.feature.mainHeading = formData?.feature.mainHeading !== '' ? featureMainHeading.current.value : formData.feature.mainHeading
-        formData.feature.mainContent = formData?.feature.mainContent !== '' ? featureMainContent.current.value : formData.feature.mainContent
-        formData.feature.serviceHeading = formData?.feature.serviceHeading !== '' ? featureServiceHeading.current.value : formData.feature.serviceHeading
-        formData.feature.serviceContent = formData?.feature.serviceContent !== '' ? featureServiceContent.current.value : formData.feature.serviceContent
-        formData.feature.subServiceHeading1 = formData?.feature.subServiceHeading1 !== '' ? featureSubServiceHeading1.current.value : formData.feature.subServiceHeading1
-        formData.feature.subServiceContent1 = formData?.feature.subServiceContent1 !== '' ? featureSubServiceContent1.current.value : formData.feature.subServiceContent1
-        formData.feature.subServiceHeading2 = formData?.feature.subServiceHeading2 !== '' ? featureSubServiceHeading2.current.value : formData.feature.subServiceHeading2
-        formData.feature.subServiceContent2 = formData?.feature.subServiceContent2 !== '' ? featureSubServiceContent2.current.value : formData.feature.subServiceContent2
-        formData.feature.subServiceHeading3 = formData?.feature.subServiceHeading3 !== '' ? featureSubServiceHeading3.current.value : formData.feature.subServiceHeading3
-        formData.feature.subServiceContent3 = formData?.feature.subServiceContent3 !== '' ? featureSubServiceContent3.current.value : formData.feature.subServiceContent3
-        formData.feature.subServiceHeading4 = formData?.feature.subServiceHeading4 !== '' ? featureSubServiceHeading4.current.value : formData.feature.subServiceHeading4
-        formData.feature.subServiceContent4 = formData?.feature.subServiceContent4 !== '' ? featureSubServiceContent4.current.value : formData.feature.subServiceContent4
+        formData.question.heading = formData.question.heading == '' ? questionHeading.current.value : formData.question.heading
+        formData.question.content = formData.question.content == '' ? questionContent.current.value : formData.question.content
+        formData.answer.heading = formData.answer.heading == '' ? answerHeading.current.value : formData.answer.heading
+        formData.answer.content = formData.answer.content == '' ? answerContent.current.value : formData.answer.content
+        formData.feature.mainHeading = formData.feature.mainHeading == '' ? featureMainHeading.current.value : formData.feature.mainHeading
+        formData.feature.mainContent = formData.feature.mainContent == '' ? featureMainContent.current.value : formData.feature.mainContent
+        formData.feature.serviceHeading = formData.feature.serviceHeading == '' ? featureServiceHeading.current.value : formData.feature.serviceHeading
+        formData.feature.serviceContent = formData.feature.serviceContent == '' ? featureServiceContent.current.value : formData.feature.serviceContent
+        formData.feature.subServiceHeading1 = formData.feature.subServiceHeading1 == '' ? featureSubServiceHeading1.current.value : formData.feature.subServiceHeading1
+        formData.feature.subServiceContent1 = formData.feature.subServiceContent1 == '' ? featureSubServiceContent1.current.value : formData.feature.subServiceContent1
+        formData.feature.subServiceHeading2 = formData.feature.subServiceHeading2 == '' ? featureSubServiceHeading2.current.value : formData.feature.subServiceHeading2
+        formData.feature.subServiceContent2 = formData.feature.subServiceContent2 == '' ? featureSubServiceContent2.current.value : formData.feature.subServiceContent2
+        formData.feature.subServiceHeading3 = formData.feature.subServiceHeading3 == '' ? featureSubServiceHeading3.current.value : formData.feature.subServiceHeading3
+        formData.feature.subServiceContent3 = formData.feature.subServiceContent3 == '' ? featureSubServiceContent3.current.value : formData.feature.subServiceContent3
+        formData.feature.subServiceHeading4 = formData.feature.subServiceHeading4 == '' ? featureSubServiceHeading4.current.value : formData.feature.subServiceHeading4
+        formData.feature.subServiceContent4 = formData.feature.subServiceContent4 == '' ? featureSubServiceContent4.current.value : formData.feature.subServiceContent4
         setLoading(true);
-        console.log(formData)
-        return;
         await mutation.mutate(formData);
     }
 

@@ -157,9 +157,10 @@ const getReview = async (req, res) => {
   try {
     console.log(req.params);
     await subject
-      .find(
+      .findOne(
         { _id: req.params.id },
-        { reviews: { $elemMatch: { _id: req.params.reviewId } } }
+        // { reviews: { $elemMatch: { _id: req.params.reviewId } } }
+        { reviews : 1}
       )
       .then((response) => {
         return res.status(202).json({
