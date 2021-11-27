@@ -79,6 +79,31 @@ const uploadSubSubject = async(req, res) => {
     }
 }
 
+const SaveContent = async (req, res) => {
+    try {
+      await SubSubject
+        .findByIdAndUpdate(
+          { _id: req.params.id },
+          { $set: { content: req.body } }
+        )
+        .then((response) => {
+          return res.status(202).json({
+            message: "Content, Successfully Saved",
+          });
+        })
+        .catch((error) => {
+          return res.status(500).json({
+            message: "Error Found",
+            errors: error.message,
+          });
+        });
+    } catch (error) {
+      res.status(409).json({
+        message: error.message,
+      });
+    }
+  };
+
 const otherFunction = async(res, FinalData, callback) => {
     await SubSubject.insertMany(FinalData).then(() => {
         res.status(200).send('Sub subject Inserted')
@@ -216,5 +241,6 @@ module.exports = {
     deleteSubSubject,
     viewSubSubject,
     updateQASeoSubSubject,
-    updateTextBookSeoSubSubject
+    updateTextBookSeoSubSubject,
+    SaveContent
 }

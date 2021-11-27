@@ -29,6 +29,7 @@ router
     .patch('/update-QA/:id',SubSubject.updateQASeoSubSubject)
     .patch('/update-textbook/:id',SubSubject.updateTextBookSeoSubSubject)
     .delete('/delete/:id', SubSubject.deleteSubSubject)
-    .get('/view/:id', SubSubject.viewSubSubject);
+    .get('/view/:id', SubSubject.viewSubSubject)
+    .patch('/save-content/:id',checkAuth,SubSubject.SaveContent);
 
 module.exports = router;
