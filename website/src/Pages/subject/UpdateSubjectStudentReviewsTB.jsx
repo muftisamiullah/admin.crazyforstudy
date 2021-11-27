@@ -13,6 +13,7 @@ import ReviewSubjectHeading from './ReviewSubjectHeading'
 import { useToasts } from 'react-toast-notifications';
 import Breadcrumb from './SeoBreadCrumbSubject';
 import DatePicker from "react-datepicker";
+import {s3Path} from '../../Helper/ApiUrl'
 
 export default function UpdateSubjectStudentReviewsTB() {
 
@@ -203,7 +204,7 @@ return (
                                 <div className="subject-card-body">
                                     <div className="row">
                                         <div className="col-md-3">
-                                            <img src={review && review.img_path} className="img-fluid"/>
+                                            <img src={s3Path + review?.img_path} className="img-fluid"/>
                                         </div>
                                         <div className="col-md-9">
                                             <div className="admin-name"> 

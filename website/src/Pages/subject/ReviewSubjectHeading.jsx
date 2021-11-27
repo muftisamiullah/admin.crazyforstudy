@@ -87,9 +87,9 @@ function ReviewSubjectHeading({review}) {
             </div>
             <div>
                 
-                <Button className="delBtn mr-2 ml-2" title="Update Review" onClick={handleUpdate.bind(this,review._id)}>
+                {/* <Button className="delBtn mr-2 ml-2" title="Update Review" onClick={handleUpdate.bind(this,review._id)}>
                     <span className="fa fa-pencil-square-o text-secondary mr-2"></span>
-                </Button>
+                </Button> */}
 
                 <Button className="delBtn ml-2 mr-2" title="Delete Review" 
                     onClick={handleDelete.bind(this,review._id)}>
