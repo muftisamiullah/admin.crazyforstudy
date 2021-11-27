@@ -198,7 +198,7 @@ const updateReview = async (req, res) => {
   try {
     req.body.img_path =
       req.file && req.file.filename ? req.file.filename : req.body.img_path;
-    await SubSubject.updateMany(
+    await SubSubject.updateOne(
       { _id: req.params.id, "reviews._id": req.params.reviewId },
       { $set: { "reviews.$[e]": req.body } },
       {
@@ -228,7 +228,7 @@ const deleteReview = async (req, res) => {
     try {
       
       await SubSubject
-        .updateMany(
+        .updateOne(
           { _id: req.params.id, "reviews._id": req.params.reviewId },
           { $pull:  {"reviews":{"_id": req.params.reviewId } } },
           
