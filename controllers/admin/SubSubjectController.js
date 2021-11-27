@@ -1,4 +1,5 @@
 const SubSubject = require("../../models/admin/SubSubject.js");
+const Questions = require("../../models/admin/Question.js");
 const csv = require("csv-parser");
 const fs = require("fs");
 
@@ -171,9 +172,10 @@ const SaveReviews = async (req, res) => {
 
 const getReview = async (req, res) => {
   try {
-    await SubSubject.find(
+    await SubSubject.findOne(
       { _id: req.params.id },
-      { reviews: { $elemMatch: { _id: req.params.reviewId } } }
+      // { reviews: { $elemMatch: { _id: req.params.reviewId } } }
+      {reviews: 1}
     )
       .then((response) => {
         return res.status(202).json({
@@ -226,7 +228,6 @@ const updateReview = async (req, res) => {
 
 const deleteReview = async (req, res) => {
     try {
-      
       await SubSubject
         .updateOne(
           { _id: req.params.id, "reviews._id": req.params.reviewId },
@@ -386,6 +387,23 @@ const viewSubSubject = async (req, res) => {
   }
 };
 
+const relatedQuestions = async (req, res) => {
+  try {
+    const questions = await Questions.find(
+      { sub_subject_id: req.params.id },
+      { __v: 0 }
+    );
+    return res.status(200).json({
+      data: questions,
+    });
+  } catch (error) {
+    res.status(409).json({
+      message: "Error occured",
+      errors: error.message,
+    });
+  }
+};
+
 module.exports = {
   AllSubSubject,
   getAllSubSubject,
@@ -401,5 +419,6 @@ module.exports = {
   SaveReviews,
   getReview,
   updateReview,
-  deleteReview
+  deleteReview,
+  relatedQuestions,
 };

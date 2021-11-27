@@ -27,10 +27,10 @@ export default function SeoBreadCrumbSubSubject() {
                 Content
             </button>
 
-            {/* <button onClick={e => history.push(`/subject-seo/textbook/update/${params.id}`)} className="btn btn-sm counter btn-danger pl-2 pr-2 ml-2">
+            <button onClick={e => history.push(`/sub-subject-related-questions/textbook/update/${params.id}`)} className="btn btn-sm counter btn-danger pl-2 pr-2 ml-2">
                 <span className="fa fa-question-circle mr-2"></span>
-                FAQ
-            </button> */}
+                Related Questions
+            </button>
         </div>
     )
 }

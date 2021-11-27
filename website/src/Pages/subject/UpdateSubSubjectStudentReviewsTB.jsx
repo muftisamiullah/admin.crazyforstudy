@@ -4,15 +4,16 @@ import {  useParams, Link, useHistory  } from "react-router-dom";
 import {AuthContext} from '../../context/AuthContext';
 import {Notification} from '../../components/Notification';
 import {LoadingComp} from '../../components/LoadingComp';
-import useSubjectReviews from './hooks/useSubjectReviews';
+import useSubSubjectReviews from './hooks/useSubSubjectReviews.jsx';
 import {useMutation, useQueryClient} from 'react-query'
 import axios from 'axios'
 import * as cons from '../../Helper/Cons.jsx'
 import Rating from 'react-rating';
 import ReviewSubjectHeading from './ReviewSubjectHeading'
 import { useToasts } from 'react-toast-notifications';
-import Breadcrumb from './SeoBreadCrumbSubject';
+import Breadcrumb from './SeoBreadCrumbSubSubject';
 import DatePicker from "react-datepicker";
+import {s3Path} from '../../Helper/ApiUrl'
 
 export default function UpdateSubjectStudentReviewsTB() {
 
@@ -20,7 +21,7 @@ const history = useHistory();
 const params = useParams();
 const { addToast } = useToasts();
 const {state} = useContext(AuthContext);
-const {data, isLoading} = useSubjectReviews();
+const {data, isLoading} = useSubSubjectReviews();
 
 let API_URL = '';
 if(process.env.NODE_ENV === 'development'){
@@ -52,7 +53,7 @@ const options = {
 };
 
 const mutation = useMutation(formDataUpload => {
-        return axios.patch(`${API_URL}subject/save-reviews/${params.id}`, formDataUpload, options)
+        return axios.patch(`${API_URL}sub-subject/save-reviews/${params.id}`, formDataUpload, options)
     },{
     onSuccess: () => {
         setLoading(false);
@@ -204,7 +205,7 @@ return (
                                 <div className="subject-card-body">
                                     <div className="row">
                                         <div className="col-md-3">
-                                            <img src={review && review.img_path} className="img-fluid"/>
+                                            <img src={s3Path + review?.img_path} className="img-fluid"/>
                                         </div>
                                         <div className="col-md-9">
                                             <div className="admin-name"> 

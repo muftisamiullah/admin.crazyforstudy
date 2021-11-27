@@ -46,7 +46,7 @@ export default function CreateSubject() {
     const [metaKeywords, setMetaKeywords] = useState('');
     
     useEffect( () => {
-        if(response !== null){
+        if(response && response.data !== null){
             const subRes = response.data.textbook_seo_details;
             sDispatch({type: 'SET_SUBJECT', payload: subRes});
             if(sState){

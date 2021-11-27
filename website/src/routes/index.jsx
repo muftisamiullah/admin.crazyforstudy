@@ -16,6 +16,7 @@ import UpdateSubSubjectSeoQA from '../Pages/subject/UpdateSubSubjectSeoQA.jsx';
 import UpdateSubSubjectSeoTB from '../Pages/subject/UpdateSubSubjectSeoTB.jsx';
 import UpdateSubSubjectStudentReviewsTB from '../Pages/subject/UpdateSubSubjectStudentReviewsTB.jsx';
 import UpdateSubSubjectContentTB from '../Pages/subject/UpdateSubSubjectContentTB.jsx';
+import UpdateSubSubjectRelatedQuestions from '../Pages/subject/UpdateSubSubjectRelatedQuestions.jsx';
 import AllBookList from '../Pages/Books/AllBookList.jsx';
 import UploadBooks from '../Pages/Books/UploadBooks.jsx';
 import UploadBulkBooks from '../Pages/Books/UploadBulkBooks.jsx';
@@ -154,6 +155,10 @@ export const privateRoutes = [
     {
         path: '/sub-subject-content/textbook/update/:id',
         component: UpdateSubSubjectContentTB
+    },
+    {
+        path: '/sub-subject-related-questions/textbook/update/:id',
+        component: UpdateSubSubjectRelatedQuestions
     },
     {
         path: '/sub-subject/create',

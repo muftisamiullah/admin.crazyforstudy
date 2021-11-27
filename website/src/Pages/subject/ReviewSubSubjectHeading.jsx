@@ -9,7 +9,7 @@ import * as cons from '../../Helper/Cons.jsx'
 import {useMutation, useQueryClient} from 'react-query'
 import { useToasts } from 'react-toast-notifications';
 
-function ReviewSubjectHeading({review}) {
+function ReviewSubSubjectHeading({review}) {
     
     const history = useHistory();
     const params = useParams();
@@ -104,4 +104,4 @@ function ReviewSubjectHeading({review}) {
     )
 }
 
-export default ReviewSubjectHeading
+export default ReviewSubSubjectHeading

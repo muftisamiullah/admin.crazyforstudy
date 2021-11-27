@@ -38,8 +38,10 @@ router
     .patch('/save-content/:id',checkAuth,SubSubject.SaveContent)
     .get('/content/:id',checkAuth,SubSubject.getContent)
     .patch('/save-reviews/:id',upload.single('img_path'),checkAuth,SubSubject.SaveReviews)
-    .get('/review/:id/:reviewId',checkAuth,SubSubject.getReview)    
+    // .get('/review/:id/:reviewId',checkAuth,SubSubject.getReview)    
+    .get('/review/:id',checkAuth,SubSubject.getReview)    
     .patch('/update-review/:id/:reviewId',upload.single('img_path'),checkAuth,SubSubject.updateReview)
-    .patch('/delete-review/:id/:reviewId',checkAuth,SubSubject.deleteReview);
+    .delete('/delete-review/:id/:reviewId',checkAuth,SubSubject.deleteReview)
+    .get('/related-questions/:id',checkAuth,SubSubject.relatedQuestions)
 
 module.exports = router;
