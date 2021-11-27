@@ -123,8 +123,7 @@ const getContent = async (req, res) => {
 
 const SaveReviews = async (req, res) => {
   try {
-    console.log(req.body)
-    return;
+    req.body.img_path = req.file && req.file.filename ? req.file.filename : ''
     const item = await subject.findById(req.params.id);
     if (item && item.reviews) {
       if (item.reviews.length < 5) {
@@ -139,7 +138,7 @@ const SaveReviews = async (req, res) => {
       await item.save().then((result) => {
         res.status(202).json({
           message: "Review saved successfully!",
-          data: result,
+          data: req.body,
         });
       });
     } else {
@@ -185,9 +184,9 @@ const getReview = async (req, res) => {
 
 const updateReview = async (req, res) => {
   try {
-    console.log(req.body);
+    req.body.img_path = req.file && req.file.filename ? req.file.filename : req.body.img_path    
     await subject
-      .updateMany(
+      .updateOne(
         { _id: req.params.id, "reviews._id": req.params.reviewId },
         { $set: { "reviews.$[e]": req.body } },
         {
@@ -196,7 +195,35 @@ const updateReview = async (req, res) => {
       )
       .then((response) => {
         return res.status(202).json({
-          message: "Review Found",
+          message: "Review successfull updated",
+          data: response,
+        });
+      })
+      .catch((error) => {
+        return res.status(500).json({
+          message: "Error Found",
+          errors: error.message,
+        });
+      });
+  } catch (error) {
+    res.status(409).json({
+      message: error.message,
+    });
+  }
+};
+
+const deleteReview = async (req, res) => {
+  try {
+    
+    await subject
+      .updateOne(
+        { _id: req.params.id, "reviews._id": req.params.reviewId },
+        { $pull:  {"reviews":{"_id": req.params.reviewId } } },
+        
+      )
+      .then((response) => {
+        return res.status(202).json({
+          message: "Review Deleted",
           data: response,
         });
       })
@@ -306,4 +333,5 @@ module.exports = {
   SaveReviews,
   updateReview,
   getReview,
+  deleteReview
 };

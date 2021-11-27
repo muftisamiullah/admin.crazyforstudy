@@ -35,11 +35,11 @@ const SubSubjectSchema = new mongoose.Schema({
     default: true,
   },
   content: {
-    bannerText: { type: String, required: true },
-    questionHeading: { type: String, required: true },
-    questionSubHeading: { type: String, required: true },
-    aboutHeading: { type: String, required: true },
-    aboutContent: { type: String, required: true },   
+    bannerText: { type: String },
+    questionHeading: { type: String },
+    questionSubHeading: { type: String },
+    aboutHeading: { type: String },
+    aboutContent: { type: String },   
   },
   reviews: [ReviewsSchema],
   created_at: {

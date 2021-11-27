@@ -28,12 +28,6 @@ if(process.env.NODE_ENV === 'development'){
 }else{
     API_URL = cons.LIVE_API_URL;
 }
-const options = {
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization':'Bearer '+state.access_token
-    }
-};
 
 const [formData, setFormData] = useState({});
 const [rating, setRating] = useState('');
@@ -49,6 +43,13 @@ const [startDate, setStartDate] = useState(new Date());
 const [file, setFile] = useState(null);
 
 const formDataUpload = new FormData();
+
+const options = {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization':'Bearer '+state.access_token
+    }
+};
 
 const mutation = useMutation(formDataUpload => {
         return axios.patch(`${API_URL}subject/save-reviews/${params.id}`, formDataUpload, options)
