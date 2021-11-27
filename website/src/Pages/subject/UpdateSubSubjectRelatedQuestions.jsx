@@ -15,6 +15,7 @@ import * as utils from '../../utils/MakeSlug'
 
 import { useToasts } from 'react-toast-notifications';
 import Breadcrumb from './SeoBreadCrumbSubSubject';
+import {htmlDecode} from '../../utils/MakeSlug'
 
 export default function UpdateSubSubjectRelatedQuestions() {  
 
@@ -159,25 +160,25 @@ return (
                 <p><b> All Questions</b></p>
                 <hr className="mt-1 mb-2"/>
                 <div className="col-md-12 pl-0" style={{ height: '450px', overflowY: 'scroll'}}>
-                {AllQuestions?.map(books => {
+
+                {AllQuestions?.map(item => {
                     return (
                     <div className="card mb-1" style={{ cursor: 'pointer'}}
-                    key={books?._id}
-                    id={books?._id}
-                    onClick={handleAllQuestions.bind(this, books?._id)}>
+                    key={item?._id}
+                    id={item?._id}
+                    onClick={handleAllQuestions.bind(this, item?._id)}>
                         <div className="row col-md-12">
-                            <div className="col-md-3 p-1">
-                                {/* <BookImagenpm isbn={books?.ISBN13}  width="100%"/> */}
-                            </div>
                             <div className="col-md-9 pl-1">
                                 <div className="col-md-12 pl-0 pr-0">
-                                    <b>Title:  </b>{utils.GetString(books?.BookName,50)}
+                                    <b>Question:  </b>
+                                    {/* {utils.GetString(item?.question,100)} */}
+                                    <span dangerouslySetInnerHTML={{ __html:utils.GetString( htmlDecode(item?.question))  }} />
                                 </div>
                                 <div className="col-md-12 pl-0 pr-0">
-                                    <b>ISBN13:  </b>{books?.ISBN13}
+                                    <b>ISBN13:  </b>{item?.ISBN13}
                                 </div>
                                 <div className="col-md-12 pl-0 pr-0">
-                                    <b>Edition:  </b>{books?.Edition}
+                                    <b>Edition:  </b>{item?.Edition}
                                 </div>
                             </div>
                         </div>
@@ -198,10 +199,7 @@ return (
                         key={book?._id}
                         >
                         <div className="row col-md-12">   
-                        <div className="col-md-3 p-1">
-                            <BookImage isbn={book?.ISBN13}  width="100%"/>
-                        </div>
-                        <div className="col-md-9 pl-1 pr-0">
+                        {/* <div className="col-md-12 pl-1 pr-0"> */}
                             <div className="col-md-12 pl-0 pr-0">
                                     <b>Title:  </b>
                                     <span id={`Title-${book?._id}`}>{book?.BookName}</span>
@@ -216,7 +214,7 @@ return (
                                 <b>Display Title:  </b>
                                 <span id={`DisplayTitle-${book?._id}`}>{book?.DisplayTitle}</span>
                             </div>
-                       </div>
+                       {/* </div> */}
                        </div>
                         
                         
@@ -255,10 +253,7 @@ return (
                        key={book?._id}
                        >
                         <div className="row col-md-12">   
-                        <div className="col-md-3 p-1">
-                            <BookImage isbn={book?.ISBN13}  width="100%"/>
-                        </div>
-                        <div className="col-md-9 pl-1 pr-0">
+                        <div className="col-md-12 pl-1 pr-0">
                             <div className="col-md-12 pl-0 pr-0">
                                     <b>Title:  </b>
                                     <span id={`Title-${book?._id}`}>{book?.DisplayTitle}</span>

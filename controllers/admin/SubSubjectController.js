@@ -2,6 +2,7 @@ const SubSubject = require("../../models/admin/SubSubject.js");
 const Questions = require("../../models/admin/Question.js");
 const csv = require("csv-parser");
 const fs = require("fs");
+var ObjectId = require('mongodb').ObjectId; 
 
 const AllSubSubject = async (req, res) => {
   try {
@@ -389,10 +390,16 @@ const viewSubSubject = async (req, res) => {
 
 const relatedQuestions = async (req, res) => {
   try {
-    const questions = await Questions.find(
-      { sub_subject_id: req.params.id },
-      { __v: 0 }
+    const sub_subject = await SubSubject.findOne(
+      { _id: ObjectId(req.params.id) },
+      { subject_id: 1 }
     );
+
+    const questions = await Questions.aggregate([
+      { $match: { sub_subject_id:ObjectId(req.params.id),subject_id: ObjectId(sub_subject.subject_id), question: { $exists: true } }  },
+      { $sample: { size: 100 } },
+    ]);
+
     return res.status(200).json({
       data: questions,
     });
