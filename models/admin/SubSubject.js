@@ -1,5 +1,18 @@
 const mongoose = require("mongoose");
 
+
+const ReviewsSchema = new mongoose.Schema({
+    name: { type: String },
+    review: { type: String },
+    img_path: { type: String },
+    institute: { type: String },
+    rating: { type: String },
+    created_at: {
+      type: Date,
+      default: Date.now,
+    },
+  });
+
 const SubSubjectSchema = new mongoose.Schema({
   subject_id: {
     type: String,
@@ -28,6 +41,7 @@ const SubSubjectSchema = new mongoose.Schema({
     aboutHeading: { type: String, required: true },
     aboutContent: { type: String, required: true },   
   },
+  reviews: [ReviewsSchema],
   created_at: {
     type: Date,
     default: Date.now,

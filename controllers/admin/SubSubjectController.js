@@ -104,13 +104,102 @@ const SaveContent = async (req, res) => {
     }
   };
 
-  const getContent = async (req, res) => {
+const getContent = async (req, res) => {
     try {
       await SubSubject
         .findById(req.params.id, { content: 1 })
         .then((response) => {
           return res.status(202).json({
             message: "Content Found",
+            data: response,
+          });
+        })
+        .catch((error) => {
+          return res.status(500).json({
+            message: "Error Found",
+            errors: error.message,
+          });
+        });
+    } catch (error) {
+      res.status(409).json({
+        message: error.message,
+      });
+    }
+  };
+
+const SaveReviews = async (req, res) => {
+    try {
+      const item = await SubSubject.findById(req.params.id);
+      if (item && item.reviews) {
+        if (item.reviews.length < 5) {
+          item.reviews.push(req.body);
+        } else {
+          return res.status(400).json({
+            message: "Can not add more reviews",
+            errors: "Error",
+          });
+        }
+  
+        await item.save().then((result) => {
+          res.status(202).json({
+            message: "Review saved successfully!",
+            data: result,
+          });
+        });
+      } else {
+        return res.status(500).json({
+          message: "Could not found record",
+          errors: "Error",
+        });
+      }
+    } catch (error) {
+      res.status(409).json({
+        message: error.message,
+      });
+    }
+  };
+  
+const getReview = async (req, res) => {
+    try {
+      
+      await SubSubject
+        .find(
+          { _id: req.params.id },
+          { reviews: { $elemMatch: { _id: req.params.reviewId } } }
+        )
+        .then((response) => {
+          return res.status(202).json({
+            message: "Review Found",
+            data: response,
+          });
+        })
+        .catch((error) => {
+          return res.status(500).json({
+            message: "Error Found",
+            errors: error.message,
+          });
+        });
+    } catch (error) {
+      res.status(409).json({
+        message: error.message,
+      });
+    }
+  };
+  
+const updateReview = async (req, res) => {
+    try {
+      console.log(req.body);
+      await SubSubject
+        .updateMany(
+          { _id: req.params.id, "reviews._id": req.params.reviewId },
+          { $set: { "reviews.$[e]": req.body } },
+          {
+            arrayFilters: [{ "e._id": req.params.reviewId }],
+          }
+        )
+        .then((response) => {
+          return res.status(202).json({
+            message: "Review Found",
             data: response,
           });
         })
@@ -267,5 +356,9 @@ module.exports = {
     updateQASeoSubSubject,
     updateTextBookSeoSubSubject,
     SaveContent,
-    getContent
+    getContent,
+    SaveReviews,
+    getReview,
+    updateReview
+
 }
