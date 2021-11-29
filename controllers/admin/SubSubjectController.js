@@ -388,7 +388,7 @@ const viewSubSubject = async (req, res) => {
   }
 };
 
-const relatedQuestions = async (req, res) => {
+const rQuestions = async (req, res) => {
   try {
     const sub_subject = await SubSubject.findOne(
       { _id: ObjectId(req.params.id) },
@@ -411,6 +411,56 @@ const relatedQuestions = async (req, res) => {
   }
 };
 
+const relatedQuestions = async(req, res) => {
+  try {
+      const relatedQuestions = await SubSubject.findOne({_id: `${req.params.id}`},{relatedQuestions: 1, _id: 0})
+      return res.status(200).json({
+          data: relatedQuestions
+      });
+  } catch (error) {
+      res.status(409).json({
+          message: "Error occured",
+          errors: error.message
+      });
+  }
+}
+
+const addRelatedQuestions = async(req, res) => {
+  try {
+      const filter = {_id: req.body.id};
+      const RQ = req.body.relatedQuestions;
+      const sbook_id = req.body.id;
+      await SubSubject.updateOne(filter, {$addToSet: { relatedQuestions: {$each: RQ}}});
+      return res.status(201).json({
+          error: false,
+          message: "related Questions Added successfully"
+      })  
+  } catch (error) {
+      res.status(409).json({
+          message: "Error occured",
+          errors: error.message
+      });
+  }
+}
+
+const removeRelatedQuestions = async(req, res) => {
+  try {
+      const filter = {_id: req.body.id};
+      const RQ = req.body.relatedQuestions;
+      const sbook_id = req.body.id;
+      await SubSubject.updateOne(filter, {$pull: { relatedQuestions: {$each: RQ}}});
+      return res.status(201).json({
+          error: false,
+          message: "related Questions Added successfully"
+      })  
+  } catch (error) {
+      res.status(409).json({
+          message: "Error occured",
+          errors: error.message
+      });
+  }
+}
+
 module.exports = {
   AllSubSubject,
   getAllSubSubject,
@@ -427,5 +477,8 @@ module.exports = {
   getReview,
   updateReview,
   deleteReview,
+  rQuestions,
   relatedQuestions,
+  addRelatedQuestions,
+  removeRelatedQuestions
 };

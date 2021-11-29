@@ -42,6 +42,9 @@ router
     .get('/review/:id',checkAuth,SubSubject.getReview)    
     .patch('/update-review/:id/:reviewId',upload.single('img_path'),checkAuth,SubSubject.updateReview)
     .delete('/delete-review/:id/:reviewId',checkAuth,SubSubject.deleteReview)
-    .get('/related-questions/:id',checkAuth,SubSubject.relatedQuestions)
+    .get('/questions/:id',checkAuth,SubSubject.rQuestions)
+    .get('/related-questions/:id', checkAuth, SubSubject.relatedQuestions)
+    .post('/add-related-questions', checkAuth, SubSubject.addRelatedQuestions)
+    .post('/remove-related-questions', checkAuth, SubSubject.removeRelatedQuestions)
 
 module.exports = router;

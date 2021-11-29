@@ -22,7 +22,8 @@ export default function useRelatedQuestions() {
                 'Authorization':'Bearer '+state.access_token
             }
         });
-        return result.data.data.similarBooks; 
+        console.log(result.data)
+        return result.data.data.relatedQuestions; 
     });
     
 }
