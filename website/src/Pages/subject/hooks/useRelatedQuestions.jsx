@@ -5,9 +5,9 @@ import axios from 'axios';
 import {AuthContext} from '../../../context/AuthContext.jsx';
 import * as cons from '../../../Helper/Cons.jsx'
 
-export default function useAllBooks() {
+export default function useRelatedQuestions() {
     const params = useParams();
-    
+    const id = params?.id
     const {state } = useContext(AuthContext);
     let API_URL = '';
     if(process.env.NODE_ENV === 'development'){
@@ -15,14 +15,14 @@ export default function useAllBooks() {
     }else{
         API_URL = cons.LIVE_API_URL;
     }
-    return useQuery(['questions',params.id], async () => {
-        const result = await axios.get(`${API_URL}sub-subject/questions/${params.id}`,{
+    return useQuery(['relatedquestions',id], async () => {
+        const result = await axios.get(`${API_URL}sub-subject/related-questions/${id}`,{
             headers: {
                 'Content-Type': 'Application/json',
                 'Authorization':'Bearer '+state.access_token
             }
         });
-        return result.data.data; 
+        return result.data.data.similarBooks; 
     });
     
 }

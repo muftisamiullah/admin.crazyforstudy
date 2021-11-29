@@ -1,9 +1,7 @@
 import React from 'react'
 import {useHistory, useParams, Link } from 'react-router-dom'
-import useSingleBook from '../../hooks/useSingleBook';
 
 export default function SeoBreadCrumbSubject() {
-    const {data:book} = useSingleBook();
     const history = useHistory();
     const params = useParams();
     const backUrl = `/subject`

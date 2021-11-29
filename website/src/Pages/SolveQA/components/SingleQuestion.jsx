@@ -1,6 +1,6 @@
 import React from 'react'
 import {useHistory, useParams} from 'react-router-dom'
-import {htmlDecode, calculateTime} from '../../../utils/MakeSlug'
+import {htmlDecode, calculateTime, isHTML} from '../../../utils/MakeSlug'
 // import Answers from './Answers'
 
 // import '../Chapters/math.css';
@@ -49,8 +49,13 @@ var localDate = new Date(utcDate);
         {problem?.question != '' &&  (
 
             <div className="card-body" style={{ padding: '0px 0px 10px 0px' }}>
-            <hr style={{ padding: '0px', margin: '5px 0px' }}/>            
-            <div className="card-text question" id="high" dangerouslySetInnerHTML={{ __html: htmlDecode(problem?.question)  }} />
+            <hr style={{ padding: '0px', margin: '5px 0px' }}/>
+                {isHTML(problem?.question)
+                ?
+                    <div className="card-text question" id="high" dangerouslySetInnerHTML={{ __html: problem?.question }} />
+                :
+                    <div className="card-text question" id="high" dangerouslySetInnerHTML={{ __html: htmlDecode(problem?.question)  }} />
+                }        
             {problem?.image && (
                 <div style={{ height: '130px', overflow: 'hidden', marginTop: '10px' }}>
                     <img src={problem?.image} />
