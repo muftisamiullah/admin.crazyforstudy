@@ -1,18 +1,18 @@
 import React, {useContext, useState, useEffect, useRef} from 'react'
-import '../mainDash.css';
+import '../../mainDash.css';
 import {  useParams, Link, useHistory  } from "react-router-dom";
-import {AuthContext} from '../../context/AuthContext';
-import {Notification} from '../../components/Notification';
-import {LoadingComp} from '../../components/LoadingComp';
-import useSubSubjectContent from './hooks/useSubSubjectContent';
+import {AuthContext} from '../../../context/AuthContext';
+import {Notification} from '../../../components/Notification';
+import {LoadingComp} from '../../../components/LoadingComp';
+import useSubSubjectContent from '../hooks/useSubSubjectContentTB';
 import {useMutation, useQueryClient} from 'react-query'
 import axios from 'axios'
-import * as cons from '../../Helper/Cons.jsx'
+import * as cons from '../../../Helper/Cons.jsx'
 
 import { useToasts } from 'react-toast-notifications';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from 'ckeditor5-classic-with-mathtype';
-import Breadcrumb from './SeoBreadCrumbSubSubject';
+import Breadcrumb from './SeoBreadCrumbSubSubjectTB';
 
 export default function UpdateSubSubjectContentTB() {
     const {data: content, isLoading} = useSubSubjectContent();
@@ -73,7 +73,7 @@ export default function UpdateSubSubjectContentTB() {
             <div className="main-area-all">
             <div className="dashboard_main-container">
             <div className="dash-main-head">
-                <h2>Manage Sub Subject</h2>
+                <h2>Manage Textbook  Sub Subject Content</h2>
             </div>
             {error && <Notification>{error.message}</Notification>}
             {/* {isLoading && <LoadingComp />} */}
@@ -100,7 +100,7 @@ export default function UpdateSubSubjectContentTB() {
                                             <label>Banner Text</label>
                                             <input 
                                                 ref={bannerText}
-                                                defaultValue={content && content.content.bannerText}
+                                                defaultValue={content && content.content && content.content.bannerText}
                                                 onChange={e => setFormData({...formData, bannerText: e.target.value})}
                                                 className="form-control" autoComplete="off" placeholder="Enter Banner Text"/>
                                         </div>
@@ -108,7 +108,7 @@ export default function UpdateSubSubjectContentTB() {
                                             <label>Question Heading Text</label>
                                             <input 
                                                 ref={questionHeading}
-                                                defaultValue={content && content.content.questionHeading}
+                                                defaultValue={content && content.content && content.content.questionHeading}
                                                 onChange={e => setFormData({...formData, questionHeading: e.target.value})}
                                                 className="form-control" autoComplete="off" placeholder="Enter Question Heading"/>
                                         </div>
@@ -116,7 +116,7 @@ export default function UpdateSubSubjectContentTB() {
                                             <label>Question Sub Heading Text</label>
                                             <input 
                                                 ref={questionSubHeading}
-                                                defaultValue={content && content.content.questionSubHeading}
+                                                defaultValue={content && content.content && content.content.questionSubHeading}
                                                 onChange={e => setFormData({...formData, questionSubHeading: e.target.value})}
                                                 className="form-control" autoComplete="off" placeholder="Enter Question Sub Heading"/>
                                         </div>
@@ -126,7 +126,7 @@ export default function UpdateSubSubjectContentTB() {
                                             <label>About Heading</label>
                                             <input 
                                                 ref={aboutHeading}
-                                                defaultValue={content && content.content.aboutHeading}
+                                                defaultValue={content && content.content && content.content.aboutHeading}
                                                 onChange={e => {
                                                     setFormData({...formData, aboutHeading: e.target.value})
                                                 }}
@@ -136,7 +136,7 @@ export default function UpdateSubSubjectContentTB() {
                                             <label>About Content</label>
                                             <input 
                                                 ref={aboutContent}
-                                                defaultValue={content && content.content.aboutContent}
+                                                defaultValue={content && content.content && content.content.aboutContent}
                                                 onChange={e => {
                                                     setFormData({...formData, aboutContent: e.target.value})
                                                     }

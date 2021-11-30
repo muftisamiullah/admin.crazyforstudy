@@ -47,4 +47,9 @@ router
     .post('/add-related-questions', checkAuth, SubSubject.addRelatedQuestions)
     .post('/remove-related-questions', checkAuth, SubSubject.removeRelatedQuestions)
 
+    .delete('/delete-review-qa/:id/:reviewId',checkAuth, SubSubject.deleteReviewQA)
+    .get('/review-qa/:id',checkAuth, SubSubject.getReviewQA)
+    .patch('/save-reviews-qa/:id',upload.single('img_path'),checkAuth, SubSubject.SaveReviewsQA)
+    .patch('/save-content-qa/:id',checkAuth, SubSubject.SaveContentQA)
+
 module.exports = router;

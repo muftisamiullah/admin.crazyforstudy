@@ -5,7 +5,7 @@ import axios from 'axios';
 import {AuthContext} from '../../../context/AuthContext.jsx';
 import * as cons from '../../../Helper/Cons.jsx'
 
-export default function useBookReviews() {
+export default function useSubSubjectReviewsQA() {
     const params = useParams();
     const id = params.id;
     const {state } = useContext(AuthContext);
@@ -15,8 +15,8 @@ export default function useBookReviews() {
     }else{
         API_URL = cons.LIVE_API_URL;
     }
-    const data = useQuery(['reviews',id], async () => {
-        const result = await axios.get(`${API_URL}subject/review/${id}`,{
+    const data = useQuery(['reviews-qa',id], async () => {
+        const result = await axios.get(`${API_URL}sub-subject/review-qa/${id}`,{
             headers: {
                 'Content-Type': 'Application/json',
                 'Authorization':'Bearer '+state.access_token

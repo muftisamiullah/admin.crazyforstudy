@@ -3,13 +3,13 @@ import {useHistory, useParams} from 'react-router-dom'
 import Switch from "react-switch";
 
 import { Button } from 'react-bootstrap'
-import {AuthContext} from '../../context/AuthContext';
+import {AuthContext} from '../../../context/AuthContext';
 import axios from 'axios'
-import * as cons from '../../Helper/Cons.jsx'
+import * as cons from '../../../Helper/Cons.jsx'
 import {useMutation, useQueryClient} from 'react-query'
 import { useToasts } from 'react-toast-notifications';
 
-function ReviewSubSubjectHeading({review}) {
+function ReviewSubSubjectHeadingTB({review}) {
     
     const history = useHistory();
     const params = useParams();
@@ -35,25 +35,6 @@ function ReviewSubSubjectHeading({review}) {
     };
 
     const queryClient = useQueryClient();
-
-    const mutation = useMutation(formData => {
-        return axios.post(`${API_URL}books/update-review-status`, formData, options)
-    },{
-        onSuccess: () => {
-            queryClient.invalidateQueries('reviews')
-            history.push(`/book-rating-review/${params.isbn}/${params.book_id}`);
-            addToast('Status Updated Successfully', { appearance: 'success',autoDismiss: true });
-            var objDiv = document.getElementById("reviewDiv");
-            objDiv.scrollTop = 0;
-        }
-    });
-
-    // const [checked, setChecked] = useState(false);
-    // const handleChange = async ({review_id,status}) => {
-    //     setChecked(status);
-    //     const formData = {book_id: params.book_id, review_id, status}
-    //     await mutation.mutate(formData);
-    // };
 
     const [loading, setLoading] = useState(false);
     const deleteMutation = useMutation(formData => {
@@ -104,4 +85,4 @@ function ReviewSubSubjectHeading({review}) {
     )
 }
 
-export default ReviewSubSubjectHeading
+export default ReviewSubSubjectHeadingTB

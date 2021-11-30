@@ -1,15 +1,16 @@
 import React, {useContext,useState, useEffect} from 'react'
-import '../mainDash.css';
+import '../../mainDash.css';
 import {  useHistory, Link, useParams  } from "react-router-dom";
 import { Button,Form } from 'react-bootstrap'
-import * as api from '../../Helper/ApiHelper.jsx';
-import useAxios from '../../hooks/useAxios'
-import {AuthContext} from '../../context/AuthContext';
-import {Notification} from '../../components/Notification';
-import {ErrorContext} from '../../context/ErrorContext';
-import {SubjectContext} from '../../context/SubjectContext';
+import * as api from '../../../Helper/ApiHelper.jsx';
+import useAxios from '../../../hooks/useAxios'
+import {AuthContext} from '../../../context/AuthContext';
+import {Notification} from '../../../components/Notification';
+import {ErrorContext} from '../../../context/ErrorContext';
+import {SubjectContext} from '../../../context/SubjectContext';
+import Breadcrumb from './SeoBreadCrumbSubjectQA';
 
-export default function CreateSubject() {
+export default function UpdateSubjectSeoQA() {
     const history = useHistory();
     const params = useParams();
     const {state} = useContext(AuthContext);
@@ -88,14 +89,17 @@ return (
                 <div className="dash-main-head">
                     <h2>Manage QA Subject Seo</h2>
                 </div>
-                
+                <div className="dash-con-heading">
+                    <div className="col-md-12 pl-0">
+                        {/* <Link to={`/subject`} className="btn btn-sm dark">
+                            <span className="fa fa-arrow-left text-success mr-2"></span>
+                        </Link> */}
+                        <Breadcrumb/>
+                    </div>
+                </div>
                 <div className="dash-cont-start">
                     <div className="org-main-area">
-                        <div className="col-md-3 pl-0">
-                        <Link to={`/subject`} className="btn btn-sm dark">
-                            <span className="fa fa-arrow-left text-success mr-2"></span>
-                        </Link>
-                        </div>
+                       
                         <div className="col-md-12 no-gutter p-0 mt-2">
                         {errorState.error && ( 
                             <Notification>{errorState.error}</Notification>

@@ -1,27 +1,26 @@
 import React, {useContext, useState, useEffect, useRef} from 'react'
-import '../mainDash.css';
+import '../../mainDash.css';
 import {  useParams, Link, useHistory  } from "react-router-dom";
-import {AuthContext} from '../../context/AuthContext';
-import {Notification} from '../../components/Notification';
-import {LoadingComp} from '../../components/LoadingComp';
-import useSubSubjectReviews from './hooks/useSubSubjectReviews.jsx';
+import {AuthContext} from '../../../context/AuthContext';
+import {Notification} from '../../../components/Notification';
+import {LoadingComp} from '../../../components/LoadingComp';
+import useSubSubjectReviewsQA from '../hooks/useSubSubjectReviewsQA';
 import {useMutation, useQueryClient} from 'react-query'
 import axios from 'axios'
-import * as cons from '../../Helper/Cons.jsx'
+import * as cons from '../../../Helper/Cons.jsx'
 import Rating from 'react-rating';
-import ReviewSubjectHeading from './ReviewSubjectHeading'
+import ReviewSubSubjectHeadingQA from './ReviewSubSubjectHeadingQA'
 import { useToasts } from 'react-toast-notifications';
-import Breadcrumb from './SeoBreadCrumbSubSubject';
+import Breadcrumb from './SeoBreadCrumbSubSubjectQA';
 import DatePicker from "react-datepicker";
-import {s3Path} from '../../Helper/ApiUrl'
+import {s3Path} from '../../../Helper/ApiUrl'
 
-export default function UpdateSubjectStudentReviewsTB() {
+export default function UpdateSubSubjectStudentReviewsQA() {
 
-const history = useHistory();
 const params = useParams();
 const { addToast } = useToasts();
 const {state} = useContext(AuthContext);
-const {data, isLoading} = useSubSubjectReviews();
+const {data, isLoading} = useSubSubjectReviewsQA();
 
 let API_URL = '';
 if(process.env.NODE_ENV === 'development'){
@@ -29,6 +28,12 @@ if(process.env.NODE_ENV === 'development'){
 }else{
     API_URL = cons.LIVE_API_URL;
 }
+const options = {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization':'Bearer '+state.access_token
+    }
+};
 
 const [formData, setFormData] = useState({});
 const [rating, setRating] = useState('');
@@ -45,22 +50,15 @@ const [file, setFile] = useState(null);
 
 const formDataUpload = new FormData();
 
-const options = {
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization':'Bearer '+state.access_token
-    }
-};
-
 const mutation = useMutation(formDataUpload => {
-        return axios.patch(`${API_URL}sub-subject/save-reviews/${params.id}`, formDataUpload, options)
+        return axios.patch(`${API_URL}sub-subject/save-reviews-qa/${params.id}`, formDataUpload, options)
     },{
     onSuccess: () => {
         setLoading(false);
         reviewRef.current.value = '';
         userNameRef.current.value = '';
         instituteRef.current.value = '';
-        queryClient.invalidateQueries(['reviews',params.id]);
+        queryClient.invalidateQueries(['reviews-qa',params.id]);
         addToast('Review added successfully', { appearance: 'success',autoDismiss: true });
     }
 });
@@ -111,7 +109,7 @@ return (
 <div className="main-area-all">
 <div className="dashboard_main-container">
 <div className="dash-main-head">
-    <h2>Manage Sub Subject</h2>
+    <h2>Manage QA Sub Subject Reviews</h2>
 </div>
 {error && <Notification>{error.message}</Notification>}
 {isLoading && <LoadingComp />}
@@ -192,10 +190,10 @@ return (
 
             <div className="col-md-8 offset-1">
                 <h6> <span className="fa fa-star"></span>
-                {data && data.reviews.length ? data && data.reviews.length : 'All ' } Reviews for this Sub Subject:</h6>
+                {data && data.qa_reviews.length ? data && data.qa_reviews.length : 'All ' } Reviews for this Subject:</h6>
                 <hr />
                 <div style={{ height: '420px', overflowY: 'scroll', paddingRight: '15px'}} id="reviewDiv">
-                    {data && data.reviews.map(review => {
+                    {data && data.qa_reviews.map(review => {
                         const local = new Date(review && review.created_at)
                         return (
                             <div className="subject-card"
@@ -269,7 +267,7 @@ return (
 
                                 </div> 
                                 <hr className="mt-1 mb-2"/>
-                                    <ReviewSubjectHeading review={review} />
+                                    <ReviewSubSubjectHeadingQA review={review} />
                             </div>
                         )
                     })}

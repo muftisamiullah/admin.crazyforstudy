@@ -1,19 +1,19 @@
 import React, {useContext, useState, useEffect, useRef} from 'react'
-import '../mainDash.css';
+import '../../mainDash.css';
 import {  useParams, Link, useHistory  } from "react-router-dom";
-import {AuthContext} from '../../context/AuthContext';
-import {Notification} from '../../components/Notification';
-import {LoadingComp} from '../../components/LoadingComp';
-import useSubjectReviews from './hooks/useSubjectReviews';
+import {AuthContext} from '../../../context/AuthContext';
+import {Notification} from '../../../components/Notification';
+import {LoadingComp} from '../../../components/LoadingComp';
+import useSubjectReviews from '../hooks/useSubjectReviewsTB';
 import {useMutation, useQueryClient} from 'react-query'
 import axios from 'axios'
-import * as cons from '../../Helper/Cons.jsx'
+import * as cons from '../../../Helper/Cons.jsx'
 import Rating from 'react-rating';
-import ReviewSubjectHeading from './ReviewSubjectHeading'
+import ReviewSubjectHeading from './ReviewSubjectHeadingTB'
 import { useToasts } from 'react-toast-notifications';
-import Breadcrumb from './SeoBreadCrumbSubject';
+import Breadcrumb from './SeoBreadCrumbSubjectTB';
 import DatePicker from "react-datepicker";
-import {s3Path} from '../../Helper/ApiUrl'
+import {s3Path} from '../../../Helper/ApiUrl'
 
 export default function UpdateSubjectStudentReviewsTB() {
 
@@ -110,7 +110,7 @@ return (
 <div className="main-area-all">
 <div className="dashboard_main-container">
 <div className="dash-main-head">
-    <h2>Manage Textbook Subject</h2>
+    <h2>Manage Textbook Subject Reviews</h2>
 </div>
 {error && <Notification>{error.message}</Notification>}
 {isLoading && <LoadingComp />}

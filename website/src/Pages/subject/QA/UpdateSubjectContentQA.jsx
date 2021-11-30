@@ -1,20 +1,20 @@
 import React, {useContext, useState, useEffect, useRef} from 'react'
-import '../mainDash.css';
+import '../../mainDash.css';
 import {  useParams, Link, useHistory  } from "react-router-dom";
-import {AuthContext} from '../../context/AuthContext';
-import {Notification} from '../../components/Notification';
-import {LoadingComp} from '../../components/LoadingComp';
-import useSubjectContent from './hooks/useSubjectContent';
+import {AuthContext} from '../../../context/AuthContext';
+import {Notification} from '../../../components/Notification';
+import {LoadingComp} from '../../../components/LoadingComp';
+import useSubjectContent from '../hooks/useSubjectContentTB';
 import {useMutation, useQueryClient} from 'react-query'
 import axios from 'axios'
-import * as cons from '../../Helper/Cons.jsx'
+import * as cons from '../../../Helper/Cons.jsx'
 
 import { useToasts } from 'react-toast-notifications';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from 'ckeditor5-classic-with-mathtype';
-import Breadcrumb from './SeoBreadCrumbSubject';
+import Breadcrumb from './SeoBreadCrumbSubjectQA';
 
-export default function UpdateSubjectContentTB() {
+export default function UpdateSubjectContentQA() {
     const {data: content, isLoading} = useSubjectContent();
     const history = useHistory();
     const params = useParams();
@@ -112,7 +112,7 @@ export default function UpdateSubjectContentTB() {
     }
 
     const mutation = useMutation(formData => {
-            return axios.patch(`${API_URL}subject/save-content/${params.id}`, formData, options)
+            return axios.patch(`${API_URL}subject/save-content-qa/${params.id}`, formData, options)
         },{
         onSuccess: () => {
             setLoading(false);
@@ -128,7 +128,7 @@ export default function UpdateSubjectContentTB() {
             <div className="main-area-all">
             <div className="dashboard_main-container">
             <div className="dash-main-head">
-                <h2>Manage Textbook Subject</h2>
+                <h2>Manage QA Subject Content</h2>
             </div>
             {error && <Notification>{error.message}</Notification>}
             {/* {isLoading && <LoadingComp />} */}
@@ -155,7 +155,7 @@ export default function UpdateSubjectContentTB() {
                                             <label>Banner Heading</label>
                                             <input 
                                                 ref={bannerHeading}
-                                                defaultValue={content && content.content.bannerHeading}
+                                                defaultValue={content && content.qa_content && content.qa_content.bannerHeading}
                                                 onChange={e => setFormData({...formData, bannerHeading: e.target.value})}
                                                 className="form-control" autoComplete="off" placeholder="Enter Banner Heading"/>
                                         </div>
@@ -163,7 +163,7 @@ export default function UpdateSubjectContentTB() {
                                             <label>Ask An Expert Text</label>
                                             <input 
                                                 ref={askAnExpertText}
-                                                defaultValue={content && content.content.askAnExpertText}
+                                                defaultValue={content && content.qa_content && content.qa_content.askAnExpertText}
                                                 onChange={e => setFormData({...formData, askAnExpertText: e.target.value})}
                                                 className="form-control" autoComplete="off" placeholder="Enter ask an expert text"/>
                                         </div>
@@ -171,7 +171,7 @@ export default function UpdateSubjectContentTB() {
                                             <label>College Text Books Text</label>
                                             <input 
                                                 ref={collegeTextBooks}
-                                                defaultValue={content && content.content.collegeTextBooks}
+                                                defaultValue={content && content.qa_content && content.qa_content.collegeTextBooks}
                                                 onChange={e => setFormData({...formData, collegeTextBooks: e.target.value})}
                                                 className="form-control" autoComplete="off" placeholder="Enter college text books text"/>
                                         </div>
@@ -181,7 +181,7 @@ export default function UpdateSubjectContentTB() {
                                             <label>Question Heading</label>
                                             <input 
                                                 ref={questionHeading}
-                                                defaultValue={content && content.content.question.heading}
+                                                defaultValue={content && content.qa_content && content.qa_content.question.heading}
                                                 onChange={e => {
                                                     setQuestion({...question, heading : e.target.value})
                                                     setFormData({...formData, question: question})
@@ -192,7 +192,7 @@ export default function UpdateSubjectContentTB() {
                                             <label>Question Content</label>
                                             <CKEditor
                                                 ref={questionContent}
-                                                    data={content && content.content.question.content ? content.content.question.content : ''}
+                                                    data={content && content.qa_content && content.qa_content.question.content ? content.qa_content.question.content : ''}
                                                     editor={ ClassicEditor }
                                                     config={{
                                                         toolbar: {
@@ -225,7 +225,7 @@ export default function UpdateSubjectContentTB() {
                                             <label>Answer Heading</label>
                                             <input 
                                                 ref={answerHeading}
-                                                defaultValue={content && content.content.answer.heading}
+                                                defaultValue={content && content.qa_content && content.qa_content.answer.heading}
                                                 onChange={e => {
                                                     setAnswer({...answer, heading : e.target.value})
                                                     setFormData({...formData, answer: answer})
@@ -257,7 +257,7 @@ export default function UpdateSubjectContentTB() {
                                                             ]
                                                         },
                                                     }}
-                                                    data={content && content.content.answer.content ? content.content.answer.content : ''}
+                                                    data={content && content.qa_content && content.qa_content.answer.content ? content.qa_content.answer.content : ''}
                                                     onChange={ ( event, editor ) => {
                                                         const data = editor.getData();
                                                         setAnswer({...answer, content : data})
@@ -274,7 +274,7 @@ export default function UpdateSubjectContentTB() {
                                             <label>Feature Main Heading</label>
                                             <input 
                                                 ref={featureMainHeading}
-                                                defaultValue={content && content.content.feature.mainHeading}
+                                                defaultValue={content && content.qa_content && content.qa_content.feature.mainHeading}
                                                 onChange={e => {
                                                     setFeature({...feature, mainHeading : e.target.value})
                                                     setFormData({...formData, feature: feature})
@@ -285,7 +285,7 @@ export default function UpdateSubjectContentTB() {
                                             <label>Feature Content</label>
                                             <input 
                                                 ref={featureMainContent}
-                                                defaultValue={content && content.content.feature.mainContent}
+                                                defaultValue={content && content.qa_content && content.qa_content.feature.mainContent}
                                                 onChange={e => {
                                                     setFeature({...feature, mainContent : e.target.value})
                                                     setFormData({...formData, feature: feature})
@@ -297,7 +297,7 @@ export default function UpdateSubjectContentTB() {
                                             <label>Service Heading</label>
                                             <input 
                                                 ref={featureServiceHeading}
-                                                defaultValue={content && content.content.feature.serviceHeading}
+                                                defaultValue={content && content.qa_content && content.qa_content.feature.serviceHeading}
                                                 onChange={e => {
                                                     setFeature({...feature, serviceHeading : e.target.value})
                                                     setFormData({...formData, feature: feature})
@@ -308,7 +308,7 @@ export default function UpdateSubjectContentTB() {
                                             <label>Service Content</label>
                                             <input 
                                                 ref={featureServiceContent}
-                                                defaultValue={content && content.content.feature.serviceContent}
+                                                defaultValue={content  && content.qa_content && content.qa_content.feature.serviceContent}
                                                 onChange={e => {
                                                     setFeature({...feature, serviceContent : e.target.value})
                                                     setFormData({...formData, feature: feature})
@@ -322,7 +322,7 @@ export default function UpdateSubjectContentTB() {
                                                 <label>Service Sub Service Heading 1</label>
                                                 <input 
                                                     ref={featureSubServiceHeading1}
-                                                    defaultValue={content && content.content.feature.subServiceHeading1}
+                                                    defaultValue={content && content.qa_content && content.qa_content.feature.subServiceHeading1}
                                                     onChange={e => {
                                                         setFeature({...feature, subServiceHeading1 : e.target.value})
                                                         setFormData({...formData, feature: feature})
@@ -333,7 +333,7 @@ export default function UpdateSubjectContentTB() {
                                                 <label>Service Sub Service Content 1</label>
                                                 <input 
                                                     ref={featureSubServiceContent1}
-                                                    defaultValue={content && content.content.feature.subServiceContent1}
+                                                    defaultValue={content && content.qa_content && content.qa_content.feature.subServiceContent1}
                                                     onChange={e => {
                                                         setFeature({...feature, subServiceContent1 : e.target.value})
                                                         setFormData({...formData, feature: feature})
@@ -344,7 +344,7 @@ export default function UpdateSubjectContentTB() {
                                                 <label>Service Sub Service Heading 2</label>
                                                 <input 
                                                     ref={featureSubServiceHeading2}
-                                                    defaultValue={content && content.content.feature.subServiceHeading2}
+                                                    defaultValue={content && content.qa_content && content.qa_content.feature.subServiceHeading2}
                                                     onChange={e => {
                                                         setFeature({...feature, subServiceHeading2 : e.target.value})
                                                         setFormData({...formData, feature: feature})
@@ -355,7 +355,7 @@ export default function UpdateSubjectContentTB() {
                                                 <label>Service Sub Service Content 2</label>
                                                 <input 
                                                     ref={featureSubServiceContent2}
-                                                    defaultValue={content && content.content.feature.subServiceContent2}
+                                                    defaultValue={content  && content.qa_content && content.qa_content.feature.subServiceContent2}
                                                     onChange={e => {
                                                         setFeature({...feature, subServiceContent2 : e.target.value})
                                                         setFormData({...formData, feature: feature})
@@ -368,7 +368,7 @@ export default function UpdateSubjectContentTB() {
                                                 <label>Service Sub Service Heading 3</label>
                                                 <input 
                                                     ref={featureSubServiceHeading3}
-                                                    defaultValue={content && content.content.feature.subServiceHeading3}
+                                                    defaultValue={content && content.qa_content && content.qa_content.feature.subServiceHeading3}
                                                     onChange={e => {
                                                         setFeature({...feature, subServiceHeading3 : e.target.value})
                                                         setFormData({...formData, feature: feature})
@@ -379,7 +379,7 @@ export default function UpdateSubjectContentTB() {
                                                 <label>Service Sub Service Content 3</label>
                                                 <input 
                                                     ref={featureSubServiceContent3}
-                                                    defaultValue={content && content.content.feature.subServiceContent3}
+                                                    defaultValue={content && content.qa_content && content.qa_content.feature.subServiceContent3}
                                                     onChange={e => {
                                                         setFeature({...feature, subServiceContent3 : e.target.value})
                                                         setFormData({...formData, feature: feature})
@@ -390,7 +390,7 @@ export default function UpdateSubjectContentTB() {
                                                 <label>Service Sub Service Heading 4</label>
                                                 <input 
                                                     ref={featureSubServiceHeading4}
-                                                    defaultValue={content && content.content.feature.subServiceHeading4}
+                                                    defaultValue={content && content.qa_content && content.qa_content.feature.subServiceHeading4}
                                                     onChange={e => {
                                                         setFeature({...feature, subServiceHeading4 : e.target.value})
                                                         setFormData({...formData, feature: feature})
@@ -401,7 +401,7 @@ export default function UpdateSubjectContentTB() {
                                                 <label>Service Sub Service Content 4</label>
                                                 <input 
                                                     ref={featureSubServiceContent4}
-                                                    defaultValue={content && content.content.feature.subServiceContent4}
+                                                    defaultValue={content && content.qa_content && content.qa_content.feature.subServiceContent4}
                                                     onChange={e => {
                                                         setFeature({...feature, subServiceContent4 : e.target.value})
                                                         setFormData({...formData, feature: feature})

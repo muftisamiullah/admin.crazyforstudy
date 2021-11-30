@@ -1,21 +1,21 @@
 import React, {useContext, useState, useEffect, useRef} from 'react'
-import '../mainDash.css';
+import '../../mainDash.css';
 import {  useParams, Link, useHistory  } from "react-router-dom";
-import {AuthContext} from '../../context/AuthContext';
-import {Notification} from '../../components/Notification';
-import {LoadingComp} from '../../components/LoadingComp';
-import useQuestions from './hooks/useQuestions';
-import useRelatedQuestions from './hooks/useRelatedQuestions';
+import {AuthContext} from '../../../context/AuthContext';
+import {Notification} from '../../../components/Notification';
+import {LoadingComp} from '../../../components/LoadingComp';
+import useQuestions from '../hooks/useQuestionsTB';
+import useRelatedQuestions from '../hooks/useRelatedQuestionsTB';
 import {useMutation, useQueryClient} from 'react-query'
 import axios from 'axios'
-import * as cons from '../../Helper/Cons.jsx'
-import * as utils from '../../utils/MakeSlug'
+import * as cons from '../../../Helper/Cons.jsx'
+import * as utils from '../../../utils/MakeSlug'
 
 import { useToasts } from 'react-toast-notifications';
-import Breadcrumb from './SeoBreadCrumbSubSubject';
-import {htmlDecode} from '../../utils/MakeSlug'
+import Breadcrumb from './SeoBreadCrumbSubSubjectTB';
+import {htmlDecode} from '../../../utils/MakeSlug'
 
-export default function UpdateSubSubjectRelatedQuestions() {  
+export default function UpdateSubSubjectRelatedQuestionsTB() {  
 
 const history = useHistory();
 const params = useParams();
@@ -118,7 +118,7 @@ return (
 <div className="main-area-all">
 <div className="dashboard_main-container">
 <div className="dash-main-head">
-    <h2>Similar Questions: </h2>
+    <h2>Manage Textbook Sub Subject Similar Questions: </h2>
 </div>
 {error && <Notification>{error.message}</Notification>}
 {isLoading && <LoadingComp />}

@@ -1,16 +1,16 @@
 import React, {useContext,useState, useEffect} from 'react'
-import '../mainDash.css';
+import '../../mainDash.css';
 import {  useHistory, Link, useParams  } from "react-router-dom";
 import { Button,Form } from 'react-bootstrap'
-import * as api from '../../Helper/ApiHelper.jsx';
-import useAxios from '../../hooks/useAxios'
-import {AuthContext} from '../../context/AuthContext';
-import {Notification} from '../../components/Notification';
-import {ErrorContext} from '../../context/ErrorContext';
-import {SubjectContext} from '../../context/SubjectContext';
-import Breadcrumb from './SeoBreadCrumbSubSubject';
+import * as api from '../../../Helper/ApiHelper.jsx';
+import useAxios from '../../../hooks/useAxios'
+import {AuthContext} from '../../../context/AuthContext';
+import {Notification} from '../../../components/Notification';
+import {ErrorContext} from '../../../context/ErrorContext';
+import {SubjectContext} from '../../../context/SubjectContext';
+import Breadcrumb from './SeoBreadCrumbSubSubjectTB';
 
-export default function CreateSubject() {
+export default function UpdateSubSubjectSeoTB() {
     const history = useHistory();
     const params = useParams();
     const {state} = useContext(AuthContext);
@@ -88,7 +88,7 @@ return (
         <div className="main-area-all">
             <div className="dashboard_main-container">
                 <div className="dash-main-head">
-                    <h2>Manage Text Sub Subject</h2>
+                    <h2>Manage Textbook Sub Subject Seo</h2>
                 </div>
                 <div className="dash-con-heading">
                     <div className="col-md-12 pl-0">

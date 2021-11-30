@@ -54,6 +54,14 @@ const SubSubjectSchema = new mongoose.Schema({
   },
   reviews: [ReviewsSchema],
   relatedQuestions: [RelatedQuestionsSchema],
+  qa_content: {
+    bannerText: { type: String },
+    questionHeading: { type: String },
+    questionSubHeading: { type: String },
+    aboutHeading: { type: String },
+    aboutContent: { type: String },   
+  },
+  qa_reviews: [ReviewsSchema],
   created_at: {
     type: Date,
     default: Date.now,

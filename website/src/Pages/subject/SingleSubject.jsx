@@ -13,7 +13,7 @@ function SingleSubject({sub}) {
     }
 
     return (
-        <div className="subject-card" key={sub._id} id={`card-${sub._id}`}>
+        <div className="subject-card" key={sub._id} id={`card-${sub._id}`} style={{ width: '50%' }}>
         <div className="subject-card-body">
             <div className="admin-name"> 
                 <div className="name-label">

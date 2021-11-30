@@ -1,16 +1,16 @@
 import React, {useContext,useState, useEffect} from 'react'
-import '../mainDash.css';
+import '../../mainDash.css';
 import {  useHistory, Link, useParams  } from "react-router-dom";
 import { Button,Form } from 'react-bootstrap'
-import * as api from '../../Helper/ApiHelper.jsx';
-import useAxios from '../../hooks/useAxios'
-import {AuthContext} from '../../context/AuthContext';
-import {Notification} from '../../components/Notification';
-import {ErrorContext} from '../../context/ErrorContext';
-import {SubjectContext} from '../../context/SubjectContext';
-import Breadcrumb from './SeoBreadCrumbSubject';
+import * as api from '../../../Helper/ApiHelper.jsx';
+import useAxios from '../../../hooks/useAxios';
+import {AuthContext} from '../../../context/AuthContext';
+import {Notification} from '../../../components/Notification';
+import {ErrorContext} from '../../../context/ErrorContext';
+import {SubjectContext} from '../../../context/SubjectContext';
+import Breadcrumb from './SeoBreadCrumbSubSubjectQA';
 
-export default function CreateSubject() {
+export default function UpdateSubSubjectSeoQA() {
     const history = useHistory();
     const params = useParams();
     const {state} = useContext(AuthContext);
@@ -22,14 +22,15 @@ export default function CreateSubject() {
     async  function handleSubmit(e){
         e.preventDefault();
         let response = null;
+        console.log(formData);
         if(formData == ''){
             errorDispatch({type: 'SET_ERROR', payload: "You haven't change anything"});
         }else{
             if(params.id){
-                response = await api.patch(`subject/update-textbook/${params.id}`,formData);
+                response = await api.patch(`sub-subject/update-QA/${params.id}`,formData);
             }
             errorDispatch({type: 'SET_SUCCESS', payload: response.message});
-            history.push('/subject');
+            history.push('/sub-subject');
         }
     }
     async function handelChange(e){
@@ -38,7 +39,7 @@ export default function CreateSubject() {
         setFormData({...formData, [e.target.name]: subject});
     }
     const {response} = useAxios({
-        method: 'get', url: `subject/view/${params.id}`
+        method: 'get', url: `sub-subject/view/${params.id}`
     });
     
     const [metatitle, setMetaTitle] = useState('');
@@ -46,13 +47,12 @@ export default function CreateSubject() {
     const [metaKeywords, setMetaKeywords] = useState('');
     
     useEffect( () => {
-        if(response && response.data !== null){
-            const subRes = response.data.textbook_seo_details;
+        if(response !== null){
+            console.log(response.data)
+            const subRes = response.data.qa_seo_details;
             sDispatch({type: 'SET_SUBJECT', payload: subRes});
             if(sState){
-
                 if(subRes){
-                    
                         setMetaTitle(subRes.meta_title)
                         setMetaDescription(subRes.meta_description)
                         setMetaKeywords(subRes.meta_keywords)
@@ -86,7 +86,7 @@ return (
         <div className="main-area-all">
             <div className="dashboard_main-container">
                 <div className="dash-main-head">
-                    <h2>Manage Textbook Subject</h2>
+                    <h2>Manage QA Sub Subject Seo</h2>
                 </div>
                 <div className="dash-con-heading">
                     <div className="col-md-12 pl-0">
@@ -98,7 +98,11 @@ return (
                 </div>
                 <div className="dash-cont-start">
                     <div className="org-main-area">
-                        
+                        <div className="col-md-3 pl-0">
+                        <Link to={`/subject`} className="btn btn-sm dark">
+                            <span className="fa fa-arrow-left text-success mr-2"></span>
+                        </Link>
+                        </div>
                         <div className="col-md-12 no-gutter p-0 mt-2">
                         {errorState.error && ( 
                             <Notification>{errorState.error}</Notification>
@@ -107,8 +111,7 @@ return (
                         {errorState.success && ( 
                             <Notification>{errorState.success}</Notification>
                         )}
-                        <h6> <span className="fa fa-globe"></span> Manage SEO</h6>
-                        <hr />
+
                         <Form method="POST" className="col-md-6 p-0">
 
                             <Form.Group>    

@@ -3,13 +3,13 @@ import {useHistory, useParams} from 'react-router-dom'
 import Switch from "react-switch";
 
 import { Button } from 'react-bootstrap'
-import {AuthContext} from '../../context/AuthContext';
+import {AuthContext} from '../../../context/AuthContext';
 import axios from 'axios'
-import * as cons from '../../Helper/Cons.jsx'
+import * as cons from '../../../Helper/Cons.jsx'
 import {useMutation, useQueryClient} from 'react-query'
 import { useToasts } from 'react-toast-notifications';
 
-function ReviewSubjectHeading({review}) {
+function ReviewSubjectHeadingQA({review}) {
     
     const history = useHistory();
     const params = useParams();
@@ -27,6 +27,7 @@ function ReviewSubjectHeading({review}) {
     }else{
         API_URL = cons.LIVE_API_URL;
     }
+
     const options = {
         headers: {
             'Content-Type': 'application/json',
@@ -36,39 +37,20 @@ function ReviewSubjectHeading({review}) {
 
     const queryClient = useQueryClient();
 
-    const mutation = useMutation(formData => {
-        return axios.post(`${API_URL}books/update-review-status`, formData, options)
-    },{
-        onSuccess: () => {
-            queryClient.invalidateQueries('reviews')
-            history.push(`/book-rating-review/${params.isbn}/${params.book_id}`);
-            addToast('Status Updated Successfully', { appearance: 'success',autoDismiss: true });
-            var objDiv = document.getElementById("reviewDiv");
-            objDiv.scrollTop = 0;
-        }
-    });
-
-    // const [checked, setChecked] = useState(false);
-    // const handleChange = async ({review_id,status}) => {
-    //     setChecked(status);
-    //     const formData = {book_id: params.book_id, review_id, status}
-    //     await mutation.mutate(formData);
-    // };
-
     const [loading, setLoading] = useState(false);
     const deleteMutation = useMutation(formData => {
-        return axios.delete(`${API_URL}sub-subject/delete-review/${params.id}/${formData.review_id}`, options)
+        return axios.delete(`${API_URL}subject/delete-review-qa/${params.id}/${formData.review_id}`, options)
     },{
         onSuccess: () => {
-            queryClient.invalidateQueries(['reviews',params.id])
+            queryClient.invalidateQueries(['reviews-qa',params.id])
             addToast('Deleted Successfully', { appearance: 'success',autoDismiss: true });
         }
     });
+
     const handleDelete = async (id) => {
         setLoading(true);
         await deleteMutation.mutate({review_id: id});
     }
-
 
     return (
         <div className="subject-card-heading">
@@ -104,4 +86,4 @@ function ReviewSubjectHeading({review}) {
     )
 }
 
-export default ReviewSubjectHeading
+export default ReviewSubjectHeadingQA

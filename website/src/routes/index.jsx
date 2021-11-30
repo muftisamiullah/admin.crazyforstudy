@@ -4,19 +4,24 @@ import Dashboard from '../Pages/Dashboard.jsx'
 import MyProfile from '../Pages/MyProfile.jsx'
 import SubjectList from '../Pages/subject/SubjectList.jsx';
 import CreateSubject from '../Pages/subject/CreateSubject.jsx';
-import UpdateSubjectSeoQA from '../Pages/subject/UpdateSubjectSeoQA.jsx';
-import UpdateSubjectSeoTB from '../Pages/subject/UpdateSubjectSeoTB.jsx';
-import UpdateSubjectStudentReviewsTB from '../Pages/subject/UpdateSubjectStudentReviewsTB.jsx';
-import UpdateSubjectContentTB from '../Pages/subject/UpdateSubjectContentTB.jsx';
+import UpdateSubjectSeoQA from '../Pages/subject/QA/UpdateSubjectSeoQA.jsx';
+import UpdateSubjectSeoTB from '../Pages/subject/TB/UpdateSubjectSeoTB.jsx';
+import UpdateSubjectStudentReviewsTB from '../Pages/subject/TB/UpdateSubjectStudentReviewsTB.jsx';
+import UpdateSubjectStudentReviewsQA from '../Pages/subject/QA/UpdateSubjectStudentReviewsQA.jsx';
+import UpdateSubjectContentTB from '../Pages/subject/TB/UpdateSubjectContentTB.jsx';
+import UpdateSubjectContentQA from '../Pages/subject/QA/UpdateSubjectContentQA.jsx';
 import SubSubjectList from '../Pages/subject/SubSubjectList.jsx';
 import CreateSubSubject from '../Pages/subject/CreateSubSubject.jsx';
 import AllSubSubjectList from '../Pages/subject/AllSubSubjectList.jsx';
 import UploadSubSubject from '../Pages/subject/UploadSubSubject.jsx';
-import UpdateSubSubjectSeoQA from '../Pages/subject/UpdateSubSubjectSeoQA.jsx';
-import UpdateSubSubjectSeoTB from '../Pages/subject/UpdateSubSubjectSeoTB.jsx';
-import UpdateSubSubjectStudentReviewsTB from '../Pages/subject/UpdateSubSubjectStudentReviewsTB.jsx';
-import UpdateSubSubjectContentTB from '../Pages/subject/UpdateSubSubjectContentTB.jsx';
-import UpdateSubSubjectRelatedQuestions from '../Pages/subject/UpdateSubSubjectRelatedQuestions.jsx';
+import UpdateSubSubjectSeoQA from '../Pages/subject/QA/UpdateSubSubjectSeoQA.jsx';
+import UpdateSubSubjectSeoTB from '../Pages/subject/TB/UpdateSubSubjectSeoTB.jsx';
+import UpdateSubSubjectStudentReviewsTB from '../Pages/subject/TB/UpdateSubSubjectStudentReviewsTB.jsx';
+import UpdateSubSubjectContentTB from '../Pages/subject/TB/UpdateSubSubjectContentTB.jsx';
+import UpdateSubSubjectRelatedQuestionsTB from '../Pages/subject/TB/UpdateSubSubjectRelatedQuestionsTB.jsx';
+import UpdateSubSubjectStudentReviewsQA from '../Pages/subject/QA/UpdateSubSubjectStudentReviewsQA.jsx';
+import UpdateSubSubjectRelatedQuestionsQA from '../Pages/subject/QA/UpdateSubSubjectRelatedQuestionsQA.jsx';
+import UpdateSubSubjectContentQA from '../Pages/subject/QA/UpdateSubSubjectContentQA.jsx';
 import AllBookList from '../Pages/Books/AllBookList.jsx';
 import UploadBooks from '../Pages/Books/UploadBooks.jsx';
 import UploadBulkBooks from '../Pages/Books/UploadBulkBooks.jsx';
@@ -117,6 +122,14 @@ export const privateRoutes = [
         component: UpdateSubjectSeoQA
     },
     {
+        path: '/subject-student-reviews/qa/update/:id',
+        component: UpdateSubjectStudentReviewsQA
+    },
+    {
+        path: '/subject-content/qa/update/:id',
+        component: UpdateSubjectContentQA
+    },
+    {
         path: '/subject-seo/textbook/update/:id',
         component: UpdateSubjectSeoTB
     },
@@ -145,6 +158,18 @@ export const privateRoutes = [
         component: UpdateSubSubjectSeoQA
     },
     {
+        path: '/sub-subject-student-reviews/qa/update/:id',
+        component: UpdateSubSubjectStudentReviewsQA
+    },
+    {
+        path: '/sub-subject-content/qa/update/:id',
+        component: UpdateSubSubjectContentQA
+    },
+    {
+        path: '/sub-subject-related-questions/qa/update/:id',
+        component: UpdateSubSubjectRelatedQuestionsQA
+    },
+    {
         path: '/sub-subject-seo/textbook/update/:id',
         component: UpdateSubSubjectSeoTB
     },
@@ -158,7 +183,7 @@ export const privateRoutes = [
     },
     {
         path: '/sub-subject-related-questions/textbook/update/:id',
-        component: UpdateSubSubjectRelatedQuestions
+        component: UpdateSubSubjectRelatedQuestionsTB
     },
     {
         path: '/sub-subject/create',
