@@ -38,7 +38,7 @@ function ReviewSubjectHeadingTB({review}) {
 
     const [loading, setLoading] = useState(false);
     const deleteMutation = useMutation(formData => {
-        return axios.delete(`${API_URL}subject/delete-review/${params.id}/${formData.review_id}`, options)
+        return axios.delete(`${API_URL}sub-subject/delete-review/${params.id}/${formData.review_id}`, options)
     },{
         onSuccess: () => {
             queryClient.invalidateQueries(['reviews',params.id])

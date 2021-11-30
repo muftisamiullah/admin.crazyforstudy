@@ -80,7 +80,6 @@ const uploadSubSubject = async (req, res) => {
           });
         });
         otherFunction(res, FinalData, function () {
-          console.log(req.file.path);
           fs.unlinkSync(req.file.path);
         });
       });
@@ -283,7 +282,6 @@ const deleteReview = async (req, res) => {
         .updateOne(
           { _id: req.params.id, "reviews._id": req.params.reviewId },
           { $pull:  {"reviews":{"_id": req.params.reviewId } } },
-          
         )
         .then((response) => {
 
@@ -370,7 +368,6 @@ const updateSubSubject = async (req, res) => {
 };
 
 const updateQASeoSubSubject = async (req, res) => {
-  console.log("req: " + JSON.stringify(req.body));
   try {
     await SubSubject.findByIdAndUpdate(
       { _id: req.params.id },
@@ -395,7 +392,6 @@ const updateQASeoSubSubject = async (req, res) => {
 };
 
 const updateTextBookSeoSubSubject = async (req, res) => {
-  console.log("req: " + JSON.stringify(req.body));
   try {
     await SubSubject.findByIdAndUpdate(
       { _id: req.params.id },

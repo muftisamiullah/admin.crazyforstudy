@@ -304,7 +304,6 @@ const deleteReview = async (req, res) => {
       .updateOne(
         { _id: req.params.id, "reviews._id": req.params.reviewId },
         { $pull:  {"reviews":{"_id": req.params.reviewId } } },
-        
       )
       .then((response) => {
         return res.status(202).json({

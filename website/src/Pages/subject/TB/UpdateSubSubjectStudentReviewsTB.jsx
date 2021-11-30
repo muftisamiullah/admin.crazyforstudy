@@ -9,7 +9,7 @@ import {useMutation, useQueryClient} from 'react-query'
 import axios from 'axios'
 import * as cons from '../../../Helper/Cons.jsx'
 import Rating from 'react-rating';
-import ReviewSubjectHeading from './ReviewSubjectHeadingTB'
+import ReviewSubjectHeadingTB from './ReviewSubjectHeadingTB'
 import { useToasts } from 'react-toast-notifications';
 import Breadcrumb from './SeoBreadCrumbSubSubjectTB';
 import DatePicker from "react-datepicker";
@@ -269,7 +269,7 @@ return (
 
                                 </div> 
                                 <hr className="mt-1 mb-2"/>
-                                    <ReviewSubjectHeading review={review} />
+                                    <ReviewSubjectHeadingTB review={review} />
                             </div>
                         )
                     })}
