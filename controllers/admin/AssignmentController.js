@@ -1,5 +1,4 @@
 const Assignment = require('../../models/admin/Assignment');
-const Tutor = require('../../models/tutor/Tutor');
 const Notify = require('../../models/admin/Notification.js');
 const Student = require('../../models/student/Student');
 const Admin = require('../../models/admin/Admin');
@@ -102,8 +101,12 @@ const updateSingleAssignment = async (req, res) => {
         let update = req.body
         update.assignment_status = "answered"
         update.updated_at = Date.now()
-        update.solutionHalf = req.files.file1 ? req.files.file1[0].filename : '';
-        update.solutionFull = req.files.file2 ? req.files.file2[0].filename : '' 
+        if(req.files.file1){
+            update.solutionHalf = req.files.file1 && req.files.file1[0].filename;
+        }
+        if(req.files.file2){
+            update.solutionFull = req.files.file2 && req.files.file2[0].filename; 
+        }   
         delete update.user_Id;
         const response = await Assignment.findByIdAndUpdate({ _id: req.params.id }, update);
         if(response){
@@ -119,9 +122,9 @@ const updateSingleAssignment = async (req, res) => {
             }
             var localDate = new Date(response.deadline_date);
             var localCDate = new Date(response.created_at);
-            newDeadlineDate = localDate.toLocaleString();
-            newCreatedAtDate = localCDate.toLocaleString();
-
+            newDeadlineDate = localDate.toLocaleString(undefined, { timeZone: 'Asia/Kolkata'} );
+            newCreatedAtDate = localCDate.toLocaleString(undefined, { timeZone: 'Asia/Kolkata'} );
+            
             const d = await Notify.findOneAndUpdate({ data_Id: req.params.id, type:'ASSIGNMENT' }, notifyData);
             // const noti = new Notify(notifyData);
             // const dt = await noti.save();

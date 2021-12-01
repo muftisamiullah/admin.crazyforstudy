@@ -2,6 +2,7 @@ const Sub_Subject = require('../../models/admin/SubSubject.js');
 const Subject = require('../../models/admin/Subject.js');
 const ChildSubjects = require('../../models/admin/ChieldSubject.js');
 const Questions = require('../../models/admin/Question');
+const Question = require('../../models/admin/Question');
 
 const SubSubjects = async(req, res) => {
     try {
@@ -141,6 +142,8 @@ const GetRandomThreeQuestions = async (req, res) => {
         });
     }
 }
+
+
 
 module.exports = {
     AllSubjects,

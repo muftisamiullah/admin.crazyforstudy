@@ -1,7 +1,7 @@
 import React from 'react'
 import {useHistory, useParams} from 'react-router-dom'
 // import Answers from './Answers'
-import {htmlDecode, calculateTime} from '../../../utils/MakeSlug'
+import {htmlDecode, calculateTime,isHTML} from '../../../utils/MakeSlug'
 // import '../Chapters/math.css';
 // import HighlighterComponent from '../../components/HighlighterComponent';
 
@@ -31,7 +31,7 @@ function SingleQuestion({problem, search}) {
         return 0;
     });
     //console.log(sortRequested[0].answerRequestDate, sortRequested.length);
-    var utcDate =  sortRequested[0].answerRequestDate;// ISO-8601 formatted date returned from server
+    var utcDate =  sortRequested[0]?.answerRequestDate;// ISO-8601 formatted date returned from server
     console.log(utcDate,);
     var localDate = new Date(utcDate);
     return (
@@ -59,8 +59,12 @@ function SingleQuestion({problem, search}) {
         {problem?.question != '' &&  (
 
             <div className="card-body" style={{ padding: '0px 0px 10px 0px' }}>
-            <hr style={{ padding: '0px', margin: '5px 0px' }}/>            
-            <div className="card-text question" id="high" dangerouslySetInnerHTML={{ __html: htmlDecode(problem?.question)  }} />
+            <hr style={{ padding: '0px', margin: '5px 0px' }}/> 
+            {isHTML(problem?.question)
+                ?            <div className="card-text question" id="high" dangerouslySetInnerHTML={{ __html: (problem?.question)  }} />
+
+                :            <div className="card-text question" id="high" dangerouslySetInnerHTML={{ __html: htmlDecode(problem?.question)  }} />
+            }           
             {problem?.image && (
                 <div style={{ height: '130px', overflow: 'hidden', marginTop: '10px' }}>
                     <img src={problem?.image} />

@@ -23,7 +23,6 @@ export default function ReportList() {
     const {data, isLoading:isLoadingBooks, error} = useReport();
 
     const setD = (date) => {
-
         setStartDate(date)
         history.push(`/solutions-report/${params.question_type}/${params.filter}/${date}`);
     }

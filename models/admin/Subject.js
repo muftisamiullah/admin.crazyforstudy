@@ -58,7 +58,34 @@ const SubjectSchema = new mongoose.Schema(
       },
     },
     reviews: [ReviewsSchema],
-
+    qa_content:{
+      bannerHeading: { type: String },
+      askAnExpertText: { type: String },
+      collegeTextBooks: { type: String },
+      question: {
+        heading: { type: String },
+        content: { type: String },
+      },
+      answer: {
+        heading: { type: String },
+        content: { type: String },        
+      },
+      feature: {
+        mainHeading: { type: String },
+        mainContent: { type: String },
+        serviceHeading: { type: String },
+        serviceContent: { type: String },
+        subServiceHeading1: { type: String },
+        subServiceContent1: { type: String },
+        subServiceHeading2: { type: String },
+        subServiceContent2: { type: String },
+        subServiceHeading3: { type: String },
+        subServiceContent3: { type: String },
+        subServiceHeading4: { type: String },
+        subServiceContent4: { type: String },
+      },
+    },
+    qa_reviews : [ReviewsSchema],
     created_at: {
       type: Date,
       default: Date.now,

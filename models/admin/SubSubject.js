@@ -11,7 +11,18 @@ const ReviewsSchema = new mongoose.Schema({
       type: Date,
       default: Date.now,
     },
-  });
+});
+
+const RelatedQuestionsSchema = new mongoose.Schema({
+  question_id: 'string',
+  question: 'string',
+  shortanswer: {
+    type: String,
+  },
+  completeanswer: {
+    type: String,
+  },
+});
 
 const SubSubjectSchema = new mongoose.Schema({
   subject_id: {
@@ -42,6 +53,15 @@ const SubSubjectSchema = new mongoose.Schema({
     aboutContent: { type: String },   
   },
   reviews: [ReviewsSchema],
+  relatedQuestions: [RelatedQuestionsSchema],
+  qa_content: {
+    bannerText: { type: String },
+    questionHeading: { type: String },
+    questionSubHeading: { type: String },
+    aboutHeading: { type: String },
+    aboutContent: { type: String },   
+  },
+  qa_reviews: [ReviewsSchema],
   created_at: {
     type: Date,
     default: Date.now,

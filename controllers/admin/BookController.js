@@ -786,6 +786,7 @@ const relatedBooks = async(req, res) => {
         });
     }
 }
+
 const smimilarBooks = async(req, res) => {
     try {
         const SimilarBooks = await Book.findOne({_id: `${req.params.book_id}`},{similarBooks: 1,_id: 0})

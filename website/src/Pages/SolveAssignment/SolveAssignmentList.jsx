@@ -133,7 +133,7 @@ export default function SolveAssignmentList() {
                             <div className="subject-main-container pl-0 pt-0 pr-0 pb-0">    
                                 <h3>{params.filter != "undefined" && params.filter} assignment: </h3>  
                                 <div className="clearfix"></div>
-                                {data && data.data.assignment.map(problem => {
+                                {data && data.data.map(problem => {
                                     return (
                                         <SingleQuestion key={problem._id} problem={problem}/>
                                     )

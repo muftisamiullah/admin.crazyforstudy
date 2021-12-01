@@ -98,6 +98,31 @@ const SaveContent = async (req, res) => {
   }
 };
 
+const SaveContentQA = async (req, res) => {
+  try {
+    await subject
+      .findByIdAndUpdate(
+        { _id: req.params.id },
+        { $set: { qa_content: req.body } }
+      )
+      .then((response) => {
+        return res.status(202).json({
+          message: "Content, Successfully Saved",
+        });
+      })
+      .catch((error) => {
+        return res.status(500).json({
+          message: "Error Found",
+          errors: error.message,
+        });
+      });
+  } catch (error) {
+    res.status(409).json({
+      message: error.message,
+    });
+  }
+};
+
 const getContent = async (req, res) => {
   try {
     await subject
@@ -123,7 +148,6 @@ const getContent = async (req, res) => {
 
 const SaveReviews = async (req, res) => {
   try {
-    
     req.body.img_path = req.file && req.file.filename ? req.file.filename : ''
     const item = await subject.findById(req.params.id);
     if (item && item.reviews) {
@@ -155,13 +179,74 @@ const SaveReviews = async (req, res) => {
   }
 };
 
+const SaveReviewsQA = async (req, res) => {
+  try {
+    req.body.img_path = req.file && req.file.filename ? req.file.filename : ''
+    const item = await subject.findById(req.params.id);
+    if (item && item.qa_reviews) {
+      if (item.qa_reviews.length < 5) {
+        item.qa_reviews.push(req.body);
+      } else {
+        return res.status(400).json({
+          message: "Can not add more reviews",
+          errors: "Error",
+        });
+      }
+
+      await item.save().then((result) => {
+        res.status(202).json({
+          message: "Review saved successfully!",
+          data: req.body,
+        });
+      });
+    } else {
+      return res.status(500).json({
+        message: "Could not found record",
+        errors: "Error",
+      });
+    }
+  } catch (error) {
+    res.status(409).json({
+      message: error.message,
+    });
+  }
+};
+
 const getReview = async (req, res) => {
   try {
     console.log(req.params);
     await subject
-      .find(
+      .findOne(
         { _id: req.params.id },
-        { reviews: { $elemMatch: { _id: req.params.reviewId } } }
+        // { reviews: { $elemMatch: { _id: req.params.reviewId } } }
+        { reviews : 1}
+      )
+      .then((response) => {
+        return res.status(202).json({
+          message: "Review Found",
+          data: response,
+        });
+      })
+      .catch((error) => {
+        return res.status(500).json({
+          message: "Error Found",
+          errors: error.message,
+        });
+      });
+  } catch (error) {
+    res.status(409).json({
+      message: error.message,
+    });
+  }
+};
+
+const getReviewQA = async (req, res) => {
+  try {
+    await subject
+      .findOne(
+        { _id: req.params.id },
+        // { reviews: { $elemMatch: { _id: req.params.reviewId } } }
+        { qa_reviews : 1}
       )
       .then((response) => {
         return res.status(202).json({
@@ -219,6 +304,33 @@ const deleteReview = async (req, res) => {
       .updateOne(
         { _id: req.params.id, "reviews._id": req.params.reviewId },
         { $pull:  {"reviews":{"_id": req.params.reviewId } } },
+      )
+      .then((response) => {
+        return res.status(202).json({
+          message: "Review Deleted",
+          data: response,
+        });
+      })
+      .catch((error) => {
+        return res.status(500).json({
+          message: "Error Found",
+          errors: error.message,
+        });
+      });
+  } catch (error) {
+    res.status(409).json({
+      message: error.message,
+    });
+  }
+};
+
+const deleteReviewQA = async (req, res) => {
+  try {
+    
+    await subject
+      .updateOne(
+        { _id: req.params.id, "qa_reviews._id": req.params.reviewId },
+        { $pull:  {"qa_reviews":{"_id": req.params.reviewId } } },
         
       )
       .then((response) => {
@@ -306,6 +418,7 @@ const deleteSubject = async (req, res) => {
     });
   }
 };
+
 const viewSubject = async (req, res) => {
   try {
     const Subject = await subject.findOne({ _id: req.params.id }, { __v: 0 });
@@ -333,5 +446,10 @@ module.exports = {
   SaveReviews,
   updateReview,
   getReview,
-  deleteReview
+  deleteReview,
+  
+  deleteReviewQA,
+  getReviewQA,
+  SaveReviewsQA,
+  SaveContentQA
 };

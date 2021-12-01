@@ -930,28 +930,96 @@ const askTbsSolutionSolved = (book_name, chapter_name, section_name, question, s
     </html>`
 }
 
-const assignmentSubmitUser = (question, subject, sub_subject, date) => {
+const assignmentSubmitUser = (question, subject, sub_subject, dated) => {
     return `<!doctype html>
     <html>
-        <head>
-            <meta charset="utf-8">
-            <title>Yaay! Your Assignment Request has been Submitted!</title>
-        </head>
-        <body>
-            <p>Hello User,</p>
-            <p>We would like to inform you that we have successfully received your Assignment request from subject: <strong>${subject}</strong> and sub_subject: <strong>${sub_subject}</strong>.</p>
-            <p><Here’s a brief about your assignment details - </p>                                                                                                                                     
-            <p><strong>Question: </strong>s${question}</p>
-            <p>If you want to make any changes to any of the provided details, connect with us. </p>
-            <p>You can expect to receive your assignment by <strong> ${date}.</strong></p>
-            <p>Thanks for choosing CFS!</p>
-            <p><strong>With regards,</strong></p>
-            <p><strong>Team Crazy For Study</strong></p>
-        </body>
+       <head>
+          <meta charset="utf-8">
+          <title>Assignment Successfully Submitted!</title>
+       </head>
+       <body>
+          <table width="600" cellspacing="0" cellpadding="0" border="0" align="center" style="border:1px #fff solid">
+             <tbody> 
+                <tr>
+                   <td>
+                      <table width="600" cellspacing="0" cellpadding="0" border="0" style="border:solid 1px #f8d021">
+                         <tbody>
+                            <tr>
+                               <td valign="middle" align="left" colspan="2" style="background:#f8d021;padding:3px 0;border-bottom:#ff6a00 solid 6px"><a style="color:#fff;font-size:20px;font-weight:bold" href="#" target="_blank"> <img width="150" border="0" align="absmiddle" alt="www.crazyforstudy.com" title="https://www.crazyforstudy.com" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/crazyforstudy-logo.png" class="CToWUd" style="visibility:hidden;"></a> </td>
+                            </tr>
+                            <tr>
+                 <td style="height:10px;"></td>
+                 </tr>
+                            <tr>
+                               <td valign="middle" align="left" style="background:#fff;padding:0 10px;font-size:15px;line-height:24px;color:#333;padding:10px; font-size:15px; font-family:Arial,Helvetica,sans-serif;">
+                                  <strong>Dear Student, </strong>
+                                    <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;">Thank you for choosing CFS Assignment Help Service!  </p>
+                                    <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;">We would like to inform you that we have received your assignment. The assignment details are as follows: </p>
+                                    <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Assignment Subject:</strong> ${subject} </p>
+                                    <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Assignment Sub-Subject:</strong> ${sub_subject} </p>
+                                    <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;"><strong>Assignment Question / File:</strong> ${question} </p>
+                                     <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;">If you want to change any of the submitted assignment details, please connect with us at <a href="mailto:support@crazyforstudy.com" target="_blank" style="color:#008cef;text-decoration:none;font-family:Arial,Helvetica,sans-serif;">support@crazyforstudy.com</a>.  </p>  
+                                     <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;">You can expect to receive the assignment by ${dated}. Till then, stay tuned!  </p>
+                                     <p style="margin:10px 0 0 0; font-size:15px; font-family:Arial,Helvetica,sans-serif;">Once again, thanks for choosing CFS! </p>
+                               </td>
+                            </tr>
+                            <tr>
+                               <td>
+                                  <table width="100%">
+                                     <tbody>
+                                        <tr>
+                                           <td valign="bottom" align="left" style="background:#fff;padding:20px 5px 10px 5px;color:#333;font-size:14px; font-weight:bold; font-family:Arial,Helvetica,sans-serif;"> 
+                                           With Warm Regards,<br><br>
+                                            Team Crazy for Study</td>
+                                           <td></td>
+                                           <td></td> 
+                                        </tr>
+                                     </tbody>
+                                  </table>
+                               </td>
+                            </tr>
+                            <tr>
+                               <td>
+                                  <table width="100%" cellspacing="0" cellpadding="0">
+                                     <tbody>
+                                     <tr>
+                                     <td style="height:30px;"></td>
+                                     </tr>
+                                        <tr>
+                                           <td width="113" valign="top" align="left" style="background:#002147;padding:12px 0 5px 12px;color:#fff;font-size:15px; font-family:Arial,Helvetica,sans-serif;">Contact Us<br><a style="color:#fff;text-decoration:none" href="#" target="_blank">www.<span>crazyforstudy.com</span></a><br>
+                                              <a style="color:#fff;text-decoration:none;font-family:Arial,Helvetica,sans-serif; display:block; margin-bottom:2px;" href="mailto:support@crazyforstudy.com" target="_blank">support@<span>crazyforstudy.com</span></a><br>
+                                           </td>
+                                           <td width="299" valign="top" align="right" style="background:#002147;padding:5px 5px">
+                                           <table width="80" height="20px" cellspacing="2" cellpadding="0" border="0" style="font-family:Arial,Helvetica,sans-serif;color:#000;font-style:normal;padding:5px;font-size:11px;line-height:15px">
+                                                <tbody>
+                                                    <tr>
+                                                        <td valign="middle" align="center" style="font-size:12px;font-weight:bold;color:#333;padding:4px 0 0 5px;color:#ffffff;font-family:Arial,Helvetica,sans-serif;" colspan="3">Follow us</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><a href="https://www.facebook.com/Crazy-for-Study-133559800329407" target="_blank"><img alt="logo facebook" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/fb-icon.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://twitter.com/CrazyForStudy1" target="_blank"><img alt="logo Twitter" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/twtr-icon.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://www.instagram.com/crazyforstudy_cfs" target="_blank"><img alt="logo Instagram" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/instagram.png" class="CToWUd"/> </a></td>
+                                                        <td><a href="https://www.pinterest.com/crazyforstudy1" target="_blank"><img alt="logo Pinterest" src="https://crazyforstudy.s3.ap-south-1.amazonaws.com/email-images/pinterest.png" class="CToWUd"/> </a> </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                           </td>
+                                        </tr>
+                                     </tbody>
+                                  </table>
+                               </td>
+                            </tr>
+                         </tbody>
+                      </table>
+                   </td>
+                </tr>
+             </tbody>
+          </table>
+       </body>
     </html>`
 }
 
-const assignmentSubmitAdmin = (question, subject, sub_subject, date) => {
+const assignmentSubmitAdmin = (question, subject, sub_subject, dated) => {
     return `<!doctype html>
     <html>
         <head>
@@ -964,7 +1032,7 @@ const assignmentSubmitAdmin = (question, subject, sub_subject, date) => {
             <p>A student has just submitted a new Assignment Help requirement on crazyforstudy.com for subject: <strong>${subject}</strong> and sub_subject: <strong>${sub_subject}</strong>.                                                                                                                                   
             <p>Assignment requirement details as provided by the student </p>
             <p><strong>Question: </strong>${question}</p>
-            <p><strong>Deadline Date: </strong>${date}</p>
+            <p><strong>Deadline Date: </strong>${dated}</p>
             <p>Thanks for choosing CFS!</p>
             <p><strong>With regards,</strong></p>
             <p><strong>Team Crazy For Study</strong></p>

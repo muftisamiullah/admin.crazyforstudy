@@ -1,6 +1,8 @@
 const SubSubject = require("../../models/admin/SubSubject.js");
+const Questions = require("../../models/admin/Question.js");
 const csv = require("csv-parser");
 const fs = require("fs");
+var ObjectId = require('mongodb').ObjectId; 
 
 const AllSubSubject = async (req, res) => {
   try {
@@ -78,7 +80,6 @@ const uploadSubSubject = async (req, res) => {
           });
         });
         otherFunction(res, FinalData, function () {
-          console.log(req.file.path);
           fs.unlinkSync(req.file.path);
         });
       });
@@ -95,6 +96,30 @@ const SaveContent = async (req, res) => {
     await SubSubject.findByIdAndUpdate(
       { _id: req.params.id },
       { $set: { content: req.body } }
+    )
+      .then((response) => {
+        return res.status(202).json({
+          message: "Content, Successfully Saved",
+        });
+      })
+      .catch((error) => {
+        return res.status(500).json({
+          message: "Error Found",
+          errors: error.message,
+        });
+      });
+  } catch (error) {
+    res.status(409).json({
+      message: error.message,
+    });
+  }
+};
+
+const SaveContentQA = async (req, res) => {
+  try {
+    await SubSubject.findByIdAndUpdate(
+      { _id: req.params.id },
+      { $set: { qa_content: req.body } }
     )
       .then((response) => {
         return res.status(202).json({
@@ -171,9 +196,36 @@ const SaveReviews = async (req, res) => {
 
 const getReview = async (req, res) => {
   try {
-    await SubSubject.find(
+    await SubSubject.findOne(
       { _id: req.params.id },
-      { reviews: { $elemMatch: { _id: req.params.reviewId } } }
+      // { reviews: { $elemMatch: { _id: req.params.reviewId } } }
+      {reviews: 1}
+    )
+      .then((response) => {
+        return res.status(202).json({
+          message: "Review Found",
+          data: response,
+        });
+      })
+      .catch((error) => {
+        return res.status(500).json({
+          message: "Error Found",
+          errors: error.message,
+        });
+      });
+  } catch (error) {
+    res.status(409).json({
+      message: error.message,
+    });
+  }
+};
+
+const getReviewQA = async (req, res) => {
+  try {
+    await SubSubject.findOne(
+      { _id: req.params.id },
+      // { reviews: { $elemMatch: { _id: req.params.reviewId } } }
+      {qa_reviews: 1}
     )
       .then((response) => {
         return res.status(202).json({
@@ -226,11 +278,37 @@ const updateReview = async (req, res) => {
 
 const deleteReview = async (req, res) => {
     try {
-      
       await SubSubject
         .updateOne(
           { _id: req.params.id, "reviews._id": req.params.reviewId },
           { $pull:  {"reviews":{"_id": req.params.reviewId } } },
+        )
+        .then((response) => {
+
+          return res.status(202).json({
+            message: "Review Deleted",
+            data: response,
+          });
+        })
+        .catch((error) => {
+          return res.status(500).json({
+            message: "Error Found",
+            errors: error.message,
+          });
+        });
+    } catch (error) {
+      res.status(409).json({
+        message: error.message,
+      });
+    }
+  };
+
+const deleteReviewQA = async (req, res) => {
+    try {
+      await SubSubject
+        .updateOne(
+          { _id: req.params.id, "qa_reviews._id": req.params.reviewId },
+          { $pull:  {"qa_reviews":{"_id": req.params.reviewId } } },
           
         )
         .then((response) => {
@@ -290,7 +368,6 @@ const updateSubSubject = async (req, res) => {
 };
 
 const updateQASeoSubSubject = async (req, res) => {
-  console.log("req: " + JSON.stringify(req.body));
   try {
     await SubSubject.findByIdAndUpdate(
       { _id: req.params.id },
@@ -315,7 +392,6 @@ const updateQASeoSubSubject = async (req, res) => {
 };
 
 const updateTextBookSeoSubSubject = async (req, res) => {
-  console.log("req: " + JSON.stringify(req.body));
   try {
     await SubSubject.findByIdAndUpdate(
       { _id: req.params.id },
@@ -386,6 +462,112 @@ const viewSubSubject = async (req, res) => {
   }
 };
 
+const rQuestions = async (req, res) => {
+  try {
+    const sub_subject = await SubSubject.findOne(
+      { _id: ObjectId(req.params.id) },
+      { subject_id: 1 }
+    );
+
+    const questions = await Questions.aggregate([
+      { $match: { sub_subject_id:ObjectId(req.params.id),subject_id: ObjectId(sub_subject.subject_id), question: { $exists: true } }  },
+      { $sample: { size: 100 } },
+    ]);
+
+    return res.status(200).json({
+      data: questions,
+    });
+  } catch (error) {
+    res.status(409).json({
+      message: "Error occured",
+      errors: error.message,
+    });
+  }
+};
+
+const relatedQuestions = async(req, res) => {
+  try {
+      const relatedQuestions = await SubSubject.findOne({_id: `${req.params.id}`},{relatedQuestions: 1, _id: 0})
+      return res.status(200).json({
+          data: relatedQuestions
+      });
+  } catch (error) {
+      res.status(409).json({
+          message: "Error occured",
+          errors: error.message
+      });
+  }
+}
+
+const addRelatedQuestions = async(req, res) => {
+  try {
+      const filter = {_id: req.body.id};
+      const RQ = req.body.relatedQuestions;
+      const sbook_id = req.body.id;
+      await SubSubject.updateOne(filter, {$addToSet: { relatedQuestions: {$each: RQ}}});
+      return res.status(201).json({
+          error: false,
+          message: "related Questions Added successfully"
+      })  
+  } catch (error) {
+      res.status(409).json({
+          message: "Error occured",
+          errors: error.message
+      });
+  }
+}
+
+const removeRelatedQuestions = async(req, res) => {
+  try {
+      const filter = {_id: req.body.id};
+      const RQ = req.body.relatedQuestions;
+      const sbook_id = req.body.id;
+      await SubSubject.updateOne(filter, {$pull: { relatedQuestions: {$each: RQ}}});
+      return res.status(201).json({
+          error: false,
+          message: "related Questions Added successfully"
+      })  
+  } catch (error) {
+      res.status(409).json({
+          message: "Error occured",
+          errors: error.message
+      });
+  }
+}
+
+const SaveReviewsQA = async (req, res) => {
+  try {
+    req.body.img_path = req.file && req.file.filename ? req.file.filename : ''
+    const item = await SubSubject.findById(req.params.id);
+    if (item && item.qa_reviews) {
+      if (item.qa_reviews.length < 5) {
+        item.qa_reviews.push(req.body);
+      } else {
+        return res.status(400).json({
+          message: "Can not add more reviews",
+          errors: "Error",
+        });
+      }
+
+      await item.save().then((result) => {
+        res.status(202).json({
+          message: "Review saved successfully!",
+          data: req.body,
+        });
+      });
+    } else {
+      return res.status(500).json({
+        message: "Could not found record",
+        errors: "Error",
+      });
+    }
+  } catch (error) {
+    res.status(409).json({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   AllSubSubject,
   getAllSubSubject,
@@ -401,5 +583,14 @@ module.exports = {
   SaveReviews,
   getReview,
   updateReview,
-  deleteReview
+  deleteReview,
+  rQuestions,
+  relatedQuestions,
+  addRelatedQuestions,
+  removeRelatedQuestions,
+
+  SaveReviewsQA,
+  deleteReviewQA,
+  getReviewQA,
+  SaveContentQA,
 };
