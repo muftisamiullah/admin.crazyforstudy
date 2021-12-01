@@ -269,7 +269,7 @@ return (
 
                                 </div> 
                                 <hr className="mt-1 mb-2"/>
-                                    <ReviewSubjectHeadingTB review={review} />
+                                    <ReviewSubjectHeadingTB review={review} flag={'subSubject'}/>
                             </div>
                         )
                     })}
