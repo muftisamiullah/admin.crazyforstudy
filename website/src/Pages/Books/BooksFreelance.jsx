@@ -27,7 +27,7 @@ export default function BooksFreelance() {
   const location = useLocation();
   const { addToast } = useToasts();
   const { state } = useContext(AuthContext);
-  const { data: singleBook } = useBookByISBN();
+  const { data: singleBook } = useBookByISBN(); 
   const { data: chapters } = useBartelbyChapters();
   const [sectionId, setSectionId] = useState("");
   const [questionsData, setQuestionsData] = useState([]);
@@ -50,7 +50,8 @@ export default function BooksFreelance() {
   const [hideImport, setHideImport] = useState(false)
 
   useEffect(()=> {
-    if(location.pathname === '/books-freelance'){
+    
+    if(location.pathname === '/books-freelance'){      
         history.push(`/books/freelance`)
     }
   },[state, params?.isbn]);
@@ -509,6 +510,7 @@ export default function BooksFreelance() {
       },
     }
   );
+  console.log('path', state.isLoggedIn);
 
   return (
     <>
@@ -1146,6 +1148,12 @@ export default function BooksFreelance() {
                   </div>
                 </div>
               )}
+
+              {
+               params?.solution_type != 'QZ' && params?.solution_type != 'BB' && params?.status !== "import-chapter" && params?.status !== "view-uploaded-chapter"
+               && params?.status !== "update-expert-answer" && 
+               <div className="col-sm-12 p-4 text-center"> No Data Found</div>
+              } 
 
 
              
