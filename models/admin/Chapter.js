@@ -76,7 +76,7 @@ const ChapterSchema = new mongoose.Schema(
       type: Date,
     },
     assigned_to: {
-      type: Object,
+      type: mongoose.Schema.ObjectId,
     },
     tutor_name: {
       type: String,
@@ -103,6 +103,7 @@ ChapterSchema.index({ answerFlag: 1}, { unique: false });
 ChapterSchema.index({ book_isbn: 1 }, { unique: false });
 ChapterSchema.index({ book_id: 1 }, { unique: false });
 ChapterSchema.index({ book_isbn: 1 ,chapter_no:1 }, { unique: false });
+ChapterSchema.index({ assigned_to: 1 }, { unique: false });
 ChapterSchema.index({ question: "text" }, { unique: false });
 
 module.exports = mongoose.model("Chapter", ChapterSchema);
