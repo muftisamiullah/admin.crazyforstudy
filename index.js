@@ -135,7 +135,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// express session 
+// express session
 app.use(session({
     secret: 'acadecraft-secerate',
     resave: true,
