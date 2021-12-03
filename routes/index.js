@@ -16,6 +16,8 @@ const TutorRoutes = require('./TutorRoutes.js');
 const FaqRoutes = require('./FaqRoutes.js');
 const VendorRoutes = require('./vendorRoutes.js');
 const DummyRoutes = require('./DummyRoutes.js');
+const AssignmentRoutes = require('./AssignmentRoutes.js');
+
 
 module.exports = {
     AdminAuthRoutes,
@@ -35,4 +37,6 @@ module.exports = {
     FaqRoutes,
     VendorRoutes,
     DummyRoutes,
+    AssignmentRoutes,
+    
 }

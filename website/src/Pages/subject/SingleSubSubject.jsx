@@ -39,10 +39,10 @@ function SingleSubSubject({sub}) {
         <hr className="mt-1 mb-1"/>
         <div className="subject-card-heading">
             <div><Button className="btn-sm btn-primary " onClick={e => history.push(`/sub-subject-seo/qa/update/${sub._id}`)}>
-                        Update Seo Q and A
+                        Update Seo/Content Q&A
                     </Button>
                     <Button className="btn-sm btn-primary ml-1" onClick={e => history.push(`/sub-subject-seo/textbook/update/${sub._id}`)}>
-                        Update Seo Solution Manuals
+                        Update Seo/Content Soln Manuals
                     </Button></div>
             <div>
                 <button className="delBtn" onClick={e => history.push(`/books/${util.MakeSlug(sub.subject)}/${util.MakeSlug(sub.sub_subject)}/${sub._id}`)}>

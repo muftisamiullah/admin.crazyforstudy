@@ -11,7 +11,7 @@ const searchQuestion = async (req, res) => {
             // [{book_isbn: { $regex: search}},{book_name:{ $regex:search }},{question:{$regex:search}}]
             [{question:{$regex:search}}]
         },{
-            _id:0,
+            _id:1,
             price :1,
             shortanswer:1,
             completeanswer:1,

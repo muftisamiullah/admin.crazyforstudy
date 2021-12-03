@@ -8,6 +8,7 @@ function Pagination({pagination}) {
     const [pageno, setPageNo] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     useEffect(paginateFunction,[params?.page])
+
     function paginateFunction(){
         setPageNo(params?.page)
     }
@@ -24,15 +25,32 @@ function Pagination({pagination}) {
                 history.push(`/solve-tbs/${params.filter}/${e.target.value}`)
             }}
             >
-                <option value="1">{isLoading ?'Pro...':'Page'}</option>
-                {[...Array(pagination?.pageCount).fill().map( (t,i) => {
+                <option value="1">{isLoading ?'Pro...':'Page'}</option>{console.log(pagination)}
+                {/* {[...Array(pagination).map((t,i) => {
+                    console.log("asdsa")
                     return (
                         <option value={i+1}
-                        key={i+1}
-                        selected={(+pagination?.currentPage === +i+1)?'selected':''}
+                            key={i+1}
+                            selected={(+pagination?.currentPage === +i+1)?'selected':''}
                         >{i+1}</option>
                     )
-                })]}
+                })]} */}
+                {[...Array(pagination)].map((e, i) => {
+                    return(
+                        <option  value={i+1}
+                        key={i+1}
+                        selected={(+params?.page_no === +i+1) ? 'selected' : ''}
+                        >{i+1}</option>
+                    )
+                })}
+                {/* {[...Array(pagination?.pageCount).fill().map( (t,i) => {
+                    return (
+                        <option value={i+1}
+                            key={i+1}
+                            selected={(+pagination?.currentPage === +i+1)?'selected':''}
+                        >{i+1}</option>
+                    )
+                })]} */}
             
             </select>
             <Button className="dark"

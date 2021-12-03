@@ -34,13 +34,13 @@ export default function TextbooksList() {
                         {isLoadingBooks && (<LoadingComp />)}
                         <div className="dash-con-heading">
                             <div className="col-md-12 row">
-                                <button className="btn btn-sm dark">
+                                {/* <button className="btn btn-sm dark">
                                     <span className="fa fa-arrow-left"></span>
-                                </button>
+                                </button> */}
                                 <div className="col-md-12 row">
-                                <div className="col-md-2">
+                                {/* <div className="col-md-2">
                                     <h2>Books</h2>
-                                </div>
+                                </div> */}
 
                             <select className="col-md-2 ml-2 form-control"
                                 onChange={e => {   

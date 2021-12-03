@@ -1,15 +1,16 @@
 import React, {useContext,useState, useEffect} from 'react'
-import '../mainDash.css';
+import '../../mainDash.css';
 import {  useHistory, Link, useParams  } from "react-router-dom";
 import { Button,Form } from 'react-bootstrap'
-import * as api from '../../Helper/ApiHelper.jsx';
-import useAxios from '../../hooks/useAxios'
-import {AuthContext} from '../../context/AuthContext';
-import {Notification} from '../../components/Notification';
-import {ErrorContext} from '../../context/ErrorContext';
-import {SubjectContext} from '../../context/SubjectContext';
+import * as api from '../../../Helper/ApiHelper.jsx';
+import useAxios from '../../../hooks/useAxios'
+import {AuthContext} from '../../../context/AuthContext';
+import {Notification} from '../../../components/Notification';
+import {ErrorContext} from '../../../context/ErrorContext';
+import {SubjectContext} from '../../../context/SubjectContext';
+import Breadcrumb from './SeoBreadCrumbSubSubjectTB';
 
-export default function CreateSubject() {
+export default function UpdateSubSubjectSeoTB() {
     const history = useHistory();
     const params = useParams();
     const {state} = useContext(AuthContext);
@@ -26,10 +27,10 @@ export default function CreateSubject() {
             errorDispatch({type: 'SET_ERROR', payload: "You haven't change anything"});
         }else{
             if(params.id){
-                response = await api.patch(`subject/update-textbook/${params.id}`,formData);
+                response = await api.patch(`sub-subject/update-textbook/${params.id}`,formData);
             }
             errorDispatch({type: 'SET_SUCCESS', payload: response.message});
-            history.push('/subject');
+            history.push('/sub-subject');
         }
     }
     async function handelChange(e){
@@ -38,7 +39,7 @@ export default function CreateSubject() {
         setFormData({...formData, [e.target.name]: subject});
     }
     const {response} = useAxios({
-        method: 'get', url: `subject/view/${params.id}`
+        method: 'get', url: `sub-subject/view/${params.id}`
     });
     
     const [metatitle, setMetaTitle] = useState('');
@@ -87,15 +88,19 @@ return (
         <div className="main-area-all">
             <div className="dashboard_main-container">
                 <div className="dash-main-head">
-                    <h2>Manage Textbook Subject Seo</h2>
+                    <h2>Manage Textbook Sub Subject Seo</h2>
                 </div>
-                
+                <div className="dash-con-heading">
+                    <div className="col-md-12 pl-0">
+                        {/* <Link to={`/subject`} className="btn btn-sm dark">
+                            <span className="fa fa-arrow-left text-success mr-2"></span>
+                        </Link> */}
+                        <Breadcrumb/>
+                    </div>
+                </div>
                 <div className="dash-cont-start">
                     <div className="org-main-area">
                         <div className="col-md-3 pl-0">
-                        <Link to={`/subject`} className="btn btn-sm dark">
-                            <span className="fa fa-arrow-left text-success mr-2"></span>
-                        </Link>
                         </div>
                         <div className="col-md-12 no-gutter p-0 mt-2">
                         {errorState.error && ( 

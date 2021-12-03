@@ -19,6 +19,8 @@ router
     .get('/single-question-50/:q_id',  checkAuth, Question.GetSingleQuestion)
     .patch('/update-answer-50/:q_id',  checkAuth, Question.UpdateAnswer50)
     .patch('/reject-question-50/:q_id',  checkAuth, Question.RejectQuestion50)
+
+    .get('/solution-report/:q_type/:flag/:date',  checkAuth, Question.getAllData)
 ;
 
 module.exports = router;

@@ -1,19 +1,24 @@
 const express = require("express");
+var multerS3 = require('multer-s3'); //s3
+var aws = require('aws-sdk') //s3
+var multer = require('multer')
 const SubSubject = require('../controllers/admin/SubSubjectController.js');
 const checkAuth = require("../middleware/check-auth.js");
 
-var multer = require('multer')
-var storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'uploads/')
+var s3 = new aws.S3({secretAccessKey: process.env.awsAcessSecret,
+    accessKeyId: process.env.awsAccessKey,
+    region: process.env.awsRegion}) //s3
+
+var storage =  multerS3({
+    s3: s3,
+    bucket: 'crazyforstudy',
+    metadata: function (req, file, cb) {
+        cb(null, {fieldName: file.fieldname});
     },
-    fileFilter: function(req, file, cb) {
-        console.log(file.mimetype, "dadasd")
-    },
-    filename: function(req, file, cb) {
-        console.log(file)
-        cb(null, file.fieldname + '-' + Date.now() + '.csv')
-    },
+    key: function (req, file, cb) {
+        file.filename = file.originalname
+        cb(null, "uploads/" + file.originalname)
+    }
 })
 
 var upload = multer({ storage: storage })
@@ -29,6 +34,22 @@ router
     .patch('/update-QA/:id',SubSubject.updateQASeoSubSubject)
     .patch('/update-textbook/:id',SubSubject.updateTextBookSeoSubSubject)
     .delete('/delete/:id', SubSubject.deleteSubSubject)
-    .get('/view/:id', SubSubject.viewSubSubject);
+    .get('/view/:id', SubSubject.viewSubSubject)
+    .patch('/save-content/:id',checkAuth,SubSubject.SaveContent)
+    .get('/content/:id',checkAuth,SubSubject.getContent)
+    .patch('/save-reviews/:id',upload.single('img_path'),checkAuth,SubSubject.SaveReviews)
+    // .get('/review/:id/:reviewId',checkAuth,SubSubject.getReview)    
+    .get('/review/:id',checkAuth,SubSubject.getReview)    
+    .patch('/update-review/:id/:reviewId',upload.single('img_path'),checkAuth,SubSubject.updateReview)
+    .delete('/delete-review/:id/:reviewId',checkAuth,SubSubject.deleteReview)
+    .get('/questions/:id',checkAuth,SubSubject.rQuestions)
+    .get('/related-questions/:id', checkAuth, SubSubject.relatedQuestions)
+    .post('/add-related-questions', checkAuth, SubSubject.addRelatedQuestions)
+    .post('/remove-related-questions', checkAuth, SubSubject.removeRelatedQuestions)
+
+    .delete('/delete-review-qa/:id/:reviewId',checkAuth, SubSubject.deleteReviewQA)
+    .get('/review-qa/:id',checkAuth, SubSubject.getReviewQA)
+    .patch('/save-reviews-qa/:id',upload.single('img_path'),checkAuth, SubSubject.SaveReviewsQA)
+    .patch('/save-content-qa/:id',checkAuth, SubSubject.SaveContentQA)
 
 module.exports = router;

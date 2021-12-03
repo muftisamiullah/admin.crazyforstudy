@@ -32,9 +32,9 @@ export default function SolveTBSList() {
                         {isLoadingQestions && (<LoadingComp />)}
                         <div className="dash-con-heading">
                             <div className="col-md-12 row">
-                                <button className="btn btn-sm dark">
+                                {/* <button className="btn btn-sm dark">
                                     <span className="fa fa-arrow-left"></span>
-                                </button>
+                                </button> */}
                                 <div className="col-md-12 row">
                                 <div className="col-md-2">
                                     <h2>Questions</h2>
@@ -48,7 +48,7 @@ export default function SolveTBSList() {
                                     }
                                 }}
                             >
-                                <option value="999">Select Filter</option>
+                                <option value="999">Select Filter</option>{console.log(data)}
                                 <option value="pending" selected={params.filter == "pending" ? true : false}>Pending</option>
                                 <option value="answered" selected={params.filter == "answered" ? true : false}>Answered</option>
                             </select>

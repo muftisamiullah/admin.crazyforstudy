@@ -103,7 +103,6 @@ const handleSEO = async (e) => {
     formData['faqHeading'] = faqHeadingRef.current.value
     formData['status'] = true
     setLoading(true);
-    console.log(formData);
     await mutation.mutate(formData);
 }
 
@@ -114,7 +113,7 @@ useEffect(() => {
     clearTimeout(timerError)
 }
 }, [error]);
-console.log(book)
+
 const Surls = seo?.urls === '' ? seo?.urls : utils.MakeSlug(book?.BookName)
 const urls = `isbn-${params.isbn}-${Surls}-${utils.MakeSlug(book?.Edition)}`;
 

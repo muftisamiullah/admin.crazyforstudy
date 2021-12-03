@@ -291,6 +291,7 @@ const UpdateAnswer = async (req, res) => {
     try {
         let update = req.body
         update.flag = "answered"
+        update.updated_at = Date.now()
         delete update.user_Id;
         const response = await Question.findByIdAndUpdate({ _id: req.params.q_id, type:'QA' }, update);
         if(response){
@@ -347,6 +348,7 @@ const UpdateAnswer50 = async (req, res) => {
     try {
         let update = req.body
         update.flag = "answered"
+        update.updated_at = Date.now()
         delete update.user_Id;
         const response = await Question.findByIdAndUpdate({ _id: req.params.q_id, type: "ASK50" }, update);
         if(response){
@@ -402,6 +404,7 @@ const RejectQuestion50 = async (req, res) => {
     try {
         let update = req.body
         update.flag = "rejected"
+        update.updated_at = Date.now()
         delete update.user_Id;
         const response = await Question.findByIdAndUpdate({ _id: req.params.q_id, type:"ASK50" }, update);
             if(response){
@@ -466,6 +469,51 @@ const RejectQuestion50 = async (req, res) => {
     }
 }
 
+const getAllData = async (req, res) => {
+    try {
+        const date = JSON.parse(req.params.date)
+        const d = new Date(date.date);
+        const da = d.getUTCDate()
+        console.log(da);
+        ltDate = da.toDate().setHours(23,59,59,999)
+        console.log(ltDate);  
+
+        let response = [];
+        console.log(d)
+        if(req.params.q_type == "qa"){
+            response = await Question.find({ type:"QA", flag: req.params.flag, 
+                updated_at:
+                    {
+                        "$gte": d,
+                        "$lt": d
+                    }
+            });
+        }else if(req.params.q_type == "ask50"){
+            response = await Question.find({ type:"ASK50", flag: req.params.flag, 
+                updated_at:
+                    {
+                        "$gte": d,
+                        "$lt": d
+                    } 
+            });
+            console.log(response)
+        }else if(req.params.q_type == "tbs"){
+            // const response = await Question.find({ type:"QA" });
+            // console.log(response)
+        }
+        return res.status(200).json({
+            data : response,
+        })
+    } catch (error) {
+        console.log(error.message)
+        res.send({
+            error: true,
+            code: 501,
+            message: error.message
+        })
+    }
+}
+
 module.exports = {
     importData,
     chieldQuestion,
@@ -477,4 +525,5 @@ module.exports = {
     UpdateAnswer,
     UpdateAnswer50,
     RejectQuestion50,
+    getAllData
 }

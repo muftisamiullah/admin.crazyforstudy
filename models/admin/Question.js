@@ -5,9 +5,9 @@ const QuestionSchema = new mongoose.Schema({
     old_qid:{type: String},
     uuid:{type: String},
     subject:{type: String},
-    subject_id:{type: String},
+    subject_id:{type: mongoose.Schema.ObjectId},
     sub_subject:{type: String},
-    sub_subject_id:{type: String},
+    sub_subject_id:{type: mongoose.Schema.ObjectId},
     chield_subject_id:{type: String},
     book_isbn:{type: String},
     book_name:{type: String},
@@ -34,7 +34,7 @@ const QuestionSchema = new mongoose.Schema({
         default: 3
     },
     user_Id: {
-        type: String
+        type: mongoose.Schema.ObjectId
     },
     user_role: {
         type: String
@@ -70,7 +70,13 @@ const QuestionSchema = new mongoose.Schema({
     updated_at: {
         type: Date
     }
-});
+},{
+    autoCreate: true, // auto create collection
+    autoIndex: true, // auto create indexes
+  });
 
 QuestionSchema.plugin(mongoosePaginate);
+QuestionSchema.index({'subject_id': 1, 'sub_subject_id': 1},{unique:false});
+QuestionSchema.index({'user_Id': 1},{unique:false});
+QuestionSchema.index({'question': 'text'},{unique:false});
 module.exports = mongoose.model('Question', QuestionSchema);

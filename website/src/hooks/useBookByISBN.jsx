@@ -7,7 +7,8 @@ import * as cons from '../Helper/Cons.jsx'
 
 export default function useBookByISBN() {
     const params = useParams();
-    const isbn = params.isbn;
+    const isbn = params.isbn == undefined ? params.solution_type : params.isbn;
+    
     const {state } = useContext(AuthContext);
     let API_URL = '';
     if(process.env.NODE_ENV === 'development'){

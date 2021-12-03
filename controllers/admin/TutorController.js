@@ -109,10 +109,24 @@ const updateStatus = async (req, res) => {
 const tutorDetails = async (req, res) => {
     try {
         // return res.send(req.body)
-        const tutor = await Tutor.findOne({_id: req.params.tutor_id});
-        const approved_qc = await Chapter.find({"assigned_to": req.params.tutor_id,flag: "approved"});
-        const reworked_qc = await Chapter.find({"assigned_to": req.params.tutor_id,flag:"reworked"});
-        const pending_qc = await Chapter.find({"assigned_to": req.params.tutor_id,flag: "answered"});
+        const tutor = await Tutor.findById({_id: req.params.tutor_id});
+        const data = await Chapter.find({"assigned_to": req.params.tutor_id,flag: {$in:["approved","reworked","answered"]}});
+        let approved_qc = [];
+        let pending_qc = [];
+        let reworked_qc = [];
+        if(data && data.length>0){
+            for(let i=0; i<data.length; i++){
+                if(data[i].flag == "approved"){
+                    approved_qc.push(data[i]);
+                }else if(data[i].flag == "reworked"){
+                    total_reworked.push(data[i]);
+                }else if(data[i].flag == "answered"){
+                    pending_qc.push(data[i]);
+                }
+            }
+        }
+        // const reworked_qc = await Chapter.find({"assigned_to": req.params.tutor_id,flag:"reworked"});
+        // const pending_qc = await Chapter.find({"assigned_to": req.params.tutor_id,flag: "answered"});
 
         res.status(201).json({
             error: false,

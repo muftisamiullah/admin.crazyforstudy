@@ -3,6 +3,7 @@ import TutorHeading from './TutorHeading';
 
 export default function SingleTutor({tutor}) {
     const subData = tutor.education;
+    console.log('tutor',tutor);
     let subject = subData[0];
     return (
         <div className="subject-card" key={tutor._id} id={`card-${tutor._id}`}>

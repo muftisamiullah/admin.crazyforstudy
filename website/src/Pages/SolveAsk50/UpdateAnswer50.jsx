@@ -15,7 +15,7 @@ import useGetSingleQuestion50 from './hooks/useGetSingleQuestion50';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from 'ckeditor5-classic-with-mathtype';
-import {htmlDecode} from '../../utils/MakeSlug'
+import {htmlDecode, isHTML} from '../../utils/MakeSlug'
 
 export default function UpdateAnswer() {
     const history = useHistory();

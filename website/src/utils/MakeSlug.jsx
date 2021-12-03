@@ -103,6 +103,42 @@ const calculateTime = (id, eventTime, afterComplete) => {
     }, 1000);
 }
 
+const calculateTime1 = (id, eventTime, afterComplete) => {
+    var countDownDate = new Date(eventTime).getTime();        
+    var x = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+        //console.log(distance);
+        let ele = document.getElementById(id);
+        
+        if (distance < 4000) {
+            clearInterval(x);
+            if(ele){
+                ele.innerHTML = afterComplete;
+            }
+        }else{
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = (days*24)+Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            if(ele){
+                ele.innerHTML = '';
+                ele.innerHTML = pad(hours,2) + ":"  + pad(minutes,2) + ":" + pad(seconds,2);
+            }
+        }
+    }, 1000);
+} 
+
+const isHTML = (str) => {
+    const fragment = document.createRange().createContextualFragment(str);
+    
+    // remove all non text nodes from fragment
+    fragment.querySelectorAll('*').forEach(el => el.parentNode.removeChild(el));
+    
+    // if there is textContent, then not a pure HTML
+    return !(fragment.textContent || '').trim();
+}
+
 export {
     MakeSlug,
     calculateTime,
@@ -113,4 +149,6 @@ export {
     ObjectToCsv,
     downloadData,
     htmlDecode,
+    calculateTime1,
+    isHTML,
 }

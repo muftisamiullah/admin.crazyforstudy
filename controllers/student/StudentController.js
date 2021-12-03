@@ -18,16 +18,18 @@ const askQuestion = async (req, res) => {
     try {
         const data = req.body;
         const cond = {user_Id: req.body.user_Id, type: 'ASK50'}    
-        const count =  await Question.find(cond).count();
+        const count =  await Question.find(cond).countDocuments();
+        console.log('count', count);
         if(count > 50){
             // const error = new Error("message")
             // error.code = "501"
             // throw error;
-            return res.status(501).json({error: true, message: "User can ask only 5o questions"}) 
+            return res.status(501).json({error: true, message: "User can ask only 50 questions"}) 
         }
         data.image0 = req.files?.image0 ? req?.files?.image0[0].filename : '';
         data.image1 = req.files?.image1 ? req?.files?.image1[0].filename : '';
         data['last_submition'] = "04:00";
+        data['updated_at'] = Date.now();
         const question = new Question(data);
 
         const q = await question.save();
@@ -257,7 +259,7 @@ const askAlreadyPQuestion = async (req, res) => {
         let update = req.body
         update.flag = "pending"
         update.created_at = new Date();
-        update.updated_at = new Date();
+        update.updated_at = Date.now();
         const question = await Question.findOne({_id:req.body.q_id, type: "QA"})
         const resolved = await Question.findByIdAndUpdate({_id:req.body.q_id, type: "QA"}, update)
         if(resolved){
