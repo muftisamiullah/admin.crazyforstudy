@@ -69,7 +69,7 @@ export default function UploadChapters() {
             errorDispatch({type: 'SET_SUCCESS', payload: response.message});
             setBtnDisbaled(false);
             setLoading(false);
-            history.push(`/book-chapters/${params.isbn}/${params.book_name}/${params.book_id}`);
+            history.push(`/books-chapters/${params.isbn}/${params.book_name}/${params.book_id}`);
         
         }catch(error){
             errorDispatch({type: 'SET_ERROR', payload: error.message});
