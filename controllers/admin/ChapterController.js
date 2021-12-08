@@ -313,8 +313,21 @@ const GetChapterQuestions = async (req, res) => {
     });
   }
 };
-const UploadChapters = async (req, res) => {
-  const data = req.body;
+
+function importCSV(filepath,data)
+{
+  return new Promise((resolve,reject)=>{
+    try{
+  let results = [];
+    let columns = {
+      'chapter_no':'chapter_no',
+      'chapter_name':'chapter_name',
+      'section_no':'section_no',
+      'section_name':'section_name',
+      'excerise':'excerise',
+      'problem_no':'problem_no',
+      'question'  :'question'  
+    };
   let FinalData = [];
   let chapter_no = "";
   let chapter_name = "";
@@ -323,12 +336,32 @@ const UploadChapters = async (req, res) => {
   let excerise = "";
   let problem_no = "";
   let question = "";
-  try {
-    let results = [];
-
-    fs.createReadStream(req.file.path, { encoding: "utf8" })
+  let rstream= fs.createReadStream(filepath, { encoding: "utf8" })
       .pipe(csv())
-      .on("data", (data) => results.push(data))
+      .on("data", (data) => {
+try{
+        let keys = Object.keys(data);
+
+       
+        let isValid = keys.length == Object.keys(columns).length;
+
+        if (isValid) {
+          for (let i=0;i< keys.length;i++) {
+            console.log(i);
+            if (!columns[keys[i].trim()])
+            {              
+              isValid=false;
+              rstream.pause();
+             return reject('CSV Headers mismatch kindly download sample file and match headers.');
+             }   
+          }
+        }
+   
+        results.push(data);
+       }catch(err)
+      {
+        reject(err)
+      } })
       .on("end", async () => {
         results.forEach((chapter, index) => {
           // console.log(chapter); return;
@@ -371,20 +404,60 @@ const UploadChapters = async (req, res) => {
             question: question,
           });
         });
-        await Book.findByIdAndUpdate(
-          { _id: data.book_id },
-          {
-            question_uploaded: true,
-            total_question: FinalData.length,
-          }
-        );
-        otherFunction(res, FinalData, function () {
-          fs.unlinkSync(req.file.path);
-        });
+        console.log('On End');
+       resolve(FinalData)
+      }).on('error',err=>{
+        console.log(err)
       });
+    }catch(err)
+    {
+      reject(err)
+    }
+})}
+
+const UploadChapters = async (req, res) => {
+  const data = req.body;
+ 
+  try {
+    importCSV(req.file.path,data).then(async FinalData=>
+    {
+      await Book.findByIdAndUpdate(
+      { _id: data.book_id },
+      {
+        question_uploaded: true,
+        total_question: FinalData.length,
+      }
+    ); 
+    await Chapter.insertMany(FinalData)
+    .then(() => {
+      
+    })
+    .catch((error) => {
+      return res.status(200).json({
+        success:false,
+        message: "Error occured while Inserting Data",
+        errors: error.message,
+      });
+    });
+   
+
+    return res.status(200).json({
+      message: "Imported successfully",
+      success:true
+    });
+  }).catch(error=>{
+    fs.unlinkSync(req.file.path);    
+    console.log(error)
+    return res.status(200).json({
+      success:false,
+      message: 'Could not upload CSV data',
+      errors: error,
+    });
+  })
   } catch (error) {
-    return res.status(409).json({
-      message: "Error occured",
+    return res.status(200).json({
+      success:false,
+      message: "Error occured while Inserting Data",
       errors: error.message,
     });
   }
@@ -395,11 +468,13 @@ const otherFunction = async (res, FinalData, callback) => {
 
   await Chapter.insertMany(FinalData)
     .then(() => {
-      return res.status(200).json({
+       res.status(200).json({
         success: true,
         message: "Chapters added successfully",
       });
-      callback();
+       callback();
+       return;
+      
     })
     .catch((error) => {
       return res.status(409).json({
@@ -874,10 +949,10 @@ const UpdateSingleSolution = async (req, res) => {
       //         "extension": extension,
       //     })
       // })
-      console.log(data);
+
       let converted = decode(data);
       let new1 = converted.replace(/\n/g, "<br />");
-      console.log(new1);
+
       await Chapter.findByIdAndUpdate(
         { _id: req.params.q_id },
         { answer: new1 }
@@ -2073,7 +2148,7 @@ const getAllQuestionsTbs = async (req, res) => {
       .limit(limit);
     let totalRecords = await Chapter.find(query).countDocuments();
 
-    return res.status(200).json({chapps : chapps, totalRecords : totalRecords});
+    return res.status(200).json({ chapps: chapps, totalRecords: totalRecords });
 
     // const myCustomLabels = {
     //     totalDocs: 'itemCount',
@@ -2181,7 +2256,7 @@ const UpdateAnswerTbs = async (req, res) => {
           created_at: Date.now(),
         }
       );
-      console.log(d);
+
       var transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {

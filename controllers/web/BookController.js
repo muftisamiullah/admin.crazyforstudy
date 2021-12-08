@@ -318,6 +318,7 @@ const getBookChapters = async (req, res) => {
         chapter_no: 1,
         chapter_name: 1
     });
+    
     results.forEach( item => {
         if(!map.has(item.chapter_no)){
             map.set(item.chapter_no, true);
