@@ -336,6 +336,8 @@ function importCSV(filepath,data)
   let excerise = "";
   let problem_no = "";
   let question = "";
+
+
   let rstream= fs.createReadStream(filepath, { encoding: "utf8" })
       .pipe(csv())
       .on("data", (data) => {
@@ -417,50 +419,54 @@ try{
 
 const UploadChapters = async (req, res) => {
   const data = req.body;
- 
-  try {
-    importCSV(req.file.path,data).then(async FinalData=>
-    {
-      await Book.findByIdAndUpdate(
-      { _id: data.book_id },
-      {
-        question_uploaded: true,
-        total_question: FinalData.length,
-      }
-    ); 
-    await Chapter.insertMany(FinalData)
-    .then(() => {
+ console.log('Uploaded file')
+ res.status(200).json({
+  success: true,
+  message: `Uploaded file ${req.file.path} data ${JSON.stringify(data)}`,
+})
+  // try {
+  //   importCSV(req.file.path,data).then(async FinalData=>
+  //   {
+  //     await Book.findByIdAndUpdate(
+  //     { _id: data.book_id },
+  //     {
+  //       question_uploaded: true,
+  //       total_question: FinalData.length,
+  //     }
+  //   ); 
+  //   await Chapter.insertMany(FinalData)
+  //   .then(() => {
       
-    })
-    .catch((error) => {
-      return res.status(200).json({
-        success:false,
-        message: "Error occured while Inserting Data",
-        errors: error.message,
-      });
-    });
+  //   })
+  //   .catch((error) => {
+  //     return res.status(200).json({
+  //       success:false,
+  //       message: "Error occured while Inserting Data",
+  //       errors: error.message,
+  //     });
+  //   });
    
 
-    return res.status(200).json({
-      message: "Imported successfully",
-      success:true
-    });
-  }).catch(error=>{
-    fs.unlinkSync(req.file.path);    
-    console.log(error)
-    return res.status(200).json({
-      success:false,
-      message: 'Could not upload CSV data',
-      errors: error,
-    });
-  })
-  } catch (error) {
-    return res.status(200).json({
-      success:false,
-      message: "Error occured while Inserting Data",
-      errors: error.message,
-    });
-  }
+  //   return res.status(200).json({
+  //     message: "Imported successfully",
+  //     success:true
+  //   });
+  // }).catch(error=>{
+  //   fs.unlinkSync(req.file.path);    
+  //   console.log(error)
+  //   return res.status(200).json({
+  //     success:false,
+  //     message: 'Could not upload CSV data',
+  //     errors: error,
+  //   });
+  // })
+  // } catch (error) {
+  //   return res.status(200).json({
+  //     success:false,
+  //     message: "Error occured while Inserting Data",
+  //     errors: error.message,
+  //   });
+  // }
 };
 
 const otherFunction = async (res, FinalData, callback) => {
