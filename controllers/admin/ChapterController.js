@@ -314,154 +314,148 @@ const GetChapterQuestions = async (req, res) => {
   }
 };
 
-function importCSV(filepath,data)
-{
-  return new Promise((resolve,reject)=>{
-    try{
-  let results = [];
-    let columns = {
-      'chapter_no':'chapter_no',
-      'chapter_name':'chapter_name',
-      'section_no':'section_no',
-      'section_name':'section_name',
-      'excerise':'excerise',
-      'problem_no':'problem_no',
-      'question'  :'question'  
-    };
-  let FinalData = [];
-  let chapter_no = "";
-  let chapter_name = "";
-  let section_no = "";
-  let section_name = "";
-  let excerise = "";
-  let problem_no = "";
-  let question = "";
+function importCSV(filepath, data) {
+  return new Promise((resolve, reject) => {
+    try {
+      let results = [];
+      let columns = {
+        chapter_no: "chapter_no",
+        chapter_name: "chapter_name",
+        section_no: "section_no",
+        section_name: "section_name",
+        exercise: "exercise",
+        problem_no: "problem_no",
+        question: "question",
+      };
+      let FinalData = [];
+      let chapter_no = "";
+      let chapter_name = "";
+      let section_no = "";
+      let section_name = "";
+      let excerise = "";
+      let problem_no = "";
+      let question = "";
 
+      let rstream = fs
+        .createReadStream(filepath, { encoding: "utf8" })
+        .pipe(csv())
+        .on("data", (data) => {
+          try {
+            let keys = Object.keys(data);
 
-  let rstream= fs.createReadStream(filepath, { encoding: "utf8" })
-      .pipe(csv())
-      .on("data", (data) => {
-try{
-        let keys = Object.keys(data);
+            let isValid = keys.length == Object.keys(columns).length;
 
-       
-        let isValid = keys.length == Object.keys(columns).length;
+            if (isValid) {
+              for (let i = 0; i < keys.length; i++) {
+                console.log(i,keys[i],columns[keys[i]]);
+                if (!columns[keys[i].trim()]) {
+                  isValid = false;
+                  rstream.pause();
+                  return reject(
+                    "CSV Headers mismatch kindly download sample file and match headers."
+                  );
+                }
+              }
+            }
 
-        if (isValid) {
-          for (let i=0;i< keys.length;i++) {
-            console.log(i);
-            if (!columns[keys[i].trim()])
-            {              
-              isValid=false;
-              rstream.pause();
-             return reject('CSV Headers mismatch kindly download sample file and match headers.');
-             }   
+            results.push(data);
+          } catch (err) {
+            reject(err);
           }
-        }
-   
-        results.push(data);
-       }catch(err)
-      {
-        reject(err)
-      } })
-      .on("end", async () => {
-        results.forEach((chapter, index) => {
-          // console.log(chapter); return;
-          if (chapter.chapter_no !== "") {
-            chapter_no = results[index].chapter_no;
-          }
+        })
+        .on("end", async () => {
+          results.forEach((chapter, index) => {
+            // console.log(chapter); return;
+            if (chapter.chapter_no !== "") {
+              chapter_no = results[index].chapter_no;
+            }
 
-          if (chapter.chapter_name !== "") {
-            chapter_name = results[index].chapter_name;
-          }
+            if (chapter.chapter_name !== "") {
+              chapter_name = results[index].chapter_name;
+            }
 
-          if (chapter.section_no !== "") {
-            section_no = results[index].section_no;
-          }
+            if (chapter.section_no !== "") {
+              section_no = results[index].section_no;
+            }
 
-          if (chapter.section_name !== "") {
-            section_name = results[index].section_name;
-          }
+            if (chapter.section_name !== "") {
+              section_name = results[index].section_name;
+            }
 
-          if (chapter.excerise !== "") {
-            excerise = results[index].excerise;
-          }
+            if (chapter.excerise !== "") {
+              excerise = results[index].excerise;
+            }
 
-          if (chapter.problem_no !== "") {
-            problem_no = results[index].problem_no;
-          }
+            if (chapter.problem_no !== "") {
+              problem_no = results[index].problem_no;
+            }
 
-          question = results[index].question;
+            question = results[index].question;
 
-          FinalData.push({
-            book_id: data.book_id,
-            book_name: data.book_name,
-            book_isbn: data.book_isbn,
-            chapter_no: chapter_no,
-            chapter_name: chapter_name,
-            section_no: section_no,
-            section_name: section_name,
-            excerise: excerise,
-            problem_no: problem_no,
-            question: question,
+            FinalData.push({
+              book_id: data.book_id,
+              book_name: data.book_name,
+              book_isbn: data.book_isbn,
+              chapter_no: chapter_no,
+              chapter_name: chapter_name,
+              section_no: section_no,
+              section_name: section_name,
+              excerise: excerise,
+              problem_no: problem_no,
+              question: question,
+            });
           });
+          console.log("On End");
+          resolve(FinalData);
+        })
+        .on("error", (err) => {
+          console.log(err);
         });
-        console.log('On End');
-       resolve(FinalData)
-      }).on('error',err=>{
-        console.log(err)
-      });
-    }catch(err)
-    {
-      reject(err)
+    } catch (err) {
+      reject(err);
     }
-})}
+  });
+}
 
 const UploadChapters = async (req, res) => {
   const data = req.body;
- res.status(200).json({
-  success: true,
-  message: `Uploaded file ${req.file.path} data ${JSON.stringify(data)}`,
-})
   try {
-    importCSV(req.file.path,data).then(async FinalData=>
-    {
-      await Book.findByIdAndUpdate(
-      { _id: data.book_id },
-      {
-        question_uploaded: true,
-        total_question: FinalData.length,
-      }
-    ); 
-    await Chapter.insertMany(FinalData)
-    .then(() => {
-      
-    })
-    .catch((error) => {
-      return res.status(200).json({
-        success:false,
-        message: "Error occured while Inserting Data",
-        errors: error.message,
-      });
-    });
-   
+    importCSV(req.file.path, data)
+      .then(async (FinalData) => {
+        await Book.findByIdAndUpdate(
+          { _id: data.book_id },
+          {
+            question_uploaded: true,
+            total_question: FinalData.length,
+          }
+        );
+        await Chapter.insertMany(FinalData)
+          .then(() => {})
+          .catch((error) => {
+            return res.status(200).json({
+              success: false,
+              message: "Error occured while Inserting Data",
+              errors: error.message,
+            });
+          });
 
-    return res.status(200).json({
-      message: "Imported successfully",
-      success:true
-    });
-  }).catch(error=>{
-    fs.unlinkSync(req.file.path);    
-    console.log(error)
-    return res.status(200).json({
-      success:false,
-      message: 'Could not upload CSV data',
-      errors: error,
-    });
-  })
+        return res.status(200).json({
+          message: "Imported successfully",
+          success: true,
+        });
+      })
+      .catch((error) => {
+        fs.unlinkSync(req.file.path);
+        console.log(error);
+        return res.status(200).json({
+          success: false,
+          message: "Could not upload CSV data",
+          errors: error,
+        });
+      });
   } catch (error) {
     return res.status(200).json({
-      success:false,
+      success: false,
       message: "Error occured while Inserting Data",
       errors: error.message,
     });
@@ -473,13 +467,12 @@ const otherFunction = async (res, FinalData, callback) => {
 
   await Chapter.insertMany(FinalData)
     .then(() => {
-       res.status(200).json({
+      res.status(200).json({
         success: true,
         message: "Chapters added successfully",
       });
-       callback();
-       return;
-      
+      callback();
+      return;
     })
     .catch((error) => {
       return res.status(409).json({
@@ -919,48 +912,72 @@ const AddSingleQuestion = async (req, res) => {
 
 const UpdateSingleSolution = async (req, res) => {
   try {
-    docxParser.parseDocx(req.file.path, async function (data) {
-      // let questionArray = data.split('(a)');
-      // let finalArray = []
-      // // console.log(questionArray, "questionArray")
+    // console.log('answers',req.file.path,req.body.answer)
+    const { answer, extension } = req.body;
+    if (extension && extension == "docx") {
+      docxParser.parseDocx(req.file.path, async function (data) {
+        // let questionArray = data.split('(a)');
+        // let finalArray = []
+        // // console.log(questionArray, "questionArray")
 
-      // questionArray.forEach( (question, key) => {
-      //     // console.log(question,"key", key);
-      //     let ToDetermine = decode(question).split('To determine:',2).pop().split('Introduction:')[0];
-      //     let desToDetermine = decode(ToDetermine).trim().replace(/\r?\n|\r/g, "");
+        // questionArray.forEach( (question, key) => {
+        //     // console.log(question,"key", key);
+        //     let ToDetermine = decode(question).split('To determine:',2).pop().split('Introduction:')[0];
+        //     let desToDetermine = decode(ToDetermine).trim().replace(/\r?\n|\r/g, "");
 
-      //     let Introduction = decode(question).split('Introduction:',2).pop().split('Explanation:')[0];
-      //     let desIntroduction = decode(Introduction).trim().replace(/\r?\n|\r/g, "");
+        //     let Introduction = decode(question).split('Introduction:',2).pop().split('Explanation:')[0];
+        //     let desIntroduction = decode(Introduction).trim().replace(/\r?\n|\r/g, "");
 
-      //     let Explanation = decode(question).split('Explanation:',2).pop().split('Conclusion:')[0];
-      //     let desExplanation = decode(Explanation).trim().replace(/\r?\n|\r/g, "");
+        //     let Explanation = decode(question).split('Explanation:',2).pop().split('Conclusion:')[0];
+        //     let desExplanation = decode(Explanation).trim().replace(/\r?\n|\r/g, "");
 
-      //     let Conclusion = decode(question).split('Conclusion:',2).pop().split('(b)')[0];
-      //     let desConclusion = decode(Conclusion).trim().replace(/\r?\n|\r/g, "");
-      //     console.log(desToDetermine)
-      //     console.log(desIntroduction)
-      //     console.log(desExplanation)
-      //     console.log(desConclusion)
-      //     return;
+        //     let Conclusion = decode(question).split('Conclusion:',2).pop().split('(b)')[0];
+        //     let desConclusion = decode(Conclusion).trim().replace(/\r?\n|\r/g, "");
+        //     console.log(desToDetermine)
+        //     console.log(desIntroduction)
+        //     console.log(desExplanation)
+        //     console.log(desConclusion)
+        //     return;
 
-      //     if(ToDetermine !== '')
-      //     finalArray.push({
-      //         "user_id": user_id,
-      //         "class_id": class_id,
-      //         "class_name": class_name,
-      //         "chapter_id": chapter_id,
-      //         "chapter_name": chapter_name,
-      //         "chapter_no": chapter_no,
-      //         "extension": extension,
-      //     })
-      // })
+        //     if(ToDetermine !== '')
+        //     finalArray.push({
+        //         "user_id": user_id,
+        //         "class_id": class_id,
+        //         "class_name": class_name,
+        //         "chapter_id": chapter_id,
+        //         "chapter_name": chapter_name,
+        //         "chapter_no": chapter_no,
+        //         "extension": extension,
+        //     })
+        // })
 
-      let converted = decode(data);
-      let new1 = converted.replace(/\n/g, "<br />");
+        let converted = decode(data);
+        let new1 = converted.replace(/\n/g, "<br />");
 
+        await Chapter.findByIdAndUpdate(
+          { _id: req.params.q_id },
+          { answer: new1 }
+        )
+          .then((response) => {
+            return res.status(201).json({
+              message: "Question, Updated",
+            });
+          })
+          .catch((error) => {
+            return res.status(500).json({
+              message: "Error Found",
+              errors: error.message,
+            });
+          });
+      });
+    } else if (
+      (extension && extension == "csv") ||
+      (extension && extension == "xlsx")
+    ) {
+      let path = req.file.path.split("\\");
       await Chapter.findByIdAndUpdate(
         { _id: req.params.q_id },
-        { answer: new1 }
+        { answer: path[1] }
       )
         .then((response) => {
           return res.status(201).json({
@@ -973,7 +990,23 @@ const UpdateSingleSolution = async (req, res) => {
             errors: error.message,
           });
         });
-    });
+    } else {
+      await Chapter.findByIdAndUpdate(
+        { _id: req.params.q_id },
+        { answer: answer }
+      )
+        .then((response) => {
+          return res.status(201).json({
+            message: "Question, Updated",
+          });
+        })
+        .catch((error) => {
+          return res.status(500).json({
+            message: "Error Found",
+            errors: error.message,
+          });
+        });
+    }
   } catch (error) {
     res.send({
       error: true,

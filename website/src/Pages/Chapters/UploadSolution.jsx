@@ -51,13 +51,13 @@ export default function ModifyChapters() {
             const ext = filename.split('.')[1];
             
             setExtension(ext);
-            if(ext === "docx"){
+            if(ext === "docx" || ext === "csv" || ext === "xlsx"){
                 setBtnDisbaled(false);
                 setFile(e.target.files[0]);
                 formDataUpload.append('file', e.target.files[0]);
             }else{
                 setBtnDisbaled(true);
-                addToast('Only .docx files are allowed', { appearance: 'error', autoDismiss: true });
+                addToast('Only .docx, .csv and .xlsx files are allowed', { appearance: 'error', autoDismiss: true });
         }
     }
     const [formData, setFormData] = useState({});
@@ -66,10 +66,27 @@ export default function ModifyChapters() {
         let response = null;
         setLoading(true);
         setBtnDisbaled(true);
-        if(extension != "docx"){
-            return;
+        console.log('data',file,formData)
+        if(!file && !formData.answer){
+            errorDispatch({type: 'SET_ERROR', payload: 'Answer or file can not be empty'})
+            setLoading(false);
+            setBtnDisbaled(false);
+            return
         }
+        if(file){
+            formDataUpload.append('extension',extension);
+        }
+        if( file && extension != "docx" && extension!='csv' && extension != 'xlsx'){
+            errorDispatch({type: 'SET_ERROR', payload: 'Only excel or doc files can be uploaded'})
+            setLoading(false);
+            setBtnDisbaled(false);
+            return
+        }
+        
         formDataUpload.append('file',file)
+        if(formData && formData.answer){
+            formDataUpload.append('answer',formData.answer)
+        }
         response = await axios.patch(`${API_URL}chapter/upload-solution/${params.q_id}`,formDataUpload, options);
         errorDispatch({type: 'SET_SUCCESS', payload: response.message});
         setBtnDisbaled(false);
@@ -128,9 +145,10 @@ return (
                                 Choose Solution Doc
                             </Form.Label> 
                             <Form.Control name="image" type="file" 
+                            disabled = {formData && formData.answer ? true : false }
                             onChange={uploadDoc}
                             />  
-                            <small style={{color:"green"}}>only .docx extenion files can be uploaded</small>
+                            <small style={{color:"green"}}>only .docx and excel extenion files can be uploaded</small>
                             {/* <div style={{ height: '130px', overflow: 'hidden', marginTop: '10px' }}>
                                 <img src={blogImage ? blogImage: data && data.image} />
                             </div> */}
@@ -176,7 +194,7 @@ return (
                             </Form.Label>
                             
                             <CKEditor
-                                disabled
+                                disabled = {file ? true : false }
                                 editor={ ClassicEditor }
                                 config={{
                                     toolbar: {
