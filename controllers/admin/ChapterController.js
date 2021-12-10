@@ -911,9 +911,8 @@ const AddSingleQuestion = async (req, res) => {
 };
 
 const UpdateSingleSolution = async (req, res) => {
-  try {
-    // console.log('answers',req.file.path,req.body.answer)
-    const { answer, extension } = req.body;
+  try {    
+    const { answer, extension } = req.body;   
     if (extension && extension == "docx") {
       docxParser.parseDocx(req.file.path, async function (data) {
         // let questionArray = data.split('(a)');
@@ -971,8 +970,7 @@ const UpdateSingleSolution = async (req, res) => {
           });
       });
     } else if (
-      (extension && extension == "csv") ||
-      (extension && extension == "xlsx")
+      extension &&(extension=='csv'||extension=='xlsx')
     ) {
       let path = req.file.path.split("\\");
       await Chapter.findByIdAndUpdate(
