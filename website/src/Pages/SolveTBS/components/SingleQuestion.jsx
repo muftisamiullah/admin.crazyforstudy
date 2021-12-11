@@ -5,7 +5,7 @@ import {htmlDecode, calculateTime,isHTML} from '../../../utils/MakeSlug'
 // import '../Chapters/math.css';
 // import HighlighterComponent from '../../components/HighlighterComponent';
 
-function SingleQuestion({problem, search}) {
+function SingleQuestion({problem,index, search}) {
     const history = useHistory();
     const params = useParams();
     const manageQuestion = (e) => {
@@ -32,7 +32,7 @@ function SingleQuestion({problem, search}) {
     });
     //console.log(sortRequested[0].answerRequestDate, sortRequested.length);
     var utcDate =  sortRequested[0]?.answerRequestDate;// ISO-8601 formatted date returned from server
-    console.log(utcDate,);
+    // console.log('tbs',problem?.problem_no,params);
     var localDate = new Date(utcDate);
     return (
         <>
@@ -44,7 +44,7 @@ function SingleQuestion({problem, search}) {
                 <div>
                     {params?.filter === 'pending' && sortRequested[0]?.answerRequestDate && (
                         <button className="btn btn-sm bg-warning text-white mr-2">
-                            <span id={`${problem?._id}_timer`}>{calculateTime(`${problem?._id}_timer`, localDate.getTime(), 'time-over')}</span>
+                            <span id={`${problem?._id}_timer${index}`}>{calculateTime(`${problem?._id}_timer${index}`, localDate.getTime(), 'time-over')}</span>
                         </button>
                     )}
                     {/* <button className="btn btn-sm bg-primary text-white mr-2"

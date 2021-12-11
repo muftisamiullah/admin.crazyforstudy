@@ -63,9 +63,9 @@ export default function SolveTBSList() {
                             <div className="subject-main-container pl-0 pt-0 pr-0 pb-0">    
                                 <h3>{params.filter != "undefined" && params.filter} questions: </h3>  
                                 <div className="clearfix"></div>    
-                                {data && data.data.map(problem => {
+                                {data && data.data.map((problem,index) => {
                                     return (
-                                        <SingleQuestion key={problem._id} problem={problem}/>
+                                        <SingleQuestion key={problem._id} index={index} problem={problem}/>
                                     )
                                 })}   
                             </div>

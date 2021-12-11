@@ -22,7 +22,7 @@ function SingleQuestion({problem, search}) {
     }else{
         answers = problem?.answer;
     }
-//console.log(problem?.updated_at);
+
 var utcDate =  problem?.updated_at;// ISO-8601 formatted date returned from server
 var localDate = new Date(utcDate);
     return (

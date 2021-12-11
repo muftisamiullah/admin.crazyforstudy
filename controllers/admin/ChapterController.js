@@ -2179,7 +2179,7 @@ const getAllQuestionsTbs = async (req, res) => {
     // console.log(query);
 
     let chapps = await Chapter.find(query)
-      .sort({ created_at: -1 })
+      .sort({ created_at: -1})
       .skip(limit * (pageno - 1))
       .limit(limit);
     let totalRecords = await Chapter.find(query).countDocuments();

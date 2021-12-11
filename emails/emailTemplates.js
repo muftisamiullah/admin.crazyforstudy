@@ -1064,6 +1064,41 @@ const assignmentSubmitUserSolution = (name, question, answer, order_id, order_re
     </html>`
 }
 
+const AdminISBNRequest = (isbn)=> {
+   return `<!doctype html>
+   <html>
+       <head>
+           <meta charset="utf-8">
+           <title>Book Request</title>
+       </head>
+       <body>
+           <p>Hi There,</p>
+           <p>A new book request has been received with the Isbn no <strong>${isbn && isbn.map(item=>{
+              return `${item.value}.`
+           })}</strong>. </p>                                                                                                                                     
+           
+       </body>
+   </html>`
+}
+
+
+
+const StudentResponseISBNRequest = (name,isbn)=> {
+   return `<!doctype html>
+   <html>
+       <head>
+           <meta charset="utf-8">
+           <title>Book Request</title>
+       </head>
+       <body>
+           <p>Dear ${name},</p>
+           <p>Your requested book (isbn:${isbn}) is now available </p> 
+           <p><a  href="crazyforstudy.com">check now from here<a><p>                                                                                                                                    
+           
+       </body>
+   </html>`
+}
+
 module.exports = { 
     forgotPassword,
     welcomeEmail, 
@@ -1083,4 +1118,6 @@ module.exports = {
     assignmentSubmitUser,
     assignmentSubmitAdmin,
     assignmentSubmitUserSolution,
+    AdminISBNRequest,
+    StudentResponseISBNRequest
 }
