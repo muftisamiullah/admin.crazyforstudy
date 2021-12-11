@@ -93,7 +93,7 @@ export default function Login() {
             </div>
             <div className="row no-gutter">
                 <div className="col-md-3 loginDiv">
-                <h4>Administrator Login2 </h4>    
+                <h4>Administrator Login </h4>    
                 <hr />
                 
                 <form autoComplete="Off" onSubmit={submitForm}>
