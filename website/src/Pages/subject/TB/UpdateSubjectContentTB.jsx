@@ -333,7 +333,7 @@ export default function UpdateSubjectContentTB() {
                                                     }}
                                                     // data={singleFaq?.answer ? singleFaq?.answer : 'Enter Answer'}
                                                     onChange={e => {
-                                                        setFeature({...feature, serviceContent : e.target.value})
+                                                        setFeature({...feature, serviceContent : e?.target?.value})
                                                         setFormData({...formData, feature: feature})
                                                     }}
                                                 />  
