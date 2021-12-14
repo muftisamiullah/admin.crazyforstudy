@@ -269,6 +269,7 @@ const saveTransactionAssignment = async(req, res) => {
             type: "assignment",
             OrderDate: Date.now(),
         }
+        
         const transaction = await Assignment.findOneAndUpdate(filter,{$set: { transactions : data } });
         if(transaction){
             const filter1 = {_id: req.body.assignmentId, user_id: req.body.userId};
@@ -276,7 +277,7 @@ const saveTransactionAssignment = async(req, res) => {
             if(assign.payment_status == "unpaid"){
                 assignment = await Assignment.findOneAndUpdate(filter1, {payment_status: "half-paid"});
             }else if(assign.payment_status == "half-paid"){
-                assignment = await Assignment.findOneAndUpdate(filter1, {payment_status: "paid-full"});
+                assignment = await Assignment.findOneAndUpdate(filter1, {payment_status: "paid-full",assignment_status: "pending"});
             }
             return res.status(200).json({
                 data: assignment

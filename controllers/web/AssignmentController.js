@@ -104,19 +104,21 @@ const saveAssignmentLocal = async (req, res) => {
     }
 }
 
+
 const saveAssignmentTwo = async (req, res) => {
-    try {
-        // console.log(req.body)
-        // return;
-        const tutor = await Tutor.aggregate([
+    try {     
+        
+        const tutor = await Tutor.aggregate([            
             { $sample: { size: 1 } }
         ]);
+        
         const filter = {_id:req.body.id,user_id:req.body.user_Id}
         const content = {   deadline_date: req.body.deadline_date,deadline_time: req.body.deadline_time, 
                             pages: req.body.pages, reference: req.body.reference,amount:req.body.amount,
                             tutor_id: tutor[0]._id, tutor_name: tutor[0].Name, referenceString: req.body.referenceString
                         };
         const assignment = await Assignment.findOneAndUpdate(filter, content);
+       
         if(assignment){
             const notifyData = {
                 info: `<p>You will get the answer for <strong>${assignment.question?.substr(0,100)}</strong> within the provided deadline, Please be patient.</p>`,

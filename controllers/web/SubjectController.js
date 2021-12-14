@@ -71,6 +71,7 @@ const GetQuestionAndAnswers = async (req, res) => {
 }
 
 const GetQuestionAndAnswers2 = async (req, res) => {
+    console.log(req.body.pageno , req.body.limit);
     try {
         const questions = await Questions.find({sub_subject:req.params.sub_subject, subject:req.params.subject},{shortanswer:0, completeanswer:0}).skip(req.body.pageno * req.body.limit).limit(parseInt(req.body.limit))
         const SubSubjectSeo = await Sub_Subject.findOne({ sub_subject: req.params.sub_subject }, {  textbook_seo_details:1, qa_seo_details:1 }).collation( { locale: 'en', strength: 2 });

@@ -306,14 +306,46 @@ export default function UpdateSubjectContentTB() {
                                         </div>         
                                         <div className="form-group">
                                             <label>Service Content</label>
-                                            <input 
+
+
+                                            <CKEditor
+                                                ref={featureServiceContent}
+                                                    data={content && content.content && content.content.feature.serviceContent ? content.content.feature.serviceContent : ''}
+                                                    editor={ ClassicEditor }
+                                                    config={{
+                                                        toolbar: {
+                                                            items: [
+                                                                'heading', 
+                                                                '|',
+                                                                'bold',
+                                                                'italic',
+                                                                'link',
+                                                                'bulletedList',
+                                                                'numberedList',
+                                                                'imageUpload',
+                                                                'mediaEmbed',
+                                                                'insertTable',
+                                                                'blockQuote',
+                                                                'undo',
+                                                                'redo'
+                                                            ]
+                                                        },
+                                                    }}
+                                                    // data={singleFaq?.answer ? singleFaq?.answer : 'Enter Answer'}
+                                                    onChange={e => {
+                                                        setFeature({...feature, serviceContent : e.target.value})
+                                                        setFormData({...formData, feature: feature})
+                                                    }}
+                                                />  
+
+                                            {/* <input 
                                                 ref={featureServiceContent}
                                                 defaultValue={content && content.content && content.content.feature.serviceContent}
                                                 onChange={e => {
                                                     setFeature({...feature, serviceContent : e.target.value})
                                                     setFormData({...formData, feature: feature})
                                                 }}
-                                                className="form-control" autoComplete="off" placeholder="Enter Service Content"/>
+                                                className="form-control" autoComplete="off" placeholder="Enter Service Content"/> */}
                                         </div>    
                                         <hr/>  
                                         <div className="row">
